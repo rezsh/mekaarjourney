@@ -194,55 +194,66 @@
 
             <!-- Interactive Encounters (NPCs on Map) -->
             <!-- 0. Pak RT - Village Head (Permission Giver) -->
-            <div class="map-encounter active" id="encounter-pakrt" style="left: 45%; top: 18%;" data-id="pakrt">
+            <div class="map-encounter active" id="encounter-pakrt" style="left: 32%; top: 41%;" data-id="pakrt">
               <div class="npc-character" style="background-image: url('npc/pakrtneutral.png');"></div>
               <div class="speech-bubble">!</div>
               <span class="location-tag" style="background-color: var(--pnm-green);">Kantor Pak RT</span>
             </div>
 
             <!-- 1. Warung Sedap (Group Encounter 1) -->
-            <div class="map-encounter active" id="encounter-warung" style="left: 61%; top: 58%;" data-id="warung">
+            <div class="map-encounter active" id="encounter-warung" style="left: 58%; top: 45%;" data-id="warung">
               <div class="npc-character npc-group" style="background-image: url('nasabah/nasabah10idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Warung Sedap (3 Orang)</span>
             </div>
 
             <!-- 2. Gerobak Sayur (Group Encounter 2) -->
-            <div class="map-encounter active" id="encounter-sayur" style="left: 18%; top: 64%;" data-id="sayur">
+            <div class="map-encounter active" id="encounter-sayur" style="left: 12%; top: 72%;" data-id="sayur">
               <div class="npc-character npc-group" style="background-image: url('nasabah/nasabah6idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Gerobak Sayur (3 Orang)</span>
             </div>
 
             <!-- 3. Ibu Siti - Grocer -->
-            <div class="map-encounter active" id="encounter-siti" style="left: 45%; top: 32%;" data-id="siti">
+            <div class="map-encounter active" id="encounter-siti" style="left: 60%; top: 32%;" data-id="siti">
               <div class="npc-character" style="background-image: url('nasabah/nasabah7idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Ibu Siti</span>
             </div>
 
             <!-- 4. Ibu Tini - Fishmonger -->
-            <div class="map-encounter active" id="encounter-tini" style="left: 77%; top: 26%;" data-id="tini">
+            <div class="map-encounter active" id="encounter-tini" style="left: 80%; top: 26%;" data-id="tini">
               <div class="npc-character" style="background-image: url('nasabah/nasabah8idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Ibu Tini</span>
             </div>
 
             <!-- 5. Ibu Wati - Chicken Breeder -->
-            <div class="map-encounter active" id="encounter-wati" style="left: 72%; top: 78%;" data-id="wati">
+            <div class="map-encounter active" id="encounter-wati" style="left: 64%; top: 78%;" data-id="wati">
               <div class="npc-character" style="background-image: url('nasabah/nasabah9idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Ibu Wati</span>
             </div>
 
             <!-- 6. Ibu Minah - Bakso Seller -->
-            <div class="map-encounter active" id="encounter-minah" style="left: 28%; top: 36%;" data-id="minah">
+            <div class="map-encounter active" id="encounter-minah" style="left: 20%; top: 45%;" data-id="minah">
               <div class="npc-character" style="background-image: url('nasabah/nasabah10idle.png');"></div>
               <div class="speech-bubble">...</div>
               <span class="location-tag">Ibu Minah</span>
             </div>
           </div>
         </div>
+
+        <!-- RT Permission Guide Overlay at bottom of map screen -->
+        <div id="rt-permission-guide" class="map-guide-overlay" style="display: none;">
+          <div class="guide-portrait-container">
+            <img src="player/femaleplayer.png" alt="AO Portrait" class="guide-portrait-img">
+          </div>
+          <div class="guide-dialogue-box">
+            <p class="guide-dialogue-text">Aku harus berbicara dan izin dengan Pak Rt dulu sebelum memulai sosialisasi disini....</p>
+          </div>
+        </div>
+
       </div>
 
       <!-- SCREEN 4: DIALOGUE / QUESTION INTERFACE -->

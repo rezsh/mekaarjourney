@@ -339,6 +339,16 @@ function showScreen(screenId) {
     }
   }
 
+  // Toggle RT permission guide visibility
+  const rtGuide = document.getElementById("rt-permission-guide");
+  if (rtGuide) {
+    if (screenId === "map" && !STATE.hasPermission) {
+      rtGuide.style.display = "flex";
+    } else {
+      rtGuide.style.display = "none";
+    }
+  }
+
   // Extra logic for specific screens
   if (screenId === "map") {
     updateMapHUD();
@@ -950,5 +960,18 @@ document.addEventListener("DOMContentLoaded", () => {
       startEncounter(encId);
     });
   });
+
+  // AO blinking animation interval
+  const guideImg = document.querySelector(".guide-portrait-img");
+  if (guideImg) {
+    setInterval(() => {
+      if (STATE.screen === "map" && !STATE.hasPermission) {
+        guideImg.src = "player/femaleplayerblink.png";
+        setTimeout(() => {
+          guideImg.src = "player/femaleplayer.png";
+        }, 150);
+      }
+    }, 3800);
+  }
   
 });
