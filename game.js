@@ -214,8 +214,119 @@ const STATE = {
   dialogueIndex: 0,
   isFirstTry: true,
   audioCtx: null,
-  hasPermission: false
+  hasPermission: false,
+  selectedPrepItems: new Set()
 };
+
+// Safety Riding Equipment Configuration
+const PREP_ITEMS = {
+  required: new Set(["helm", "bodyprotect", "ransel", "dompet", "hp"]),
+  forbidden: new Set(["totebg", "makeup", "kacamata", "necklace"])
+};
+
+// Reset Riding Prep Screen
+function resetPrepScreen() {
+  STATE.selectedPrepItems.clear();
+  document.querySelectorAll(".prep-item-card").forEach(card => {
+    card.classList.remove("selected");
+  });
+}
+
+// Show Prep Feedback Modal with educational text
+function showPrepFeedbackModal(isSuccess, message, submessage) {
+  const modal = document.getElementById("prep-feedback-modal");
+  const banner = document.getElementById("prep-feedback-banner");
+  const title = document.getElementById("prep-feedback-title");
+  const textEl = document.getElementById("prep-feedback-text");
+  const subtextEl = document.getElementById("prep-feedback-subtext");
+  const iconContainer = document.getElementById("prep-feedback-icon-container");
+  const closeBtn = document.getElementById("btn-close-prep-feedback");
+  
+  // Set messages
+  textEl.innerText = message;
+  subtextEl.innerText = submessage;
+  
+  if (isSuccess) {
+    playSound("correct");
+    title.innerText = "PERSIAPAN SIAP";
+    banner.style.background = "var(--pnm-green) linear-gradient(180deg, var(--pnm-green), var(--pnm-green-dark))";
+    banner.style.borderBottom = "4px solid var(--pnm-green-dark)";
+    
+    // Success Icon
+    iconContainer.innerHTML = `
+      <div class="feedback-icon correct" style="width: 54px; height: 54px; margin: 0 auto; background-color: var(--pnm-green);"></div>
+    `;
+    
+    closeBtn.innerText = "BERANGKAT!";
+    closeBtn.onclick = () => {
+      playSound("tap");
+      modal.classList.remove("active");
+      showScreen("map");
+    };
+  } else {
+    playSound("incorrect");
+    title.innerText = "PERIKSA PERSIAPAN";
+    banner.style.background = "#c34a26 linear-gradient(180deg, #d35400, #c0392b)";
+    banner.style.borderBottom = "4px solid #e74c3c";
+    
+    // Warning Icon
+    iconContainer.innerHTML = `
+      <div class="feedback-icon incorrect" style="width: 54px; height: 54px; margin: 0 auto; background-color: #d32f2f;"></div>
+    `;
+    
+    closeBtn.innerText = "SESUAIKAN KEMBALI";
+    closeBtn.onclick = () => {
+      playSound("tap");
+      modal.classList.remove("active");
+    };
+  }
+  
+  modal.classList.add("active");
+}
+
+// Validate Selected Items
+function validateRidingPrep() {
+  const missing = [...PREP_ITEMS.required].filter(item => !STATE.selectedPrepItems.has(item));
+  const extra = [...PREP_ITEMS.forbidden].filter(item => STATE.selectedPrepItems.has(item));
+  
+  if (missing.length === 0 && extra.length === 0) {
+    // Success! Perfect safety preparation
+    showPrepFeedbackModal(
+      true, 
+      "Luar Biasa! Persiapan Selesai.", 
+      "Semua perlengkapan safety riding Anda lengkap dan aman. Mari berangkat menuju Desa!"
+    );
+  } else {
+    // Failure!
+    let msg = "Persiapan berkendara Anda belum tepat!";
+    let subMsg = "";
+    
+    if (missing.length > 0 && extra.length > 0) {
+      subMsg = "Helm SNI, Jaket Pelindung, Tas Ransel, Dompet & Surat, serta Handphone wajib dibawa demi keselamatan. Barang pelengkap seperti Totebag, Makeup, Kacamata Gaya, dan Kalung tidak perlu dibawa.";
+    } else if (missing.length > 0) {
+      const missingNames = missing.map(m => {
+        if (m === "helm") return "Helm SNI";
+        if (m === "bodyprotect") return "Jaket Pelindung";
+        if (m === "ransel") return "Tas Ransel";
+        if (m === "dompet") return "Dompet & Surat";
+        if (m === "hp") return "Handphone";
+        return m;
+      }).join(", ");
+      subMsg = `Ada perlengkapan wajib keselamatan yang belum Anda bawa: ${missingNames}. Pastikan untuk melengkapinya.`;
+    } else if (extra.length > 0) {
+      const extraNames = extra.map(e => {
+        if (e === "totebg") return "Totebag";
+        if (e === "makeup") return "Makeup Kit";
+        if (e === "kacamata") return "Kacamata Gaya";
+        if (e === "necklace") return "Kalung Emas";
+        return e;
+      }).join(", ");
+      subMsg = `Anda membawa barang yang tidak perlu dibawa berkendara: ${extraNames}. Silakan tinggalkan di kantor demi kepraktisan dan keselamatan berkendara.`;
+    }
+    
+    showPrepFeedbackModal(false, msg, subMsg);
+  }
+}
 
 // Handle Portrait Asset Filename Typos
 function getPortraitUrl(id, state) {
@@ -918,7 +1029,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-start-level").addEventListener("click", () => {
     document.getElementById("level-detail-overlay").classList.remove("active");
     resetGame();
-    showScreen("map");
+    resetPrepScreen();
+    showScreen("prep");
   });
   
   // Close Instructions
@@ -935,12 +1047,46 @@ document.addEventListener("DOMContentLoaded", () => {
   // Victory Screen Buttons
   document.getElementById("btn-replay").addEventListener("click", () => {
     resetGame();
-    showScreen("map");
+    resetPrepScreen();
+    showScreen("prep");
   });
   
   document.getElementById("btn-home").addEventListener("click", () => {
     resetGame();
     showScreen("menu");
+  });
+
+  // Riding Preparation (Safety Riding) Event Listeners
+  document.querySelectorAll(".prep-item-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const item = card.getAttribute("data-item");
+      if (STATE.selectedPrepItems.has(item)) {
+        STATE.selectedPrepItems.delete(item);
+        card.classList.remove("selected");
+      } else {
+        STATE.selectedPrepItems.add(item);
+        card.classList.add("selected");
+      }
+      playSound("tap");
+    });
+  });
+
+  document.getElementById("btn-prep-submit").addEventListener("click", () => {
+    validateRidingPrep();
+  });
+
+  document.getElementById("btn-prep-back").addEventListener("click", () => {
+    resetGame();
+    showScreen("menu");
+  });
+
+  document.getElementById("btn-prep-help").addEventListener("click", () => {
+    document.getElementById("instructions-modal").classList.add("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-prep-settings").addEventListener("click", () => {
+    openSettingsModal(false);
   });
 
   // Global Settings Gear Toggle
