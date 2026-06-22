@@ -223,7 +223,7 @@ function getPortraitUrl(id, state) {
   let expression = state; // idle, talk, think, laugh
   
   if (id === "pakrt") {
-    return `nasabah/pakrt${expression}.png`;
+    return expression === "laugh" ? "npc/pakrthappy.png" : "npc/pakrtneutral.png";
   }
   
   if (id === 5 && expression === "idle") {
