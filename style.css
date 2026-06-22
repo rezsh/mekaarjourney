@@ -1187,3 +1187,86 @@ body {
     width: 180px;
   }
 }
+
+/* Level Selection Buttons Styling */
+.level-select-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  background-color: white;
+  border: 3px solid var(--wood-medium);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 4px 0px var(--wood-dark);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.level-select-btn:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 2px 0px var(--wood-dark);
+}
+
+.level-select-btn.locked {
+  background-color: #eaeaea;
+  border-color: #9e9e9e;
+  box-shadow: 0 4px 0px #757575;
+  cursor: pointer;
+}
+
+.level-select-btn.locked:active {
+  transform: translateY(2px) scale(0.99);
+  box-shadow: 0 2px 0px #757575;
+}
+
+.level-select-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.level-num {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--pnm-green-dark);
+}
+.level-select-btn.locked .level-num {
+  color: #757575;
+}
+
+.level-name {
+  font-family: var(--font-game);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+.level-select-btn.locked .level-name {
+  color: #616161;
+}
+
+.level-sub {
+  font-size: 9px;
+  color: #666;
+  font-weight: 600;
+}
+.level-select-btn.locked .level-sub {
+  color: #9e9e9e;
+}
+
+.level-status-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 10px;
+  color: white;
+}
+
+.level-status-badge.open {
+  background-color: var(--pnm-green);
+}
+
+.level-status-badge.dev {
+  background-color: var(--pnm-blue);
+}

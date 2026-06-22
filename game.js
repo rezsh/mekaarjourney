@@ -13,6 +13,26 @@ initVH();
 const CONFIG = {
   totalNasabahGoal: 10,
   encounters: {
+    pakrt: {
+      id: "pakrt",
+      locationName: "Kantor Pak RT",
+      isGroup: false,
+      recruitsCount: 0,
+      dialogues: [
+        {
+          speaker: "PAK RT",
+          portraitId: "pakrt",
+          objection: "Selamat siang, Neng. Ada perlu apa ya datang ke desa kami?",
+          options: [
+            { text: "Saya dari PNM Mekaar, mau izin untuk mensosialisasikan program pemberdayaan kelompok khusus ibu-ibu prasejahtera, Pak.", isCorrect: true },
+            { text: "Saya mau menawarkan pinjaman perorangan dengan bunga harian untuk warga bapak, Pak.", isCorrect: false },
+            { text: "Saya mau bagi-bagi hadiah gratis dari pemerintah tanpa syarat apa pun, Pak.", isCorrect: false }
+          ],
+          correctResponse: "Oh, program PNM Mekaar khusus ibu-ibu untuk pemberdayaan usaha ya? Bagus sekali itu. Kebetulan banyak warga saya yang butuh modal usaha. Silakan neng, saya izinkan bersosialisasi dengan warga!",
+          incorrectResponse: "Wah, kalau pinjaman bunga harian atau bagi-bagi gratis yang tidak mendidik mah saya kurang setuju neng."
+        }
+      ]
+    },
     warung: {
       id: "warung",
       locationName: "Warung Sedap",
@@ -193,13 +213,18 @@ const STATE = {
   activeEncounterId: null,
   dialogueIndex: 0,
   isFirstTry: true,
-  audioCtx: null
+  audioCtx: null,
+  hasPermission: false
 };
 
 // Handle Portrait Asset Filename Typos
 function getPortraitUrl(id, state) {
   // Special overrides for typos
   let expression = state; // idle, talk, think, laugh
+  
+  if (id === "pakrt") {
+    return `nasabah/pakrt${expression}.png`;
+  }
   
   if (id === 5 && expression === "idle") {
     // nasabah5idle.png is actually nasabah5dle.png
@@ -335,7 +360,7 @@ function updateMapHUD() {
       el.querySelector(".speech-bubble").innerText = "✓";
     } else {
       el.classList.remove("completed");
-      el.querySelector(".speech-bubble").innerText = "...";
+      el.querySelector(".speech-bubble").innerText = (encId === "pakrt") ? "!" : "...";
     }
   });
 }
@@ -344,6 +369,12 @@ function updateMapHUD() {
 function startEncounter(encounterId) {
   if (STATE.completedEncounters.has(encounterId)) {
     return; // Already completed
+  }
+  
+  // Check if player has permission from Pak RT
+  if (encounterId !== "pakrt" && !STATE.hasPermission) {
+    showPermissionRequiredModal();
+    return;
   }
   
   STATE.activeEncounterId = encounterId;
@@ -422,8 +453,8 @@ function handleOptionSelect(option, buttonEl) {
     feedbackTitle.className = "feedback-title correct";
     feedbackResponse.innerText = dialogue.correctResponse;
     
-    // Track stats
-    if (STATE.isFirstTry) {
+    // Track stats (excluding Pak RT)
+    if (STATE.isFirstTry && STATE.activeEncounterId !== "pakrt") {
       STATE.firstTryCorrect++;
     }
     
@@ -486,8 +517,19 @@ function advanceDialogue() {
     STATE.isFirstTry = true;
     loadDialogueStep();
   } else {
-    // Group encounter fully complete!
+    // Group/Individual encounter fully complete!
     STATE.completedEncounters.add(STATE.activeEncounterId);
+    
+    if (STATE.activeEncounterId === "pakrt") {
+      STATE.hasPermission = true;
+      // Change speech bubble to checkmark
+      const rMarker = document.querySelector("#encounter-pakrt .speech-bubble");
+      if (rMarker) rMarker.innerText = "✓";
+      
+      showScreen("map");
+      return;
+    }
+    
     STATE.collectedCount += encData.recruitsCount;
     
     // Check win condition
@@ -541,9 +583,14 @@ function resetGame() {
   STATE.activeEncounterId = null;
   STATE.dialogueIndex = 0;
   STATE.isFirstTry = true;
+  STATE.hasPermission = false; // Reset permission status
   
   // Set star icon in level selector card to match current progress (default 1 star before starting)
   document.getElementById("star-rating-img").src = "1star.png";
+  
+  // Reset Pak RT marker
+  const rMarker = document.querySelector("#encounter-pakrt .speech-bubble");
+  if (rMarker) rMarker.innerText = "!";
   
   updateMapHUD();
 }
@@ -682,6 +729,12 @@ function openSettingsModal(fromMainMenu = false) {
   playSound("tap");
 }
 
+// Show Permission Warning Modal
+function showPermissionRequiredModal() {
+  document.getElementById("permission-modal").classList.add("active");
+  playSound("incorrect");
+}
+
 // Setup Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
   // Fullscreen Toggle Listeners
@@ -805,14 +858,55 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleSound();
   });
 
-  // Level Selection Modal
+  // Level Selection Modal (Level List)
   document.getElementById("btn-close-level-select").addEventListener("click", () => {
     document.getElementById("level-select-overlay").classList.remove("active");
     playSound("tap");
   });
   
-  document.getElementById("btn-start-level").addEventListener("click", () => {
+  // Level Selection Menu Buttons (Sosialisasi, Kelayakan, PKM)
+  document.getElementById("btn-level-sosialisasi").addEventListener("click", () => {
     document.getElementById("level-select-overlay").classList.remove("active");
+    document.getElementById("level-detail-overlay").classList.add("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-level-kelayakan").addEventListener("click", () => {
+    const textEl = document.getElementById("dev-modal-text");
+    if (textEl) {
+      textEl.innerHTML = "Level 2: Uji Kelayakan & Verifikasi<br><span style='font-size: 13px; font-weight: 400; color: #555;'>Feasibility Study & Verifikasi Nasabah</span>";
+    }
+    document.getElementById("dev-modal").classList.add("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-level-pkm").addEventListener("click", () => {
+    const textEl = document.getElementById("dev-modal-text");
+    if (textEl) {
+      textEl.innerHTML = "Level 3: PKM<br><span style='font-size: 13px; font-weight: 400; color: #555;'>Pertemuan Kelompok Mingguan & Pembinaan</span>";
+    }
+    document.getElementById("dev-modal").classList.add("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-close-dev").addEventListener("click", () => {
+    document.getElementById("dev-modal").classList.remove("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-close-level-detail").addEventListener("click", () => {
+    document.getElementById("level-detail-overlay").classList.remove("active");
+    document.getElementById("level-select-overlay").classList.add("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-close-permission").addEventListener("click", () => {
+    document.getElementById("permission-modal").classList.remove("active");
+    playSound("tap");
+  });
+  
+  document.getElementById("btn-start-level").addEventListener("click", () => {
+    document.getElementById("level-detail-overlay").classList.remove("active");
     resetGame();
     showScreen("map");
   });

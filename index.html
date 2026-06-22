@@ -52,8 +52,50 @@
         </div>
       </div>
 
-      <!-- SCREEN 2: LEVEL SELECTION OVERLAY (MODAL) -->
+      <!-- SCREEN 2: PILIH LEVEL (MODAL) -->
       <div id="level-select-overlay" class="modal-overlay">
+        <div class="level-card-container animate-pop">
+          <div class="wood-banner">
+            <h2>PILIH LEVEL</h2>
+          </div>
+          <div class="level-card-content" style="gap: 12px; padding: 15px;">
+            <!-- Level 1: Sosialisasi -->
+            <button id="btn-level-sosialisasi" class="level-select-btn active">
+              <div class="level-select-info">
+                <span class="level-num">LEVEL 1</span>
+                <span class="level-name">Sosialisasi</span>
+                <span class="level-sub">Sosialisasi & Rekrutmen Nasabah</span>
+              </div>
+              <div class="level-status-badge open">BUKA</div>
+            </button>
+
+            <!-- Level 2: Uji Kelayakan & Verifikasi -->
+            <button id="btn-level-kelayakan" class="level-select-btn locked">
+              <div class="level-select-info">
+                <span class="level-num">LEVEL 2</span>
+                <span class="level-name">Uji Kelayakan & Verifikasi</span>
+                <span class="level-sub">Feasibility Study & Verifikasi</span>
+              </div>
+              <div class="level-status-badge dev">DEV</div>
+            </button>
+
+            <!-- Level 3: PKM -->
+            <button id="btn-level-pkm" class="level-select-btn locked">
+              <div class="level-select-info">
+                <span class="level-num">LEVEL 3</span>
+                <span class="level-name">PKM</span>
+                <span class="level-sub">Pertemuan Kelompok Mingguan</span>
+              </div>
+              <div class="level-status-badge dev">DEV</div>
+            </button>
+
+            <button id="btn-close-level-select" class="btn btn-secondary btn-full-width" style="margin-top: 5px;">KEMBALI</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2B: LEVEL DETAIL SOSIALISASI (MODAL) -->
+      <div id="level-detail-overlay" class="modal-overlay">
         <div class="level-card-container animate-pop">
           <div class="wood-banner">
             <h2>SOSIALISASI</h2>
@@ -71,12 +113,58 @@
               <img id="star-rating-img" src="1star.png" alt="Star Rating" class="stars-image">
             </div>
             <!-- Level Info -->
-            <p class="level-desc">Level 1: Sosialisasi<br>Kumpulkan 10 Nasabah dengan memberikan penjelasan yang tepat!</p>
+            <p class="level-desc">Level 1: Sosialisasi<br>Dapatkan izin Pak RT terlebih dahulu, lalu kumpulkan 10 Nasabah dengan memberikan penjelasan yang tepat!</p>
             
             <div class="level-actions">
               <button id="btn-start-level" class="btn btn-primary">MULAI</button>
-              <button id="btn-close-level-select" class="btn btn-secondary">KEMBALI</button>
+              <button id="btn-close-level-detail" class="btn btn-secondary">KEMBALI</button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP MODAL: LEVEL IN DEVELOPMENT -->
+      <div id="dev-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+          <div class="wood-banner" style="background: #0a4f8f linear-gradient(180deg, #0e62b3, #0a4f8f); border-bottom: 4px solid #1072d1;">
+            <h2>COMING SOON</h2>
+          </div>
+          <div class="modal-card-content">
+            <div class="dev-icon-container" style="margin: 10px 0;">
+              <svg viewBox="0 0 24 24" width="60" height="60" style="color: #0a4f8f;">
+                <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+              </svg>
+            </div>
+            <p id="dev-modal-text" style="font-weight: 800; font-size: 15px; color: var(--text-dark); text-align: center;">
+              Level ini masih dalam pengembangan!
+            </p>
+            <p style="font-size: 13px; color: #555; text-align: center; margin-top: -5px;">
+              Nantikan update selanjutnya untuk mempelajari tahapan tahapan berikutnya dari PNM Mekaar.
+            </p>
+            <button id="btn-close-dev" class="btn btn-primary btn-full-width" style="background-color: #0a4f8f; border-bottom: 4px solid #083c6d;">MENGERTI</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP MODAL: PERMISSION REQUIRED -->
+      <div id="permission-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+          <div class="wood-banner" style="background: #c34a26 linear-gradient(180deg, #d35400, #c0392b); border-bottom: 4px solid #e74c3c;">
+            <h2>BUTUH IZIN RT</h2>
+          </div>
+          <div class="modal-card-content">
+            <div class="alert-icon-container" style="margin: 10px 0;">
+              <svg viewBox="0 0 24 24" width="60" height="60" style="color: #c0392b;">
+                <path fill="currentColor" d="M12,2L1,21H23L12,2M12,6L19.53,19H4.47L12,6M11,10V14H13V10H11M11,16V18H13V16H11Z"/>
+              </svg>
+            </div>
+            <p style="font-weight: 800; font-size: 14px; color: var(--text-dark); text-align: center;">
+              Sebagai Account Officer yang sopan, Anda harus meminta izin kepada <strong>Pak RT</strong> terlebih dahulu sebelum bersosialisasi dengan warga!
+            </p>
+            <p style="font-size: 12px; color: #555; text-align: center; margin-top: -5px;">
+              Kunjungi Kantor Pak RT (ditandai dengan tanda seru kuning <span style="font-weight: 800; color: #f4c430;">!</span> di peta).
+            </p>
+            <button id="btn-close-permission" class="btn btn-primary btn-full-width" style="background-color: #c0392b; border-bottom: 4px solid #962d22;">MENGERTI</button>
           </div>
         </div>
       </div>
@@ -105,6 +193,13 @@
             <img src="mapenviroment2.jpeg" alt="Village Map" class="map-bg-img">
 
             <!-- Interactive Encounters (NPCs on Map) -->
+            <!-- 0. Pak RT - Village Head (Permission Giver) -->
+            <div class="map-encounter active" id="encounter-pakrt" style="left: 45%; top: 18%;" data-id="pakrt">
+              <div class="npc-character" style="background-image: url('nasabah/pakrtidle.png');"></div>
+              <div class="speech-bubble">!</div>
+              <span class="location-tag" style="background-color: var(--pnm-green);">Kantor Pak RT</span>
+            </div>
+
             <!-- 1. Warung Sedap (Group Encounter 1) -->
             <div class="map-encounter active" id="encounter-warung" style="left: 61%; top: 58%;" data-id="warung">
               <div class="npc-character npc-group" style="background-image: url('nasabah/nasabah10idle.png');"></div>
