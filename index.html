@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PNM Mekaar Journey - Sosialisasi</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Load Premium Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playpen+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Background overlay for desktop layout -->
+  <div class="desktop-bg"></div>
+
+  <!-- Main Mobile Shell Container -->
+  <div id="game-shell">
+    <div class="phone-screen">
+      
+      <!-- Top Notch simulation for native feel -->
+      <div class="phone-notch"></div>
+      
+      <!-- Audio Toggle Button -->
+      <button id="sound-toggle" class="icon-btn sound-on" title="Toggle Sound">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.85 14,18.71V20.77C18.07,19.86 21,16.28 21,12C21,7.72 18.07,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.77 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/>
+        </svg>
+      </button>
+
+      <!-- SCREEN 1: MAIN MENU -->
+      <div id="menu-screen" class="game-screen active">
+        <div class="menu-content">
+          <!-- Game Logo -->
+          <div class="menu-logo-container">
+            <img src="titlenew.png" alt="Journey Mekaar Logo" class="menu-logo">
+          </div>
+          <!-- Menu Buttons -->
+          <div class="menu-buttons">
+            <button id="btn-play" class="img-btn-wrapper">
+              <img src="play.png" alt="PLAY" class="menu-btn-img">
+            </button>
+            <button id="btn-options" class="img-btn-wrapper">
+              <img src="options.png" alt="OPTIONS" class="menu-btn-img">
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: LEVEL SELECTION OVERLAY (MODAL) -->
+      <div id="level-select-overlay" class="modal-overlay">
+        <div class="level-card-container animate-pop">
+          <div class="wood-banner">
+            <h2>SOSIALISASI</h2>
+          </div>
+          <div class="level-card-content">
+            <!-- Level Preview Image (AO talking to a batik resident) -->
+            <div class="level-preview-frame">
+              <div class="level-preview-bg">
+                <div class="card-character character-ao"></div>
+                <div class="card-character character-resident"></div>
+              </div>
+            </div>
+            <!-- Star Ratings -->
+            <div class="stars-display">
+              <img id="star-rating-img" src="1star.png" alt="Star Rating" class="stars-image">
+            </div>
+            <!-- Level Info -->
+            <p class="level-desc">Level 1: Sosialisasi<br>Kumpulkan 10 Nasabah dengan memberikan penjelasan yang tepat!</p>
+            
+            <div class="level-actions">
+              <button id="btn-start-level" class="btn btn-primary">MULAI</button>
+              <button id="btn-close-level-select" class="btn btn-secondary">KEMBALI</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: VILLAGE MAP SCREEN -->
+      <div id="map-screen" class="game-screen">
+        <!-- Top HUD -->
+        <div class="map-hud">
+          <div class="hud-left">
+            <h1 class="hud-title">Sosialisasi</h1>
+            <div class="hud-progress-container">
+              <span class="hud-progress-label">Nasabah Terkumpul:</span>
+              <span id="collected-count" class="hud-progress-value">0 / 10</span>
+            </div>
+            <!-- Visual Progress Bar -->
+            <div class="hud-progress-bar-bg">
+              <div id="hud-progress-bar-fill" class="hud-progress-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+          <button id="btn-map-pause" class="icon-btn-gear" title="Pause Game">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Scrollable Village Minimap -->
+        <div class="map-viewport" id="map-viewport">
+          <div class="map-content" id="map-content">
+            <!-- Minimap Image -->
+            <img src="mapenviroment2.jpeg" alt="Village Map" class="map-bg-img">
+
+            <!-- Interactive Encounters (NPCs on Map) -->
+            <!-- 1. Warung Sedap (Group Encounter 1) -->
+            <div class="map-encounter active" id="encounter-warung" style="left: 61%; top: 58%;" data-id="warung">
+              <div class="npc-character npc-group" style="background-image: url('nasabah/nasabah10idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Warung Sedap (3 Orang)</span>
+            </div>
+
+            <!-- 2. Gerobak Sayur (Group Encounter 2) -->
+            <div class="map-encounter active" id="encounter-sayur" style="left: 18%; top: 64%;" data-id="sayur">
+              <div class="npc-character npc-group" style="background-image: url('nasabah/nasabah6idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Gerobak Sayur (3 Orang)</span>
+            </div>
+
+            <!-- 3. Ibu Siti - Grocer -->
+            <div class="map-encounter active" id="encounter-siti" style="left: 45%; top: 32%;" data-id="siti">
+              <div class="npc-character" style="background-image: url('nasabah/nasabah7idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Ibu Siti</span>
+            </div>
+
+            <!-- 4. Ibu Tini - Fishmonger -->
+            <div class="map-encounter active" id="encounter-tini" style="left: 77%; top: 26%;" data-id="tini">
+              <div class="npc-character" style="background-image: url('nasabah/nasabah8idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Ibu Tini</span>
+            </div>
+
+            <!-- 5. Ibu Wati - Chicken Breeder -->
+            <div class="map-encounter active" id="encounter-wati" style="left: 72%; top: 78%;" data-id="wati">
+              <div class="npc-character" style="background-image: url('nasabah/nasabah9idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Ibu Wati</span>
+            </div>
+
+            <!-- 6. Ibu Minah - Bakso Seller -->
+            <div class="map-encounter active" id="encounter-minah" style="left: 28%; top: 36%;" data-id="minah">
+              <div class="npc-character" style="background-image: url('nasabah/nasabah10idle.png');"></div>
+              <div class="speech-bubble">...</div>
+              <span class="location-tag">Ibu Minah</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: DIALOGUE / QUESTION INTERFACE -->
+      <div id="dialogue-screen" class="game-screen">
+        <!-- Dialogue Header -->
+        <div class="dialogue-header">
+          <button id="btn-dialogue-back" class="icon-btn-back">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M20,11H7.83L13.41,5.41L12,4L4,12L12,20L13.41,18.59L7.83,13H20V11Z"/>
+            </svg>
+          </button>
+          <div class="encounter-indicator">
+            <span id="dialogue-location-name">Warung Sedap</span>
+            <span id="group-progress" class="group-progress-badge">1/3</span>
+          </div>
+        </div>
+
+        <!-- Upper half: Character Portrait with village background -->
+        <div class="dialogue-portrait-area">
+          <div class="dialogue-portrait-bg">
+            <img id="npc-portrait" src="nasabah/nasabah1idle.png" alt="Nasabah Portrait" class="npc-portrait-img">
+          </div>
+        </div>
+
+        <!-- Lower half: Dialog Board -->
+        <div class="dialogue-board">
+          <div class="speaker-name-container">
+            <span id="speaker-name" class="speaker-name">IBU INDAH</span>
+          </div>
+          
+          <div class="dialogue-content-box">
+            <!-- Question text -->
+            <p id="dialogue-text" class="dialogue-text">
+              Waalaikumsalam. Oh, dari PNM Mekaar? Itu teh apa ya Neng? Semacam koperasi simpan pinjam atau bank keliling gitu?
+            </p>
+          </div>
+
+          <!-- Multiple choice options (Pilih respon) -->
+          <div class="options-container">
+            <div class="options-title">Pilih Respon yang tepat!</div>
+            <div id="options-list" class="options-list">
+              <!-- Dynamically populated buttons -->
+              <button class="option-btn">PNM Mekaar itu layanan permodalan berbasis kelompok khusus ibu-ibu</button>
+              <button class="option-btn">PNM Mekaar itu layanan pinjaman uang berbasis perorangan</button>
+              <button class="option-btn">PNM Mekaar itu layanan pinjaman uang berbasis apalah</button>
+            </div>
+          </div>
+
+          <!-- Dialog feedback overlay (shows check / cross and text feedback) -->
+          <div id="dialogue-feedback" class="dialogue-feedback-panel hidden">
+            <div class="feedback-icon-container">
+              <div id="feedback-icon" class="feedback-icon correct"></div>
+            </div>
+            <div class="feedback-text-container">
+              <h3 id="feedback-title" class="feedback-title">Tepat Sekali!</h3>
+              <p id="feedback-response" class="feedback-response">
+                Oh begitu, jadi berbasis kelompok khusus ibu-ibu ya? Menarik juga, bukan bank keliling liar.
+              </p>
+            </div>
+            <button id="btn-feedback-next" class="btn btn-primary btn-full-width">LANJUT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5: VICTORY / LEVEL COMPLETED SCREEN -->
+      <div id="victory-screen" class="game-screen">
+        <div class="victory-content animate-pop">
+          <h1 class="victory-title">LEVEL SELESAI!</h1>
+          <h2 class="victory-subtitle">Sosialisasi Berhasil!</h2>
+          
+          <!-- Victory badge / image -->
+          <div class="victory-badge-container">
+            <img id="victory-stars-img" src="3star.png" alt="3 Stars" class="victory-stars">
+          </div>
+
+          <!-- Performance details -->
+          <div class="victory-stats-card">
+            <div class="stat-row">
+              <span class="stat-label">Nasabah Direkrut:</span>
+              <span class="stat-value text-green">10 / 10</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Jawaban Tepat (Percobaan 1):</span>
+              <span id="victory-correct-answers" class="stat-value">10 / 10</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Peringkat Kelayakan:</span>
+              <span id="victory-rating-text" class="stat-value text-gold">Sangat Kompeten!</span>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="victory-actions">
+            <button id="btn-replay" class="btn btn-primary">MAIN LAGI</button>
+            <button id="btn-home" class="btn btn-secondary">MENU UTAMA</button>
+          </div>
+        </div>
+        <!-- Confetti effects container -->
+        <div id="confetti-container" class="confetti-container"></div>
+      </div>
+
+      <!-- APP MODAL: PAUSE GAME -->
+      <div id="pause-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+          <div class="wood-banner">
+            <h2>GAME PAUSED</h2>
+          </div>
+          <div class="modal-card-content">
+            <div class="pause-setting-row">
+              <span class="setting-label">Pengaturan Suara:</span>
+              <button id="pause-sound-toggle" class="btn btn-secondary">SUARA: AKTIF</button>
+            </div>
+            
+            <div class="pause-actions" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 10px;">
+              <button id="btn-pause-resume" class="btn btn-primary">LANJUTKAN GAME</button>
+              <button id="btn-pause-instructions" class="btn btn-secondary">PETUNJUK BERMAIN</button>
+              <button id="btn-pause-menu" class="btn btn-secondary" style="background-color: #d32f2f; border-bottom: 4px solid #b71c1c;">KEMBALI KE MENU</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP MODAL: INSTRUCTIONS & OPTIONS -->
+      <div id="instructions-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+          <div class="wood-banner">
+            <h2>PANDUAN GAME</h2>
+          </div>
+          <div class="modal-card-content">
+            <div class="instruction-scroll">
+              <h3>Tujuan Anda:</h3>
+              <p>Sebagai <strong>Account Officer (AO)</strong> baru di PNM Mekaar, Anda bertugas melakukan sosialisasi program kepada ibu-ibu di desa.</p>
+              
+              <h3>Cara Bermain:</h3>
+              <ul>
+                <li><strong>Jelajahi Peta:</strong> Ada 6 lokasi dengan tanda tanya/speech bubble di desa. Cari lokasi tersebut.</li>
+                <li><strong>Kelompok Nasabah:</strong> Beberapa lokasi merupakan tempat berkumpulnya ibu-ibu (seperti <em>Warung Sedap</em> dan <em>Gerobak Sayur</em>). Menjawab dengan benar di sana akan langsung merekrut <strong>3 nasabah sekaligus!</strong></li>
+                <li><strong>Pilih Respon Tepat:</strong> Setiap nasabah akan memberikan pertanyaan atau keraguan tentang PNM Mekaar. Pilih jawaban terbaik untuk meyakinkan mereka.</li>
+                <li><strong>Hindari Kesalahan:</strong> Jawaban salah akan membuat mereka ragu. Anda bisa mencoba lagi, namun skor bintang Anda di akhir level akan berkurang.</li>
+              </ul>
+              
+              <h3>Bintang & Penilaian:</h3>
+              <ul>
+                <li>⭐⭐⭐ (3 Bintang): Semua jawaban benar pada percobaan pertama.</li>
+                <li>⭐⭐ (2 Bintang): Maksimal 2 jawaban salah.</li>
+                <li>⭐ (1 Bintang): Lebih dari 2 jawaban salah.</li>
+              </ul>
+            </div>
+            
+            <button id="btn-close-instructions" class="btn btn-primary btn-full-width">MENGERTI</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
