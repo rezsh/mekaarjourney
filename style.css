@@ -57,7 +57,7 @@ body {
   opacity: 0.9;
 }
 
-/* Main Mobile Shell (centered on desktop, full-screen on mobile) */
+/* Main Mobile Shell (locked to vertical alignment, centered on desktop, no borders) */
 #game-shell {
   width: 100%;
   height: 100%;
@@ -65,27 +65,17 @@ body {
   max-height: 900px;
   position: relative;
   background-color: #000;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-  border-radius: 40px;
-  border: 12px solid #2d2d2d;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border-radius: 16px; /* Subtle card corners on desktop */
+  border: none;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* Simulated notch for modern look */
+/* Hidden notch */
 .phone-notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 25px;
-  background-color: #2d2d2d;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  z-index: 999;
-  pointer-events: none;
+  display: none;
 }
 
 .phone-screen {
@@ -101,7 +91,7 @@ body {
 /* Global settings gear button in top-right */
 #sound-toggle {
   position: absolute;
-  top: 35px;
+  top: 20px;
   right: 20px;
   z-index: 100;
   width: 44px;
@@ -150,9 +140,8 @@ body {
   background-size: cover;
   display: none;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 100px 20px 80px 20px;
   height: 100%;
   width: 100%;
 }
@@ -168,6 +157,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 60px; /* Push logo down from top */
 }
 
 .menu-logo {
@@ -189,6 +179,8 @@ body {
   align-items: center;
   gap: 15px;
   width: 100%;
+  margin-top: auto; /* Vertically center buttons in the remaining space */
+  margin-bottom: auto;
 }
 
 .img-btn-wrapper {
@@ -437,7 +429,7 @@ body {
 
 .map-hud {
   position: absolute;
-  top: 35px;
+  top: 20px;
   left: 0;
   right: 0;
   height: 75px;
@@ -680,7 +672,7 @@ body {
 
 .dialogue-header {
   position: absolute;
-  top: 35px;
+  top: 20px;
   left: 20px;
   right: 20px;
   height: 50px;
@@ -1111,4 +1103,12 @@ body {
   font-weight: 800;
   color: var(--text-dark);
   font-size: 14px;
+}
+
+/* Responsive Mobile Rules (Card layout on desktop, full screen on mobile) */
+@media (max-width: 480px) {
+  #game-shell {
+    border-radius: 0;
+    max-height: 100%;
+  }
 }
