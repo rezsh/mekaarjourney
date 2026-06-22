@@ -232,6 +232,32 @@ function resetPrepScreen() {
   });
 }
 
+// Trigger Mockup Loading Screen
+function triggerLoadingScreen(targetScreenId, durationMs = 2500) {
+  // Hide all screens
+  document.querySelectorAll(".game-screen").forEach(s => s.classList.remove("active"));
+  
+  // Show loading screen
+  const loadingScreen = document.getElementById("loading-screen");
+  if (loadingScreen) {
+    loadingScreen.classList.add("active");
+  }
+  STATE.screen = "loading";
+
+  // Hide global HUD sound toggle during loading
+  const soundToggleBtn = document.getElementById("sound-toggle");
+  if (soundToggleBtn) soundToggleBtn.style.display = "none";
+
+  setTimeout(() => {
+    // Hide loading screen
+    if (loadingScreen) {
+      loadingScreen.classList.remove("active");
+    }
+    // Transition to the target screen
+    showScreen(targetScreenId);
+  }, durationMs);
+}
+
 // Show Prep Feedback Modal with educational text
 function showPrepFeedbackModal(isSuccess, message, submessage) {
   const modal = document.getElementById("prep-feedback-modal");
@@ -261,7 +287,7 @@ function showPrepFeedbackModal(isSuccess, message, submessage) {
     closeBtn.onclick = () => {
       playSound("tap");
       modal.classList.remove("active");
-      showScreen("map");
+      triggerLoadingScreen("map", 2500);
     };
   } else {
     playSound("incorrect");
