@@ -38,6 +38,7 @@ body {
   background-color: #121212;
   color: var(--text-white);
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
   overflow: hidden;
   display: flex;
@@ -237,11 +238,14 @@ body {
 .level-card-container, .modal-card {
   width: 100%;
   max-width: 360px;
+  max-height: 90dvh;
   background-color: var(--bg-cream);
   border: 6px solid var(--wood-dark);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(92, 53, 31, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .wood-banner {
@@ -266,6 +270,14 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  overflow-y: auto;
+}
+.level-card-content::-webkit-scrollbar, .modal-card-content::-webkit-scrollbar {
+  width: 6px;
+}
+.level-card-content::-webkit-scrollbar-thumb, .modal-card-content::-webkit-scrollbar-thumb {
+  background-color: var(--wood-medium);
+  border-radius: 3px;
 }
 
 /* Level Preview Box */
@@ -519,9 +531,10 @@ body {
 
 .map-content {
   position: relative;
-  min-width: 100%;
-  min-height: 100%;
   aspect-ratio: 769 / 768; /* Keep original aspect ratio */
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .map-bg-img {
@@ -842,6 +855,16 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  max-height: 165px;
+  padding-right: 4px;
+}
+.options-list::-webkit-scrollbar {
+  width: 6px;
+}
+.options-list::-webkit-scrollbar-thumb {
+  background-color: var(--wood-medium);
+  border-radius: 3px;
 }
 
 .option-btn {
@@ -984,6 +1007,7 @@ body {
 .victory-content {
   width: 100%;
   max-width: 360px;
+  max-height: 90dvh;
   background-color: var(--bg-cream);
   border: 6px solid var(--gold);
   border-radius: 24px;
@@ -993,6 +1017,14 @@ body {
   align-items: center;
   gap: 15px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  overflow-y: auto;
+}
+.victory-content::-webkit-scrollbar {
+  width: 6px;
+}
+.victory-content::-webkit-scrollbar-thumb {
+  background-color: var(--wood-medium);
+  border-radius: 3px;
 }
 
 .victory-title {
@@ -1110,5 +1142,42 @@ body {
   #game-shell {
     border-radius: 0;
     max-height: 100%;
+  }
+}
+
+/* Fullscreen Button */
+.icon-btn-fullscreen {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--pnm-green);
+  border: 3px solid white;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.icon-btn-fullscreen:active {
+  transform: scale(0.9);
+}
+
+/* Short height screens reactive styling */
+@media (max-height: 700px) {
+  .menu-logo-container {
+    margin-top: 30px;
+    max-height: 18dvh;
+  }
+  .menu-buttons {
+    gap: 10px;
+  }
+  .img-btn-wrapper {
+    width: 180px;
   }
 }

@@ -1,5 +1,14 @@
 /* PNM MEKAAR JOURNEY - GAME ENGINE */
 
+// Initialize dynamic viewport height for mobile browsers
+function initVH() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+window.addEventListener('resize', initVH);
+window.addEventListener('orientationchange', initVH);
+initVH();
+
 // Game Configuration & State
 const CONFIG = {
   totalNasabahGoal: 10,
@@ -583,8 +592,63 @@ function toggleSound() {
   updateSoundUI();
 }
 
+// Fullscreen API Helper Methods
+function toggleFullscreen() {
+  const doc = window.document;
+  const docEl = doc.documentElement;
+  
+  const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+  
+  const isFS = !!(doc.fullscreenElement || doc.mozFullScreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement);
+  
+  if (!isFS) {
+    if (requestFullScreen) {
+      requestFullScreen.call(docEl).catch(err => {
+        console.warn("Fullscreen request failed:", err);
+      });
+    }
+  } else {
+    if (cancelFullScreen) {
+      cancelFullScreen.call(doc);
+    }
+  }
+}
+
+function updateFullscreenUI() {
+  const isFS = !!(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  
+  const btnMM = document.getElementById("fullscreen-toggle");
+  if (btnMM) {
+    btnMM.querySelector("svg").innerHTML = isFS 
+      ? `<path fill="currentColor" d="M10,21V19H7V16H5V21H10M17,19H14V21H19V16H17V19M17,8H19V3H14V5H17V8M10,5H7V8H5V3H10V5Z"/>`
+      : `<path fill="currentColor" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z"/>`;
+  }
+  
+  const btnPause = document.getElementById("pause-fullscreen-toggle");
+  if (btnPause) {
+    btnPause.innerText = isFS ? "LAYAR BIASA" : "LAYAR PENUH";
+    btnPause.className = isFS ? "btn btn-primary" : "btn btn-secondary";
+  }
+}
+
+document.addEventListener("fullscreenchange", updateFullscreenUI);
+document.addEventListener("webkitfullscreenchange", updateFullscreenUI);
+document.addEventListener("mozfullscreenchange", updateFullscreenUI);
+document.addEventListener("MSFullscreenChange", updateFullscreenUI);
+
 // Setup Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
+  // Fullscreen Toggle Listeners
+  document.getElementById("fullscreen-toggle").addEventListener("click", () => {
+    toggleFullscreen();
+    playSound("tap");
+  });
+  document.getElementById("pause-fullscreen-toggle").addEventListener("click", () => {
+    toggleFullscreen();
+    playSound("tap");
+  });
+
   // Main Menu Buttons
   document.getElementById("btn-play").addEventListener("click", () => {
     // Show level selection popup modal
