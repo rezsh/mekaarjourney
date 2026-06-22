@@ -101,7 +101,7 @@ body {
   background-color: var(--pnm-green);
   border: 3px solid white;
   color: white;
-  display: flex;
+  display: none; /* Hidden by default on Main Menu, toggled via JS */
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -517,24 +517,30 @@ body {
   transform: rotate(45deg) scale(0.9);
 }
 
-/* Still (Non-Scrollable) Map Viewport */
+/* Scrollable Map Viewport with click-and-drag panning */
 .map-viewport {
   width: 100%;
   flex: 1;
-  overflow: hidden;
+  overflow: auto; /* Enable scrollbars when needed */
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #cde6cf; /* Match map background color */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  cursor: grab;
+}
+.map-viewport:active {
+  cursor: grabbing;
+}
+.map-viewport::-webkit-scrollbar {
+  display: none; /* Hide scrollbars for cleaner mobile look */
 }
 
 .map-content {
   position: relative;
+  height: 100%;
   aspect-ratio: 769 / 768; /* Keep original aspect ratio */
-  width: 100%;
-  max-width: 100%;
-  max-height: 100%;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .map-bg-img {

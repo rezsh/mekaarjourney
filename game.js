@@ -304,9 +304,20 @@ function showScreen(screenId) {
   document.getElementById(`${screenId}-screen`).classList.add("active");
   STATE.screen = screenId;
 
+  // Toggle global settings gear button visibility (show ONLY on map screen)
+  const soundToggleBtn = document.getElementById("sound-toggle");
+  if (soundToggleBtn) {
+    if (screenId === "map") {
+      soundToggleBtn.style.display = "flex";
+    } else {
+      soundToggleBtn.style.display = "none";
+    }
+  }
+
   // Extra logic for specific screens
   if (screenId === "map") {
     updateMapHUD();
+    setTimeout(centerMap, 50);
   }
 }
 
@@ -637,6 +648,40 @@ document.addEventListener("webkitfullscreenchange", updateFullscreenUI);
 document.addEventListener("mozfullscreenchange", updateFullscreenUI);
 document.addEventListener("MSFullscreenChange", updateFullscreenUI);
 
+// Center Map Viewport to middle of map-content
+function centerMap() {
+  const viewport = document.getElementById("map-viewport");
+  const content = document.getElementById("map-content");
+  if (viewport && content) {
+    const scrollX = (content.clientWidth - viewport.clientWidth) / 2;
+    const scrollY = (content.clientHeight - viewport.clientHeight) / 2;
+    viewport.scrollLeft = scrollX;
+    viewport.scrollTop = scrollY;
+  }
+}
+
+// Open settings (pause) modal dynamically
+function openSettingsModal(fromMainMenu = false) {
+  updateSoundUI();
+  const titleEl = document.getElementById("pause-modal-title");
+  if (titleEl) {
+    titleEl.innerText = fromMainMenu ? "PENGATURAN" : "GAME JEDA";
+  }
+  
+  const btnResume = document.getElementById("btn-pause-resume");
+  if (btnResume) {
+    btnResume.innerText = fromMainMenu ? "KEMBALI" : "LANJUTKAN GAME";
+  }
+  
+  const btnMenu = document.getElementById("btn-pause-menu");
+  if (btnMenu) {
+    btnMenu.style.display = fromMainMenu ? "none" : "block";
+  }
+  
+  document.getElementById("pause-modal").classList.add("active");
+  playSound("tap");
+}
+
 // Setup Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
   // Fullscreen Toggle Listeners
@@ -649,6 +694,83 @@ document.addEventListener("DOMContentLoaded", () => {
     playSound("tap");
   });
 
+  // Map Dragging/Panning Detectors
+  let mapIsDragging = false;
+  let mapStartX = 0;
+  let mapStartY = 0;
+  let mapScrollLeft = 0;
+  let mapScrollTop = 0;
+  const dragThreshold = 6;
+  let dragDetected = false;
+
+  const viewport = document.getElementById("map-viewport");
+  
+  if (viewport) {
+    // Mouse dragging
+    viewport.addEventListener("mousedown", (e) => {
+      mapIsDragging = true;
+      dragDetected = false;
+      mapStartX = e.pageX - viewport.offsetLeft;
+      mapStartY = e.pageY - viewport.offsetTop;
+      mapScrollLeft = viewport.scrollLeft;
+      mapScrollTop = viewport.scrollTop;
+    });
+    
+    viewport.addEventListener("mouseleave", () => {
+      mapIsDragging = false;
+    });
+    
+    viewport.addEventListener("mouseup", () => {
+      mapIsDragging = false;
+    });
+    
+    viewport.addEventListener("mousemove", (e) => {
+      if (!mapIsDragging) return;
+      e.preventDefault();
+      
+      const x = e.pageX - viewport.offsetLeft;
+      const y = e.pageY - viewport.offsetTop;
+      const walkX = x - mapStartX;
+      const walkY = y - mapStartY;
+      
+      if (Math.abs(walkX) > dragThreshold || Math.abs(walkY) > dragThreshold) {
+        dragDetected = true;
+      }
+      
+      viewport.scrollLeft = mapScrollLeft - walkX;
+      viewport.scrollTop = mapScrollTop - walkY;
+    });
+
+    // Touch events for mobile dragging detection (relies on browser scroll but checks for clicks)
+    viewport.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        mapIsDragging = true;
+        dragDetected = false;
+        mapStartX = e.touches[0].pageX - viewport.offsetLeft;
+        mapStartY = e.touches[0].pageY - viewport.offsetTop;
+        mapScrollLeft = viewport.scrollLeft;
+        mapScrollTop = viewport.scrollTop;
+      }
+    }, { passive: true });
+    
+    viewport.addEventListener("touchend", () => {
+      mapIsDragging = false;
+    });
+
+    viewport.addEventListener("touchmove", (e) => {
+      if (!mapIsDragging || e.touches.length !== 1) return;
+      
+      const x = e.touches[0].pageX - viewport.offsetLeft;
+      const y = e.touches[0].pageY - viewport.offsetTop;
+      const walkX = x - mapStartX;
+      const walkY = y - mapStartY;
+      
+      if (Math.abs(walkX) > dragThreshold || Math.abs(walkY) > dragThreshold) {
+        dragDetected = true;
+      }
+    }, { passive: true });
+  }
+
   // Main Menu Buttons
   document.getElementById("btn-play").addEventListener("click", () => {
     // Show level selection popup modal
@@ -658,8 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
   document.getElementById("btn-options").addEventListener("click", () => {
-    document.getElementById("instructions-modal").classList.add("active");
-    playSound("tap");
+    openSettingsModal(true);
   });
   
 
@@ -720,20 +841,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Global Settings Gear Toggle
   document.getElementById("sound-toggle").addEventListener("click", () => {
-    updateSoundUI();
-    const btnMenu = document.getElementById("btn-pause-menu");
-    if (STATE.screen === "menu") {
-      btnMenu.style.display = "none";
-    } else {
-      btnMenu.style.display = "block";
-    }
-    document.getElementById("pause-modal").classList.add("active");
-    playSound("tap");
+    openSettingsModal(false);
   });
 
   // Setup Map Encounters click triggers
   document.querySelectorAll(".map-encounter").forEach(el => {
-    el.addEventListener("click", () => {
+    el.addEventListener("click", (e) => {
+      if (dragDetected) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
       const encId = el.getAttribute("data-id");
       startEncounter(encId);
     });
