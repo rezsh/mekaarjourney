@@ -89,27 +89,9 @@ body {
   background-color: var(--bg-cream);
 }
 
-/* Global settings gear button in top-right */
+/* Settings gear button */
 #sound-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 100;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: var(--pnm-green);
-  border: 3px solid white;
-  color: white;
-  display: none; /* Hidden by default on Main Menu, toggled via JS */
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-#sound-toggle:active {
-  transform: rotate(45deg) scale(0.9);
+  display: none; /* Hidden by default, toggled via JS */
 }
 
 /* SCREEN MANAGEMENT */
@@ -776,7 +758,7 @@ body {
 
 /* Portrait animation effects */
 .npc-portrait-img.happy {
-  animation: bounce-portrait 0.6s ease infinite;
+  animation: bounce-portrait 0.6s ease 1;
 }
 .npc-portrait-img.incorrect {
   animation: shake-portrait 0.4s ease;
@@ -1329,7 +1311,7 @@ body {
   background-color: var(--bg-cream);
 }
 
-.prep-header-bar {
+.top-header-bar {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -1341,7 +1323,7 @@ body {
   pointer-events: none;
 }
 
-.prep-header-card {
+.top-header-card {
   background-color: white;
   border-radius: 14px;
   padding: 6px 12px;
@@ -1351,7 +1333,7 @@ body {
   pointer-events: auto;
 }
 
-.prep-header-title {
+.top-header-title {
   font-family: var(--font-game);
   color: var(--pnm-green-dark);
   font-size: 15px;
@@ -1359,28 +1341,25 @@ body {
   margin: 0;
 }
 
-.prep-header-sub {
+.top-header-sub {
   color: #555;
   font-size: 9px;
   font-weight: 700;
   margin-top: 1px;
 }
 
-.prep-header-line {
-  height: 3px;
-  background-color: #ddd;
-  border-radius: 2px;
-  margin-top: 3px;
+.top-header-line-container {
   width: 100%;
+  margin-top: 2px;
 }
 
-.prep-header-actions {
+.top-header-actions {
   display: flex;
   gap: 8px;
   pointer-events: auto;
 }
 
-.prep-circle-btn {
+.top-circle-btn {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1397,12 +1376,12 @@ body {
   transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.prep-circle-btn span {
+.top-circle-btn span {
   font-family: var(--font-game);
   line-height: 1;
 }
 
-.prep-circle-btn:active {
+.top-circle-btn:active {
   transform: scale(0.9);
 }
 
@@ -1429,12 +1408,14 @@ body {
 
 .prep-ao {
   position: absolute;
-  left: -25px;
-  bottom: -40px;
-  height: 120%;
+  left: -20px;
+  bottom: -15px;
+  height: 100%;
   width: auto;
   object-fit: contain;
   z-index: 10;
+  transform: scale(2.0);
+  transform-origin: 30% 12%;
   filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
 }
 
@@ -1563,9 +1544,9 @@ body {
     height: 42%;
   }
   .prep-ao {
-    height: 110%;
-    left: -20px;
-    bottom: -30px;
+    height: 90%;
+    left: -15px;
+    bottom: -10px;
   }
   .prep-motor {
     height: 75%;

@@ -1089,6 +1089,11 @@ document.addEventListener("DOMContentLoaded", () => {
     openSettingsModal(false);
   });
 
+  document.getElementById("btn-map-help").addEventListener("click", () => {
+    document.getElementById("instructions-modal").classList.add("active");
+    playSound("tap");
+  });
+
   // Global Settings Gear Toggle
   document.getElementById("sound-toggle").addEventListener("click", () => {
     openSettingsModal(false);

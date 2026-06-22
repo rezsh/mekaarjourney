@@ -22,13 +22,7 @@
       <!-- Top Notch simulation for native feel -->
       <div class="phone-notch"></div>
       
-      <!-- Global Settings Gear Button -->
-      <button id="sound-toggle" class="icon-btn-gear-global" title="Pengaturan">
-        <svg viewBox="0 0 24 24" width="24" height="24">
-          <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.49,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.51,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.51,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.49,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
-        </svg>
-      </button>
-
+      
       <!-- SCREEN 1: MAIN MENU -->
       <div id="menu-screen" class="game-screen active">
         <!-- Fullscreen Toggle Button (Main Menu Top-Left) -->
@@ -172,18 +166,20 @@
       <!-- SCREEN 2C: RIDING PREPARATION SCREEN (SAFETY RIDING) -->
       <div id="prep-screen" class="game-screen">
         <!-- Top header bar mimicking the user mockup -->
-        <div class="prep-header-bar">
-          <div class="prep-header-card">
-            <h1 class="prep-header-title">Safety Riding</h1>
-            <p class="prep-header-sub">Sesuaikan konteks:</p>
-            <div class="prep-header-line"></div>
+        <div class="top-header-bar">
+          <div class="top-header-card">
+            <h1 class="top-header-title">Safety Riding</h1>
+            <p class="top-header-sub">Bersiap membawa barang yang diperlukan</p>
+            <div class="top-header-line-container">
+              <div class="hud-progress-bar-bg" style="height: 4px; background-color: #ddd;"></div>
+            </div>
           </div>
-          <div class="prep-header-actions">
-            <button id="btn-prep-help" class="prep-circle-btn" title="Panduan">
+          <div class="top-header-actions">
+            <button id="btn-prep-help" class="top-circle-btn" title="Panduan">
               <span>?</span>
             </button>
-            <button id="btn-prep-settings" class="prep-circle-btn" title="Pengaturan">
-              <svg viewBox="0 0 24 24" width="18" height="18" style="margin-top: 2px;">
+            <button id="btn-prep-settings" class="top-circle-btn" title="Pengaturan">
+              <svg viewBox="0 0 24 24" width="16" height="16" style="margin-top: 2px;">
                 <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.49,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.51,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.51,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.49,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
               </svg>
             </button>
@@ -299,18 +295,29 @@
 
       <!-- SCREEN 3: VILLAGE MAP SCREEN -->
       <div id="map-screen" class="game-screen">
-        <!-- Top HUD -->
-        <div class="map-hud">
-          <div class="hud-left">
-            <h1 class="hud-title">Sosialisasi</h1>
-            <div class="hud-progress-container">
-              <span class="hud-progress-label">Nasabah Terkumpul:</span>
-              <span id="collected-count" class="hud-progress-value">0 / 10</span>
+        <!-- Top HUD (Consistent with Safety Riding screen) -->
+        <div class="top-header-bar">
+          <div class="top-header-card">
+            <h1 class="top-header-title">Sosialisasi</h1>
+            <div class="hud-progress-container" style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; color: var(--text-dark); margin-top: 1px;">
+              <span class="hud-progress-label" style="font-weight: 700;">Nasabah Terkumpul:</span>
+              <span id="collected-count" class="hud-progress-value" style="font-weight: 800; color: var(--pnm-green-dark);">0 / 10</span>
             </div>
-            <!-- Visual Progress Bar -->
-            <div class="hud-progress-bar-bg">
-              <div id="hud-progress-bar-fill" class="hud-progress-bar-fill" style="width: 0%;"></div>
+            <div class="top-header-line-container">
+              <div class="hud-progress-bar-bg" style="height: 5px; background-color: #ddd;">
+                <div id="hud-progress-bar-fill" class="hud-progress-bar-fill" style="width: 0%;"></div>
+              </div>
             </div>
+          </div>
+          <div class="top-header-actions">
+            <button id="btn-map-help" class="top-circle-btn" title="Panduan">
+              <span>?</span>
+            </button>
+            <button id="sound-toggle" class="top-circle-btn" title="Pengaturan">
+              <svg viewBox="0 0 24 24" width="16" height="16" style="margin-top: 2px;">
+                <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.49,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.51,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.51,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.49,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+              </svg>
+            </button>
           </div>
         </div>
 
