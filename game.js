@@ -215,7 +215,8 @@ const STATE = {
   isFirstTry: true,
   audioCtx: null,
   hasPermission: false,
-  selectedPrepItems: new Set()
+  selectedPrepItems: new Set(),
+  highScoreStars: parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0
 };
 
 // Safety Riding Equipment Configuration
@@ -223,6 +224,22 @@ const PREP_ITEMS = {
   required: new Set(["helm", "bodyprotect", "ransel", "dompet", "hp"]),
   forbidden: new Set(["totebg", "makeup", "kacamata", "necklace"])
 };
+
+// Update Star icon in level selector card to match current progress (0 stars initially)
+function updateLevelDetailStars() {
+  const starImg = document.getElementById("star-rating-img");
+  if (starImg) {
+    if (STATE.highScoreStars > 0) {
+      starImg.src = `${STATE.highScoreStars}star.png`;
+      starImg.style.filter = "none";
+      starImg.style.opacity = "1";
+    } else {
+      starImg.src = "1star.png";
+      starImg.style.filter = "grayscale(100%)";
+      starImg.style.opacity = "0.35"; // Grayscale + opacity represents 0 stars
+    }
+  }
+}
 
 // Reset Riding Prep Screen
 function resetPrepScreen() {
@@ -287,7 +304,7 @@ function showPrepFeedbackModal(isSuccess, message, submessage) {
     closeBtn.onclick = () => {
       playSound("tap");
       modal.classList.remove("active");
-      triggerLoadingScreen("map", 2500);
+      showScreen("map");
     };
   } else {
     playSound("incorrect");
@@ -699,18 +716,28 @@ function triggerVictory() {
   const starRatingImg = document.getElementById("victory-stars-img");
   const ratingTextEl = document.getElementById("victory-rating-text");
   
+  let starsEarned = 1;
   if (STATE.firstTryCorrect === 10) {
     starRatingImg.src = "3star.png";
     ratingTextEl.innerText = "Sangat Kompeten! (3 Bintang)";
     ratingTextEl.className = "stat-value text-gold";
+    starsEarned = 3;
   } else if (STATE.firstTryCorrect >= 8) {
     starRatingImg.src = "2star.png";
     ratingTextEl.innerText = "Cukup Kompeten (2 Bintang)";
     ratingTextEl.className = "stat-value text-green";
+    starsEarned = 2;
   } else {
     starRatingImg.src = "1star.png";
     ratingTextEl.innerText = "Perlu Belajar Lagi (1 Bintang)";
     ratingTextEl.className = "stat-value text-dark";
+    starsEarned = 1;
+  }
+
+  // Save score to browser localStorage if it is higher than previous high score
+  if (starsEarned > STATE.highScoreStars) {
+    STATE.highScoreStars = starsEarned;
+    localStorage.setItem("mekaar_journey_level_1_stars", starsEarned.toString());
   }
   
   // Update stats
@@ -732,8 +759,8 @@ function resetGame() {
   STATE.isFirstTry = true;
   STATE.hasPermission = false; // Reset permission status
   
-  // Set star icon in level selector card to match current progress (default 1 star before starting)
-  document.getElementById("star-rating-img").src = "1star.png";
+  // Set star icon in level selector card to match current progress
+  updateLevelDetailStars();
   
   // Reset Pak RT marker
   const rMarker = document.querySelector("#encounter-pakrt .speech-bubble");
@@ -1013,6 +1040,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Level Selection Menu Buttons (Sosialisasi, Kelayakan, PKM)
   document.getElementById("btn-level-sosialisasi").addEventListener("click", () => {
+    updateLevelDetailStars();
     document.getElementById("level-select-overlay").classList.remove("active");
     document.getElementById("level-detail-overlay").classList.add("active");
     playSound("tap");
@@ -1056,7 +1084,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("level-detail-overlay").classList.remove("active");
     resetGame();
     resetPrepScreen();
-    showScreen("prep");
+    triggerLoadingScreen("prep", 2500);
   });
   
   // Close Instructions
@@ -1074,7 +1102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-replay").addEventListener("click", () => {
     resetGame();
     resetPrepScreen();
-    showScreen("prep");
+    triggerLoadingScreen("prep", 2500);
   });
   
   document.getElementById("btn-home").addEventListener("click", () => {
@@ -1151,4 +1179,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3800);
   }
   
+  // Initialize star score presentation on first load
+  updateLevelDetailStars();
 });
