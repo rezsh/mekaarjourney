@@ -98,30 +98,27 @@ body {
   background-color: var(--bg-cream);
 }
 
-/* Sound toggle button */
+/* Global settings gear button in top-right */
 #sound-toggle {
   position: absolute;
   top: 35px;
   right: 20px;
   z-index: 100;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: rgba(0, 83, 67, 0.8);
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  background-color: var(--pnm-green);
+  border: 3px solid white;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  transition: transform 0.1s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 #sound-toggle:active {
-  transform: scale(0.9);
-}
-#sound-toggle.sound-off svg path {
-  d: path("M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.43 14,18.68V20.74C15.38,20.44 16.62,19.78 17.66,18.95L20.73,22L22,20.73L4.27,3M19,12C19,12.9 18.82,13.75 18.48,14.55L20,16.07C20.64,14.83 21,13.46 21,12C21,7.72 18.07,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,11.18 16.19,10.43 15.68,9.85L17.2,11.38C17.2,11.58 17.2,11.79 17.2,12C17.2,13.2 16.5,14.2 15.5,14.65V16.85C16.1,16.48 16.5,15.9 16.5,12M12,4L9.91,6.09L12,8.18V4Z");
+  transform: rotate(45deg) scale(0.9);
 }
 
 /* SCREEN MANAGEMENT */
@@ -149,25 +146,19 @@ body {
 
 /* SCREEN 1: MAIN MENU */
 #menu-screen {
-  background: url('bgnew.png') no-repeat center center;
+  background: url('bgnew.png') no-repeat center bottom;
   background-size: cover;
   display: none;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  padding-bottom: 80px;
+  padding: 100px 20px 80px 20px;
+  height: 100%;
+  width: 100%;
 }
 
 #menu-screen.active {
   display: flex;
-}
-
-.menu-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  z-index: 20;
 }
 
 .menu-logo-container {

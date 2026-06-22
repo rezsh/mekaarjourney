@@ -598,13 +598,6 @@ document.addEventListener("DOMContentLoaded", () => {
     playSound("tap");
   });
   
-  // Pause button on Map View
-  document.getElementById("btn-map-pause").addEventListener("click", (e) => {
-    e.stopPropagation();
-    updateSoundUI();
-    document.getElementById("pause-modal").classList.add("active");
-    playSound("tap");
-  });
 
   // Pause Modal Handlers
   document.getElementById("btn-pause-resume").addEventListener("click", () => {
@@ -661,9 +654,17 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("menu");
   });
 
-  // Audio Toggle
+  // Global Settings Gear Toggle
   document.getElementById("sound-toggle").addEventListener("click", () => {
-    toggleSound();
+    updateSoundUI();
+    const btnMenu = document.getElementById("btn-pause-menu");
+    if (STATE.screen === "menu") {
+      btnMenu.style.display = "none";
+    } else {
+      btnMenu.style.display = "block";
+    }
+    document.getElementById("pause-modal").classList.add("active");
+    playSound("tap");
   });
 
   // Setup Map Encounters click triggers
