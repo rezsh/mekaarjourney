@@ -1408,14 +1408,14 @@ body {
 
 .prep-ao {
   position: absolute;
-  left: -20px;
-  bottom: -15px;
-  height: 100%;
+  left: -10px;
+  top: 35px;
+  height: 140%;
   width: auto;
   object-fit: contain;
   z-index: 10;
-  transform: scale(2.0);
-  transform-origin: 30% 12%;
+  transform: scale(1.5);
+  transform-origin: top left;
   filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
 }
 
@@ -1544,9 +1544,9 @@ body {
     height: 42%;
   }
   .prep-ao {
-    height: 90%;
-    left: -15px;
-    bottom: -10px;
+    top: 20px;
+    height: 120%;
+    left: -10px;
   }
   .prep-motor {
     height: 75%;

@@ -749,13 +749,13 @@ function updateSoundUI() {
   const pauseBtn = document.getElementById("pause-sound-toggle");
   
   if (STATE.soundEnabled) {
-    globalBtn.className = "icon-btn sound-on";
+    globalBtn.className = "top-circle-btn sound-on";
     if (pauseBtn) {
       pauseBtn.innerText = "SUARA: AKTIF";
       pauseBtn.className = "btn btn-primary";
     }
   } else {
-    globalBtn.className = "icon-btn sound-off";
+    globalBtn.className = "top-circle-btn sound-off";
     if (pauseBtn) {
       pauseBtn.innerText = "SUARA: MATI";
       pauseBtn.className = "btn btn-secondary";
