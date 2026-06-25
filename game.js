@@ -216,7 +216,11 @@ const STATE = {
   audioCtx: null,
   hasPermission: false,
   selectedPrepItems: new Set(),
-  highScoreStars: parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0
+  highScoreStars: parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0,
+  typewriterIntervalId: null,
+  typewriterFullText: "",
+  isTypewriterRunning: false,
+  pendingHUDAnimation: null
 };
 
 // Safety Riding Equipment Configuration
@@ -249,6 +253,85 @@ function resetPrepScreen() {
   });
 }
 
+// Preload Assets Configuration
+const ASSETS_TO_PRELOAD = [
+  // UI & General
+  "titlenew.png",
+  "play.png",
+  "options.png",
+  "1star.png",
+  "2star.png",
+  "3star.png",
+  "bgnew.png",
+  "bgsos.png",
+  "mapenviroment2.jpeg",
+  "bg-enviroment.png",
+  
+  // Safety Riding Prep
+  "motor.png",
+  "player/femaleplayer.png",
+  "player/femaleplayerblink.png",
+  "backpack-safetyriding/helm.png",
+  "backpack-safetyriding/totebg.png",
+  "backpack-safetyriding/dompet.png",
+  "backpack-safetyriding/ransel.png",
+  "backpack-safetyriding/makeup.png",
+  "backpack-safetyriding/bodyprotect.png",
+  "backpack-safetyriding/kacamata.png",
+  "backpack-safetyriding/hp.png",
+  "backpack-safetyriding/necklace.png",
+  
+  // NPC sprites
+  "npc/pakrtneutral.png",
+  "npc/pakrthappy.png"
+];
+
+// Dynamically generate all NPC dialogue sprites for preloading
+for (let id = 1; id <= 10; id++) {
+  if (id === 5) {
+    ASSETS_TO_PRELOAD.push("nasabah/nasabah5dle.png");
+  } else {
+    ASSETS_TO_PRELOAD.push(`nasabah/nasabah${id}idle.png`);
+  }
+  
+  ASSETS_TO_PRELOAD.push(`nasabah/nasabah${id}talk.png`);
+  ASSETS_TO_PRELOAD.push(`nasabah/nasabah${id}think.png`);
+  
+  if (id === 2) {
+    ASSETS_TO_PRELOAD.push("nasabah/nasbah2laugh.png");
+  } else {
+    ASSETS_TO_PRELOAD.push(`nasabah/nasabah${id}laugh.png`);
+  }
+}
+
+let assetsPreloaded = false;
+
+function preloadImage(url) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(url);
+    img.onerror = () => resolve(url); // Always resolve to avoid hanging if one asset fails
+    img.src = url;
+  });
+}
+
+function preloadAllGameAssets(onProgress) {
+  let loadedCount = 0;
+  const totalCount = ASSETS_TO_PRELOAD.length;
+  
+  const promises = ASSETS_TO_PRELOAD.map(url => {
+    return preloadImage(url).then(resUrl => {
+      loadedCount++;
+      if (onProgress) {
+        onProgress(loadedCount, totalCount);
+      }
+      return resUrl;
+    });
+  });
+  
+  return Promise.all(promises);
+}
+
 // Trigger Mockup Loading Screen
 function triggerLoadingScreen(targetScreenId, durationMs = 2500) {
   // Hide all screens
@@ -265,14 +348,41 @@ function triggerLoadingScreen(targetScreenId, durationMs = 2500) {
   const soundToggleBtn = document.getElementById("sound-toggle");
   if (soundToggleBtn) soundToggleBtn.style.display = "none";
 
-  setTimeout(() => {
-    // Hide loading screen
+  const titleEl = document.querySelector(".loading-title");
+  const originalTitle = titleEl ? titleEl.innerText : "Menuju Desa...";
+
+  // Minimum wait timer promise
+  const timerPromise = new Promise(resolve => setTimeout(resolve, durationMs));
+
+  // Asynchronous preload promise
+  let preloadPromise;
+  if (!assetsPreloaded) {
+    preloadPromise = preloadAllGameAssets((loaded, total) => {
+      if (titleEl) {
+        const percent = Math.round((loaded / total) * 100);
+        titleEl.innerText = `${originalTitle} (${percent}%)`;
+      }
+    }).then(() => {
+      assetsPreloaded = true;
+      if (titleEl) titleEl.innerText = originalTitle;
+    });
+  } else {
+    preloadPromise = Promise.resolve();
+  }
+
+  // Wait for both minimum timer and preloading to complete
+  Promise.all([timerPromise, preloadPromise]).then(() => {
     if (loadingScreen) {
       loadingScreen.classList.remove("active");
     }
-    // Transition to the target screen
     showScreen(targetScreenId);
-  }, durationMs);
+  }).catch(err => {
+    console.error("Preload error", err);
+    if (loadingScreen) {
+      loadingScreen.classList.remove("active");
+    }
+    showScreen(targetScreenId);
+  });
 }
 
 // Show Prep Feedback Modal with educational text
@@ -476,12 +586,84 @@ function playSound(type) {
   }
 }
 
+// Typewriter Effect for NPC Objections
+function runTypewriter(text) {
+  const textEl = document.getElementById("dialogue-text");
+  if (!textEl) return;
+  textEl.textContent = "";
+  let charIndex = 0;
+  
+  // Hide options container initially
+  const optionsContainer = document.querySelector(".options-container");
+  if (optionsContainer) {
+    optionsContainer.style.display = "none";
+  }
+  
+  // Clear any existing typewriter interval
+  if (STATE.typewriterIntervalId) {
+    clearInterval(STATE.typewriterIntervalId);
+  }
+  
+  STATE.isTypewriterRunning = true;
+  STATE.typewriterFullText = text;
+  
+  // Print characters one by one using substring to avoid space-collapse issues
+  const charSpeed = 25; // 25ms per char
+  
+  STATE.typewriterIntervalId = setInterval(() => {
+    if (charIndex < text.length) {
+      charIndex++;
+      textEl.textContent = text.substring(0, charIndex);
+    } else {
+      finishTypewriter();
+    }
+  }, charSpeed);
+}
+
+function finishTypewriter() {
+  if (STATE.typewriterIntervalId) {
+    clearInterval(STATE.typewriterIntervalId);
+    STATE.typewriterIntervalId = null;
+  }
+  
+  const textEl = document.getElementById("dialogue-text");
+  if (textEl) {
+    textEl.textContent = STATE.typewriterFullText;
+  }
+  
+  STATE.isTypewriterRunning = false;
+  
+  // Change portrait to idle when NPC finishes talking (no wobble)
+  const encData = CONFIG.encounters[STATE.activeEncounterId];
+  const dialogue = encData ? encData.dialogues[STATE.dialogueIndex] : null;
+  const portraitImg = document.getElementById("npc-portrait");
+  if (portraitImg && dialogue) {
+    portraitImg.src = getPortraitUrl(dialogue.portraitId, "idle");
+    portraitImg.className = "npc-portrait-img"; // Keep class clean, no wobble
+  }
+  
+  // Show options container
+  const optionsContainer = document.querySelector(".options-container");
+  if (optionsContainer) {
+    optionsContainer.style.display = "flex";
+  }
+}
+
 // Screen Navigation
 function showScreen(screenId) {
   playSound("tap");
   document.querySelectorAll(".game-screen").forEach(s => s.classList.remove("active"));
   document.getElementById(`${screenId}-screen`).classList.add("active");
   STATE.screen = screenId;
+
+  // Clear typewriter when leaving the dialogue screen
+  if (screenId !== "dialogue") {
+    if (STATE.typewriterIntervalId) {
+      clearInterval(STATE.typewriterIntervalId);
+      STATE.typewriterIntervalId = null;
+    }
+    STATE.isTypewriterRunning = false;
+  }
 
   // Toggle global settings gear button visibility (show ONLY on map screen)
   const soundToggleBtn = document.getElementById("sound-toggle");
@@ -505,9 +687,72 @@ function showScreen(screenId) {
 
   // Extra logic for specific screens
   if (screenId === "map") {
-    updateMapHUD();
+    if (STATE.pendingHUDAnimation) {
+      const animData = STATE.pendingHUDAnimation;
+      STATE.pendingHUDAnimation = null;
+      triggerHUDAnimation(animData.oldCount, animData.newCount);
+    } else {
+      updateMapHUD();
+    }
     setTimeout(centerMap, 50);
   }
+}
+
+// Animate progress HUD values and add glow effect
+function triggerHUDAnimation(oldCount, newCount) {
+  const countEl = document.getElementById("collected-count");
+  const fillEl = document.getElementById("hud-progress-bar-fill");
+  const hudCard = document.querySelector("#map-screen .top-header-card");
+
+  // 1. Set initial display (old state before dialog completion)
+  if (countEl) {
+    countEl.innerText = `${oldCount} / ${CONFIG.totalNasabahGoal}`;
+  }
+  if (fillEl) {
+    fillEl.style.width = `${(oldCount / CONFIG.totalNasabahGoal) * 100}%`;
+  }
+
+  // 2. Add glow & bounce animation class
+  if (hudCard) {
+    hudCard.classList.remove("hud-glow"); // Force class reset if it was left over
+    void hudCard.offsetWidth; // Trigger reflow
+    hudCard.classList.add("hud-glow");
+  }
+
+  // 3. Trigger width and number increment animations after a short delay so the screen transition is done
+  setTimeout(() => {
+    if (fillEl) {
+      fillEl.style.width = `${(newCount / CONFIG.totalNasabahGoal) * 100}%`;
+    }
+
+    // Number count-up animation
+    let currentCount = oldCount;
+    if (currentCount < newCount) {
+      const duration = 750; // Total count up time in ms
+      const steps = newCount - oldCount;
+      const stepTime = Math.max(80, Math.floor(duration / steps));
+
+      const timer = setInterval(() => {
+        if (currentCount < newCount) {
+          currentCount++;
+          if (countEl) {
+            countEl.innerText = `${currentCount} / ${CONFIG.totalNasabahGoal}`;
+          }
+        } else {
+          clearInterval(timer);
+        }
+      }, stepTime);
+    }
+  }, 350); // Start after fade-in animation completes (~350-400ms)
+
+  // 4. Remove glow class when completed and update locations status on the map
+  setTimeout(() => {
+    if (hudCard) {
+      hudCard.classList.remove("hud-glow");
+    }
+    // Update map locations completed class/markers cleanly
+    updateMapHUD();
+  }, 1400);
 }
 
 // Update Map HUD values
@@ -568,28 +813,34 @@ function loadDialogueStep() {
   // Set speaker name
   document.getElementById("speaker-name").innerText = dialogue.speaker;
   
-  // Set dialogue objection text
-  document.getElementById("dialogue-text").innerText = dialogue.objection;
+  // Start typewriter effect instead of setting instantly
+  runTypewriter(dialogue.objection);
   
   // Set character portrait to "talk" mode initially
   const portraitImg = document.getElementById("npc-portrait");
-  portraitImg.src = getPortraitUrl(dialogue.portraitId, "talk");
-  portraitImg.className = "npc-portrait-img"; // reset animations
+  if (portraitImg) {
+    portraitImg.src = getPortraitUrl(dialogue.portraitId, "talk");
+    portraitImg.className = "npc-portrait-img"; // reset animations
+  }
   
   // Populate options list
   const optionsList = document.getElementById("options-list");
-  optionsList.innerHTML = "";
-  
-  dialogue.options.forEach((opt, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.innerText = opt.text;
-    btn.addEventListener("click", () => handleOptionSelect(opt, btn));
-    optionsList.appendChild(btn);
-  });
+  if (optionsList) {
+    optionsList.innerHTML = "";
+    dialogue.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.innerText = opt.text;
+      btn.addEventListener("click", () => handleOptionSelect(opt, btn));
+      optionsList.appendChild(btn);
+    });
+  }
   
   // Hide feedback panel
-  document.getElementById("dialogue-feedback").classList.add("hidden");
+  const feedbackPanel = document.getElementById("dialogue-feedback");
+  if (feedbackPanel) {
+    feedbackPanel.classList.add("hidden");
+  }
 }
 
 // Handle Option Selection
@@ -694,12 +945,15 @@ function advanceDialogue() {
       return;
     }
     
+    const oldCount = STATE.collectedCount;
     STATE.collectedCount += encData.recruitsCount;
     
     // Check win condition
     if (STATE.collectedCount >= CONFIG.totalNasabahGoal) {
       triggerVictory();
     } else {
+      // Set pending HUD animation data
+      STATE.pendingHUDAnimation = { oldCount: oldCount, newCount: STATE.collectedCount };
       // Go back to map
       showScreen("map");
     }
@@ -1096,6 +1350,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Dialogue Back Button
   document.getElementById("btn-dialogue-back").addEventListener("click", () => {
     showScreen("map");
+  });
+  
+  // Skip Typewriter on Screen Tap/Click
+  document.getElementById("dialogue-screen").addEventListener("click", (e) => {
+    if (STATE.isTypewriterRunning) {
+      if (e.target.closest("button")) return; // Don't skip if clicking back button or options cog
+      finishTypewriter();
+    }
   });
   
   // Victory Screen Buttons
