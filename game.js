@@ -13,6 +13,49 @@ initVH();
 const CONFIG = {
   totalNasabahGoal: 10,
   encounters: {
+    citra: {
+      id: "citra",
+      locationName: "Cabang PNM Sukamaju",
+      isGroup: false,
+      recruitsCount: 0,
+      dialogues: [
+        {
+          speaker: "CITRA (KUM)",
+          portraitId: "citra",
+          objection: "Selamat pagi! Selamat datang di Kantor Cabang PNM Sukamaju. Saya Citra, Ketua Unit Mekaar (KUM) di sini.",
+          options: [{ text: "Lanjut", isCorrect: true }],
+          correctResponse: ""
+        },
+        {
+          speaker: "CITRA (KUM)",
+          portraitId: "citra",
+          objection: "Hari ini adalah tugas pertamamu sebagai Account Officer (AO) untuk melakukan sosialisasi dan rekrutmen nasabah di Desa Sukamaju.",
+          options: [{ text: "Lanjut", isCorrect: true }],
+          correctResponse: ""
+        },
+        {
+          speaker: "CITRA (KUM)",
+          portraitId: "citra",
+          objection: "Sebelum berangkat ke desa, kamu harus bersiap-siap dan membawa perlengkapan berkendara yang aman dan sesuai standar safety riding kita.",
+          options: [{ text: "Lanjut", isCorrect: true }],
+          correctResponse: ""
+        },
+        {
+          speaker: "CITRA (KUM)",
+          portraitId: "citra",
+          objection: "Pastikan kamu membawa barang wajib seperti Helm SNI, Jaket/Body Protect, Ransel, Dompet, dan HP. Jangan membawa barang berlebih atau perhiasan mencolok ya!",
+          options: [{ text: "Lanjut", isCorrect: true }],
+          correctResponse: ""
+        },
+        {
+          speaker: "CITRA (KUM)",
+          portraitId: "citra",
+          objection: "Sekarang, silakan keluar melalui pintu di sebelah kiri untuk mempersiapkan perlengkapan Safety Riding kamu. Semangat bertugas!",
+          options: [{ text: "Lanjut", isCorrect: true }],
+          correctResponse: ""
+        }
+      ]
+    },
     pakrt: {
       id: "pakrt",
       locationName: "Kantor Pak RT",
@@ -220,7 +263,10 @@ const STATE = {
   typewriterIntervalId: null,
   typewriterFullText: "",
   isTypewriterRunning: false,
-  pendingHUDAnimation: null
+  pendingHUDAnimation: null,
+  cabangDialogueIndex: 0,
+  hasTalkedToCitra: false,
+  cabangDialogueActive: false
 };
 
 // Safety Riding Equipment Configuration
@@ -228,6 +274,15 @@ const PREP_ITEMS = {
   required: new Set(["helm", "bodyprotect", "ransel", "dompet", "hp"]),
   forbidden: new Set(["totebg", "makeup", "kacamata", "necklace"])
 };
+
+// Citra KUM Guidance Dialogues
+const CITRA_DIALOGUE = [
+  "Selamat pagi! Selamat datang di Kantor Cabang PNM Sukamaju. Saya Citra, Ketua Unit Mekaar (KUM) di sini.",
+  "Hari ini adalah tugas pertamamu sebagai Account Officer (AO) untuk melakukan sosialisasi dan rekrutmen nasabah di Desa Sukamaju.",
+  "Sebelum berangkat ke desa, kamu harus bersiap-siap dan membawa perlengkapan berkendara yang aman dan sesuai standar safety riding kita.",
+  "Pastikan kamu membawa barang wajib seperti Helm SNI, Jaket/Body Protect, Ransel, Dompet, dan HP. Jangan membawa barang berlebih atau perhiasan mencolok ya!",
+  "Sekarang, silakan keluar melalui pintu di sebelah kiri untuk mempersiapkan perlengkapan Safety Riding kamu. Semangat bertugas!"
+];
 
 // Update Star icon in level selector card to match current progress (0 stars initially)
 function updateLevelDetailStars() {
@@ -266,6 +321,7 @@ const ASSETS_TO_PRELOAD = [
   "bgsos.png",
   "mapenviroment2.jpeg",
   "bg-enviroment.png",
+  "bgcabang.png",
   
   // Safety Riding Prep
   "motor.png",
@@ -283,7 +339,10 @@ const ASSETS_TO_PRELOAD = [
   
   // NPC sprites
   "npc/pakrtneutral.png",
-  "npc/pakrthappy.png"
+  "npc/pakrthappy.png",
+  "npc/citraidle.png",
+  "npc/citratalk1.png",
+  "npc/citratalk2.png"
 ];
 
 // Dynamically generate all NPC dialogue sprites for preloading
@@ -486,6 +545,13 @@ function getPortraitUrl(id, state) {
   // Special overrides for typos
   let expression = state; // idle, talk, think, laugh
   
+  if (id === "citra") {
+    if (expression === "talk") {
+      return Math.random() > 0.5 ? "npc/citratalk1.png" : "npc/citratalk2.png";
+    }
+    return "npc/citraidle.png";
+  }
+  
   if (id === "pakrt") {
     return expression === "laugh" ? "npc/pakrthappy.png" : "npc/pakrtneutral.png";
   }
@@ -656,6 +722,13 @@ function showScreen(screenId) {
   document.getElementById(`${screenId}-screen`).classList.add("active");
   STATE.screen = screenId;
 
+  if (screenId === "cabang") {
+    const viewport = document.getElementById("cabang-viewport");
+    if (viewport) {
+      viewport.scrollLeft = 0;
+    }
+  }
+
   // Clear typewriter when leaving the dialogue screen
   if (screenId !== "dialogue") {
     if (STATE.typewriterIntervalId) {
@@ -781,7 +854,7 @@ function startEncounter(encounterId) {
   }
   
   // Check if player has permission from Pak RT
-  if (encounterId !== "pakrt" && !STATE.hasPermission) {
+  if (encounterId !== "pakrt" && encounterId !== "citra" && !STATE.hasPermission) {
     showPermissionRequiredModal();
     return;
   }
@@ -823,6 +896,38 @@ function loadDialogueStep() {
     portraitImg.className = "npc-portrait-img"; // reset animations
   }
   
+  // Adjust dialogue portrait background based on encounter
+  const portraitBg = document.querySelector(".dialogue-portrait-bg");
+  if (portraitBg) {
+    if (STATE.activeEncounterId === "citra") {
+      portraitBg.style.background = "url('bgcabang.png') no-repeat center bottom";
+      portraitBg.style.backgroundSize = "cover";
+    } else {
+      portraitBg.style.background = "url('bg-enviroment.png') no-repeat center bottom";
+      portraitBg.style.backgroundSize = "cover";
+    }
+  }
+
+  // Adjust option title visibility
+  const optionsTitle = document.querySelector(".options-title");
+  if (optionsTitle) {
+    if (STATE.activeEncounterId === "citra") {
+      optionsTitle.style.display = "none";
+    } else {
+      optionsTitle.style.display = "block";
+    }
+  }
+
+  // Adjust back button visibility (hide on cabang Citra dialogue)
+  const backBtn = document.getElementById("btn-dialogue-back");
+  if (backBtn) {
+    if (STATE.activeEncounterId === "citra") {
+      backBtn.style.display = "none";
+    } else {
+      backBtn.style.display = "flex";
+    }
+  }
+
   // Populate options list
   const optionsList = document.getElementById("options-list");
   if (optionsList) {
@@ -845,6 +950,12 @@ function loadDialogueStep() {
 
 // Handle Option Selection
 function handleOptionSelect(option, buttonEl) {
+  if (STATE.activeEncounterId === "citra") {
+    playSound("tap");
+    advanceDialogue();
+    return;
+  }
+
   const encData = CONFIG.encounters[STATE.activeEncounterId];
   const dialogue = encData.dialogues[STATE.dialogueIndex];
   const portraitImg = document.getElementById("npc-portrait");
@@ -935,6 +1046,11 @@ function advanceDialogue() {
     // Group/Individual encounter fully complete!
     STATE.completedEncounters.add(STATE.activeEncounterId);
     
+    if (STATE.activeEncounterId === "citra") {
+      endCabangDialogue();
+      return;
+    }
+
     if (STATE.activeEncounterId === "pakrt") {
       STATE.hasPermission = true;
       // Change speech bubble to checkmark
@@ -1157,6 +1273,124 @@ function openSettingsModal(fromMainMenu = false) {
   playSound("tap");
 }
 
+// Initialize cabang viewport scroll/drag mechanics
+function initCabangScreenDragScroll() {
+  const viewport = document.getElementById("cabang-viewport");
+  if (!viewport) return;
+
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  const dragThreshold = 6;
+  let dragDetected = false;
+
+  viewport.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    dragDetected = false;
+    startX = e.pageX - viewport.offsetLeft;
+    scrollLeft = viewport.scrollLeft;
+  });
+
+  viewport.addEventListener("mouseleave", () => {
+    isDragging = false;
+  });
+
+  viewport.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  viewport.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - viewport.offsetLeft;
+    const walkX = x - startX;
+    if (Math.abs(walkX) > dragThreshold) {
+      dragDetected = true;
+    }
+    viewport.scrollLeft = scrollLeft - walkX;
+  });
+
+  // Touch events for mobile dragging detection
+  viewport.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      dragDetected = false;
+      startX = e.touches[0].pageX - viewport.offsetLeft;
+      scrollLeft = viewport.scrollLeft;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener("touchend", () => {
+    isDragging = false;
+  });
+
+  viewport.addEventListener("touchmove", (e) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const x = e.touches[0].pageX - viewport.offsetLeft;
+    const walkX = x - startX;
+    if (Math.abs(walkX) > dragThreshold) {
+      dragDetected = true;
+    }
+    viewport.scrollLeft = scrollLeft - walkX;
+  });
+
+  // Export dragDetected check to be used in clicks
+  viewport.addEventListener("click", (e) => {
+    if (dragDetected) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+}
+
+
+
+// End dialogue with KUM Citra
+function endCabangDialogue() {
+  STATE.hasTalkedToCitra = true;
+  playSound("correct");
+
+  // Return to cabang screen
+  showScreen("cabang");
+
+  // Unlock exit door!
+  const door = document.getElementById("cabang-exit-door");
+  if (door) {
+    door.classList.remove("locked");
+  }
+}
+
+// Handle exit door click
+function handleCabangExit() {
+  if (!STATE.hasTalkedToCitra) {
+    playSound("incorrect");
+    
+    const panel = document.getElementById("cabang-dialogue-panel");
+    const avatarImg = document.getElementById("cabang-dialogue-avatar-img");
+    const speakerName = document.querySelector(".cabang-speaker-name");
+    const textEl = document.getElementById("cabang-dialogue-text");
+    
+    if (panel && textEl) {
+      if (avatarImg) avatarImg.src = "npc/citraidle.png";
+      if (speakerName) speakerName.innerText = "PANDUAN";
+      textEl.innerText = "Temui dan berbicaralah dengan Ibu Citra (KUM) di ujung kanan terlebih dahulu untuk mendapatkan arahan!";
+      panel.classList.remove("hidden");
+      
+      // Auto-hide system guide message after 4 seconds
+      setTimeout(() => {
+        if (!STATE.cabangDialogueActive && !STATE.hasTalkedToCitra) {
+          panel.classList.add("hidden");
+        }
+      }, 4000);
+    }
+    return;
+  }
+  
+  // Transition to safety riding
+  resetPrepScreen();
+  triggerLoadingScreen("prep", 2500);
+}
+
 // Show Permission Warning Modal
 function showPermissionRequiredModal() {
   document.getElementById("permission-modal").classList.add("active");
@@ -1165,6 +1399,42 @@ function showPermissionRequiredModal() {
 
 // Setup Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize Cabang Screen Mechanics
+  initCabangScreenDragScroll();
+
+  // KUM Citra Click Event
+  const npcCitra = document.getElementById("npc-citra");
+  if (npcCitra) {
+    npcCitra.addEventListener("click", () => {
+      startEncounter("citra");
+    });
+  }
+
+  // Exit Door Event
+  const cabangExitDoor = document.getElementById("cabang-exit-door");
+  if (cabangExitDoor) {
+    cabangExitDoor.addEventListener("click", () => {
+      handleCabangExit();
+    });
+  }
+
+  // Cabang Screen Help Button
+  const btnCabangHelp = document.getElementById("btn-cabang-help");
+  if (btnCabangHelp) {
+    btnCabangHelp.addEventListener("click", () => {
+      document.getElementById("instructions-modal").classList.add("active");
+      playSound("tap");
+    });
+  }
+
+  // Cabang Screen Settings Button
+  const btnCabangSettings = document.getElementById("btn-cabang-settings");
+  if (btnCabangSettings) {
+    btnCabangSettings.addEventListener("click", () => {
+      openSettingsModal(false);
+    });
+  }
+
   // Fullscreen Toggle Listeners
   document.getElementById("fullscreen-toggle").addEventListener("click", () => {
     toggleFullscreen();
@@ -1338,7 +1608,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("level-detail-overlay").classList.remove("active");
     resetGame();
     resetPrepScreen();
-    triggerLoadingScreen("prep", 2500);
+    
+    // Reset cabang-screen related states
+    STATE.cabangDialogueIndex = 0;
+    STATE.hasTalkedToCitra = false;
+    STATE.cabangDialogueActive = false;
+    
+    // Lock exit door on load
+    const door = document.getElementById("cabang-exit-door");
+    if (door) {
+      door.classList.add("locked");
+    }
+    
+    // Hide dialogue panel
+    const panel = document.getElementById("cabang-dialogue-panel");
+    if (panel) {
+      panel.classList.add("hidden");
+    }
+    
+    const indicator = document.querySelector("#npc-citra .speech-bubble-indicator");
+    if (indicator) {
+      indicator.style.display = "block";
+      indicator.innerText = "!";
+    }
+
+    triggerLoadingScreen("cabang", 2500);
   });
   
   // Close Instructions
@@ -1364,7 +1658,31 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-replay").addEventListener("click", () => {
     resetGame();
     resetPrepScreen();
-    triggerLoadingScreen("prep", 2500);
+    
+    // Reset cabang-screen related states
+    STATE.cabangDialogueIndex = 0;
+    STATE.hasTalkedToCitra = false;
+    STATE.cabangDialogueActive = false;
+    
+    // Lock exit door on load
+    const door = document.getElementById("cabang-exit-door");
+    if (door) {
+      door.classList.add("locked");
+    }
+    
+    // Hide dialogue panel
+    const panel = document.getElementById("cabang-dialogue-panel");
+    if (panel) {
+      panel.classList.add("hidden");
+    }
+    
+    const indicator = document.querySelector("#npc-citra .speech-bubble-indicator");
+    if (indicator) {
+      indicator.style.display = "block";
+      indicator.innerText = "!";
+    }
+
+    triggerLoadingScreen("cabang", 2500);
   });
   
   document.getElementById("btn-home").addEventListener("click", () => {
@@ -1384,8 +1702,94 @@ document.addEventListener("DOMContentLoaded", () => {
         card.classList.add("selected");
       }
       playSound("tap");
+      resetPrepIdleTimer(); // Reset idle timer on interaction
     });
   });
+
+  // Prep Screen Idle Tap Hint System
+  let prepIdleTimerId = null;
+
+  function resetPrepIdleTimer() {
+    // Hide the tap hint immediately
+    const hint = document.getElementById("prep-tap-hint");
+    if (hint) hint.style.display = "none";
+
+    // Clear existing timer
+    if (prepIdleTimerId) {
+      clearTimeout(prepIdleTimerId);
+      prepIdleTimerId = null;
+    }
+
+    // Only set a new timer if we're on the prep screen
+    if (STATE.screen === "prep") {
+      prepIdleTimerId = setTimeout(() => {
+        showPrepTapHint();
+      }, 3000);
+    }
+  }
+
+  function showPrepTapHint() {
+    if (STATE.screen !== "prep") return;
+
+    const hint = document.getElementById("prep-tap-hint");
+    if (!hint) return;
+
+    // Find the first unselected prep-item-card
+    const allCards = document.querySelectorAll(".prep-item-card");
+    let targetCard = null;
+    for (const card of allCards) {
+      if (!card.classList.contains("selected")) {
+        targetCard = card;
+        break;
+      }
+    }
+
+    if (!targetCard) {
+      // All items selected, no hint needed
+      hint.style.display = "none";
+      return;
+    }
+
+    // Position the hint over the target card
+    const gridPanel = document.querySelector(".prep-grid-panel");
+    const panelRect = gridPanel.getBoundingClientRect();
+    const cardRect = targetCard.getBoundingClientRect();
+
+    const offsetX = cardRect.left - panelRect.left + (cardRect.width / 2) - 40;
+    const offsetY = cardRect.top - panelRect.top + (cardRect.height / 2) - 40;
+
+    hint.style.left = `${offsetX}px`;
+    hint.style.top = `${offsetY}px`;
+    hint.style.display = "block";
+  }
+
+  // Listen for any interaction on the prep screen to reset idle
+  const prepScreen = document.getElementById("prep-screen");
+  if (prepScreen) {
+    prepScreen.addEventListener("click", () => {
+      resetPrepIdleTimer();
+    });
+    prepScreen.addEventListener("touchstart", () => {
+      resetPrepIdleTimer();
+    }, { passive: true });
+  }
+
+  // Hook into showScreen to start/stop idle timer when entering/leaving prep
+  const originalShowScreen = showScreen;
+  showScreen = function(screenId) {
+    originalShowScreen(screenId);
+    if (screenId === "prep") {
+      resetPrepIdleTimer();
+    } else {
+      // Clear timer when leaving prep screen
+      if (prepIdleTimerId) {
+        clearTimeout(prepIdleTimerId);
+        prepIdleTimerId = null;
+      }
+      const hint = document.getElementById("prep-tap-hint");
+      if (hint) hint.style.display = "none";
+    }
+  };
 
   document.getElementById("btn-prep-submit").addEventListener("click", () => {
     validateRidingPrep();

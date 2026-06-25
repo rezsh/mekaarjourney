@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playpen+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Lottie Player for tap hint animation -->
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
 
@@ -163,6 +165,61 @@
         </div>
       </div>
 
+      <!-- SCREEN 2B-2: KANTOR CABANG PNM SUKAMAJU (NEW) -->
+      <div id="cabang-screen" class="game-screen">
+        <!-- Top header bar consistent with Safety Riding -->
+        <div class="top-header-bar">
+          <div class="top-header-card">
+            <h1 class="top-header-title">Cabang PNM Sukamaju</h1>
+            <p class="top-header-sub">Dapatkan pengarahan dari KUM Citra</p>
+            <div class="top-header-line-container">
+              <div class="hud-progress-bar-bg" style="height: 4px; background-color: #ddd;"></div>
+            </div>
+          </div>
+          <div class="top-header-actions">
+            <button id="btn-cabang-help" class="top-circle-btn" title="Panduan">
+              <span>?</span>
+            </button>
+            <button id="btn-cabang-settings" class="top-circle-btn" title="Pengaturan">
+              <svg viewBox="0 0 24 24" width="16" height="16" style="margin-top: 2px;">
+                <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.49,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.51,2.42L9.14,5.08C8.53,5.34 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.95C7.96,18.34 8.53,18.66 9.14,18.92L9.51,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.49,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Office Viewport -->
+        <div class="cabang-viewport" id="cabang-viewport">
+          <div class="cabang-content" id="cabang-content">
+            <!-- Background Image -->
+            <img src="bgcabang.png" alt="Kantor Cabang" class="cabang-bg-img">
+
+            <!-- Exit Door on the far left -->
+            <div id="cabang-exit-door" class="exit-door locked" title="Pintu Keluar">
+              <div class="exit-glow"></div>
+            </div>
+
+            <!-- KUM Citra on the far right -->
+            <div id="npc-citra" class="npc-citra" title="KUM Citra">
+              <div class="speech-bubble-indicator pulsing">!</div>
+              <div class="npc-character-sprite"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dialogue Box (Bottom Overlay, hidden initially) -->
+        <div id="cabang-dialogue-panel" class="cabang-dialogue-panel hidden">
+          <div class="cabang-dialogue-avatar">
+            <img src="npc/citraidle.png" alt="KUM Citra" id="cabang-dialogue-avatar-img">
+          </div>
+          <div class="cabang-dialogue-body">
+            <div class="cabang-speaker-name">CITRA (KUM)</div>
+            <p id="cabang-dialogue-text" class="cabang-dialogue-text">...</p>
+            <div class="cabang-dialogue-next-prompt">Klik untuk lanjut...</div>
+          </div>
+        </div>
+      </div>
+
       <!-- SCREEN 2C: RIDING PREPARATION SCREEN (SAFETY RIDING) -->
       <div id="prep-screen" class="game-screen">
         <!-- Top header bar mimicking the user mockup -->
@@ -202,6 +259,17 @@
 
         <!-- Lower half item grid selection panel (Brown Background) -->
         <div class="prep-grid-panel">
+          <!-- Lottie tap hint indicator (shown after idle) -->
+          <div id="prep-tap-hint" class="prep-tap-hint" style="display: none;">
+            <dotlottie-player
+              src="https://lottie.host/08cb282f-6c3d-4ad6-9498-51d5c67f92cd/Jk1Rn3OzS7.lottie"
+              background="transparent"
+              speed="1"
+              loop
+              autoplay
+              style="width: 80px; height: 80px;"
+            ></dotlottie-player>
+          </div>
           <div class="prep-grid">
             <!-- Row 1: Helm, Totebag, Dompet -->
             <div class="prep-item-card" data-item="helm">
@@ -381,8 +449,11 @@
 
         <!-- RT Permission Guide Overlay at bottom of map screen -->
         <div id="rt-permission-guide" class="map-guide-overlay" style="display: none;">
-          <div class="guide-portrait-container">
-            <img src="player/femaleplayer.png" alt="AO Portrait" class="guide-portrait-img">
+          <div class="guide-portrait-wrapper">
+            <div class="guide-portrait-circle">
+              <img src="player/femaleplayer.png" alt="AO Portrait" class="guide-portrait-img">
+            </div>
+            <div class="guide-portrait-name-badge">Player</div>
           </div>
           <div class="guide-dialogue-box">
             <p class="guide-dialogue-text">Aku harus berbicara dan izin dengan Pak Rt dulu sebelum memulai sosialisasi disini....</p>
