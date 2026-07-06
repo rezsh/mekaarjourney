@@ -1,0 +1,54 @@
+Aminah:
+Assalamualaikum, permisi Ibu Lia... Selamat siang.
+
+Bu Lia:
+Waalaikumsalam, eh ada Mbak Aminah. Mari Mbak, silakan masuk dulu ke dalam.
+
+Pilihan:
+
+Tunggu Bu Lia keluar rumah.
+Langsung masuk tanpa izin.
+Mengetuk pintu dan mengucapkan salam. ✅
+2. Konfirmasi Penanggung Jawab
+
+Aminah:
+Mohon maaf Bu Lia, apakah hari ini Bapak ada di rumah? Untuk proses pembiayaan, suami Ibu perlu hadir sebagai penanggung jawab.
+
+Bu Lia:
+Ada kok Mbak, kebetulan lagi santai di belakang. Sebentar ya, saya panggilkan dulu bapaknya.
+
+Pilihan:
+
+Langsung proses tanpa konfirmasi penanggung jawab.
+Tanyakan dengan sopan apakah suami Ibu bisa hadir. ✅
+Minta Bu Lia menandatangani semua dokumen sendirian.
+3. Memperkenalkan Diri kepada Suami
+
+Aminah:
+Izin ya Bapak, perkenalkan saya Aminah dari Unit Mekaar Sukamaju. Maksud kedatangan saya hari ini untuk melakukan survei Uji Kelayakan terhadap Ibu Lia.
+
+Bapak:
+Oh iya Mbak Aminah, silakan dilanjutkan saja. Saya setuju dan siap bertanggung jawab sebagai penanggung jawab istri saya.
+
+Aminah:
+Baik, terima kasih. Sebelum kita mulai mengisi formulir, mohon izin saya melihat-lihat dan mengambil beberapa foto kondisi rumah terlebih dahulu untuk kelengkapan berkas.
+
+Bu Lia:
+Silakan, Mbak.
+
+Pilihan:
+
+Lewati perkenalan dan langsung mulai wawancara.
+Perkenalkan diri dengan jelas dan jelaskan tujuan survei. ✅
+Langsung bertanya kepada suami mengenai penghasilan.
+4. Penutup Survei Uji Kelayakan
+
+Aminah:
+Semua data sudah saya catat dan hasilnya sudah sesuai. Terima kasih Bu Lia dan Bapak. Proses selanjutnya adalah verifikasi oleh SAO atau Kepala Unit saya ya, Bu.
+
+Bu Lia:
+Iya, sama-sama Mbak. Alhamdulillah kalau semuanya lancar.
+
+Pilihan:
+
+Lakukan sinkronisasi di aplikasi Mekaar Digi. ✅
