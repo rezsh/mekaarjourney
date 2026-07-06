@@ -757,28 +757,38 @@ function initMapForCurrentLevel() {
     const singleChar = el.querySelector(":scope > .npc-character");
     
     if (wrapper && singleChar) {
-      if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
-        // Yarn mode: warung uses wrapper, sayur becomes single (1 person in yarn)
-        if (encId === "warung") {
-          wrapper.style.display = "flex";
-          singleChar.style.display = "none";
-          const m1 = wrapper.querySelector(".member-1");
-          const m2 = wrapper.querySelector(".member-2");
-          const m3 = wrapper.querySelector(".member-3");
-          if (m1) m1.style.backgroundImage = "url('nasabah/nasabah2idle.png')"; // Bu Ratna
-          if (m2) m2.style.backgroundImage = "url('nasabah/nasabah3idle.png')"; // Bu Nur
-          if (m3) m3.style.backgroundImage = "url('nasabah/nasabah10idle.png')"; // Bu Yanti
-        } else if (encId === "sayur") {
-          wrapper.style.display = "none";
-          singleChar.style.display = "block";
-          singleChar.classList.remove("npc-group");
-          singleChar.style.backgroundImage = "url('nasabah/nasabah1idle.png')"; // Bu Indah (yarn)
-          if (tag) tag.innerText = encData.locationName; // "Rumah Warga" in yarn config
+      const isGroupEncounter = encData.isGroup && encData.recruitsCount > 1;
+
+      if (isGroupEncounter) {
+        wrapper.style.display = "flex";
+        singleChar.style.display = "none";
+        const m1 = wrapper.querySelector(".member-1");
+        const m2 = wrapper.querySelector(".member-2");
+        const m3 = wrapper.querySelector(".member-3");
+
+        if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
+          if (encId === "warung") {
+            if (m1) m1.style.backgroundImage = "url('nasabah/nasabah2idle.png')"; // Bu Ratna
+            if (m2) m2.style.backgroundImage = "url('nasabah/nasabah3idle.png')"; // Bu Nur
+            if (m3) m3.style.backgroundImage = "url('nasabah/nasabah10idle.png')"; // Bu Yanti
+          }
+        } else {
+          // Standard / Non-yarn mode: load distinct portraits from dialogues
+          if (encData.dialogues && encData.dialogues.length >= 3) {
+            if (m1) m1.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[0].portraitId, "idle")}')`;
+            if (m2) m2.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[1].portraitId, "idle")}')`;
+            if (m3) m3.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[2].portraitId, "idle")}')`;
+          }
         }
       } else {
-        // Non-yarn mode: show group sprite for both warung and sayur
         wrapper.style.display = "none";
         singleChar.style.display = "block";
+        if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
+          if (encId === "sayur") {
+            singleChar.style.backgroundImage = "url('nasabah/nasabah1idle.png')"; // Bu Indah (yarn)
+            if (tag) tag.innerText = encData.locationName; // "Rumah Warga" in yarn config
+          }
+        }
       }
     }
 
