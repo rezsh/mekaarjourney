@@ -350,83 +350,134 @@ const LEVEL_CONFIGS = {
           }
         ]
       },
-      wati: {
-        id: "wati",
+      lia: {
+        id: "lia",
         locationName: "Rumah Bu Lia",
         isGroup: true,
         recruitsCount: 1,
         dialogues: [
+          // STEP 1 Choice
           {
-            speaker: "BU LIA",
+            speaker: "Narator",
             portraitId: 9,
-            objection: "Permisi, ada perlu apa ya Mbak bertamu ke rumah saya siang-siang begini?",
+            objection: "Kamu sudah menemukan rumah Bu Lia. Apa yang pertama kamu lakukan?",
             options: [
-              { text: "Selamat siang Bu, saya dari PNM Mekaar ingin melakukan silaturahmi dan verifikasi/Uji Kelayakan untuk pengajuan pembiayaan Ibu.", isCorrect: true },
-              { text: "Saya cuma lewat saja Bu, mau menumpang istirahat sebentar di teras Ibu.", isCorrect: false },
-              { text: "Saya langsung masuk saja ya Bu untuk memeriksa kondisi rumah Ibu.", isCorrect: false }
+              { text: "Tunggu Bu Lia keluar rumah.", isCorrect: false },
+              { text: "Langsung masuk tanpa izin.", isCorrect: false },
+              { text: "Mengetuk pintu dan mengucapkan salam.", isCorrect: true }
             ],
-            correctResponse: "BU LIA: \"Oh, Mbak AO dari PNM Mekaar! Eh ada Mbak, silakan masuk Mbak!, yuk sini.\"",
             incorrectResponse: "Kurang tepat. Sebagai Account Officer yang profesional dan sopan, ketuklah pintu terlebih dahulu, ucapkan salam, dan perkenalkan diri dengan jelas."
           },
+          // STEP 1 Normal Dialogue Lines
           {
-            speaker: "BU LIA",
+            speaker: "AMINAH",
             portraitId: 9,
-            objection: "Silakan duduk, Mbak. Oh ya, terkait pengajuan pembiayaan ini, suami saya kebetulan sedang kerja dan tidak di rumah. Apakah bisa diproses tanpa sepengetahuan suami?",
-            options: [
-              { text: "Mohon maaf Bu, persetujuan dan tanda tangan suami/penanggung jawab wajib diperoleh sebelum pembiayaan Mekaar dicairkan.", isCorrect: true },
-              { text: "Oh tentu bisa Bu, tidak perlu memberitahu suami agar tidak jadi ribut di rumah.", isCorrect: false },
-              { text: "Bisa saja Bu, asalkan ada tetangga sebelah rumah yang bersedia menjamin angsuran Ibu.", isCorrect: false }
-            ],
-            correctResponse: "BU LIA: \"Oh begitu ya Mbak. Baik, nanti malam kalau suami pulang saya sampaikan dan minta beliau tanda tangan dokumennya.\"",
-            incorrectResponse: "Kurang tepat. Izin tertulis dan tanda tangan dari suami atau keluarga dekat adalah syarat wajib penanggung jawab pembiayaan Mekaar."
+            objection: "Assalamualaikum, permisi Ibu Lia... Selamat siang.",
+            options: [{ text: "Lanjut", isCorrect: true }]
           },
           {
             speaker: "BU LIA",
             portraitId: 9,
-            objection: "Ini warung kelontong kecil-kecilan saya, Mbak. Apa Mbak AO harus memeriksa langsung seluruh stok barang dagangan saya?",
+            objection: "Waalaikumsalam, eh ada Mbak Aminah. Mari Mbak, silakan masuk dulu ke dalam.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+
+          // STEP 2 Choice
+          {
+            speaker: "Narator",
+            portraitId: 9,
+            objection: "Apa yang kamu lakukan selanjutnya?",
             options: [
-              { text: "Benar Bu, sebagai petugas AO saya wajib melihat dan memeriksa langsung kegiatan usaha serta kondisi fisik barang dagangan Ibu secara riil.", isCorrect: true },
-              { text: "Tidak perlu Bu, cukup kirimkan foto produk usahanya saja nanti lewat chat WA.", isCorrect: false },
-              { text: "Tidak usah Bu, saya percaya penuh saja pada penjelasan lisan Ibu tanpa perlu memeriksa.", isCorrect: false }
+              { text: "Langsung proses tanpa konfirmasi penanggung jawab.", isCorrect: false },
+              { text: "Tanyakan dengan sopan apakah suami Ibu bisa hadir.", isCorrect: true },
+              { text: "Minta Bu Lia menandatangani semua dokumen sendirian.", isCorrect: false }
             ],
-            correctResponse: "BU LIA: \"Silakan Mbak, ini warung kelontong saya, saya jualan sembako dan kebutuhan harian setiap hari.\"",
-            incorrectResponse: "Kurang tepat. AO wajib meninjau secara fisik dan langsung lokasi serta barang dagangan usaha calon nasabah untuk memastikan keaslian usaha."
+            incorrectResponse: "Kurang tepat. Kehadiran dan persetujuan suami/penanggung jawab sangat penting untuk keabsahan proses pembiayaan."
+          },
+          // STEP 2 Normal Dialogue Lines
+          {
+            speaker: "AMINAH",
+            portraitId: 9,
+            objection: "Mohon maaf Bu Lia, apakah hari ini Bapak ada di rumah? Untuk proses pembiayaan, suami Ibu perlu hadir sebagai penanggung jawab.",
+            options: [{ text: "Lanjut", isCorrect: true }]
           },
           {
             speaker: "BU LIA",
             portraitId: 9,
-            objection: "Mbak, rencananya modal pembiayaan Rp 2.000.000 ini mau saya gunakan untuk membeli tambahan sembako warung dan sebagian untuk belanja dapur rumah tangga. Boleh kan?",
+            objection: "Ada kok Mbak, kebetulan lagi santai di belakang. Sebentar ya, saya panggilkan dulu bapaknya.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+
+          // STEP 3 Choice
+          {
+            speaker: "Narator",
+            portraitId: 9,
+            objection: "Suami Bu Lia telah datang menemui kalian. Apa yang kamu lakukan selanjutnya?",
             options: [
-              { text: "Mohon maaf Bu, dana pembiayaan Mekaar seluruhnya harus digunakan untuk modal usaha produktif Ibu, tidak boleh untuk konsumsi pribadi.", isCorrect: true },
-              { text: "Boleh sekali Bu, yang penting angsurannya tetap dibayar lancar setiap minggu.", isCorrect: false },
-              { text: "Boleh Bu, asalkan uangnya juga dipakai untuk melunasi utang di tempat lain.", isCorrect: false }
+              { text: "Lewati perkenalan dan langsung mulai wawancara.", isCorrect: false },
+              { text: "Perkenalkan diri dengan jelas dan jelaskan tujuan survei.", isCorrect: true },
+              { text: "Langsung bertanya kepada suami mengenai penghasilan.", isCorrect: false }
             ],
-            correctResponse: "BU LIA: \"Oh begitu, baik Mbak, kalau begitu uang modal ini seluruhnya akan saya gunakan untuk beli tambahan pasokan sembako saja.\"",
-            incorrectResponse: "Kurang tepat. Dana pembiayaan Mekaar hanya boleh digunakan untuk modal usaha produktif, bukan konsumsi pribadi atau menutup utang lain."
+            incorrectResponse: "Kurang tepat. Selalu perkenalkan diri dengan sopan dan jelaskan maksud kedatangan serta tujuan survei kepada suami selaku penanggung jawab."
+          },
+          // STEP 3 Normal Dialogue Lines
+          {
+            speaker: "AMINAH",
+            portraitId: 9,
+            objection: "Izin ya Bapak, perkenalkan saya Aminah dari Unit Mekaar Sukamaju. Maksud kedatangan saya hari ini untuk melakukan survei Uji Kelayakan terhadap Ibu Lia.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BAPAK",
+            portraitId: 9,
+            objection: "Oh iya Mbak Aminah, silakan dilanjutkan saja. Saya setuju dan siap bertanggung jawab sebagai penanggung jawab istri saya.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "AMINAH",
+            portraitId: 9,
+            objection: "Baik, terima kasih. Sebelum kita mulai mengisi formulir, mohon izin saya melihat-lihat dan mengambil beberapa foto kondisi rumah terlebih dahulu untuk kelengkapan berkas.",
+            options: [{ text: "Lanjut", isCorrect: true }]
           },
           {
             speaker: "BU LIA",
             portraitId: 9,
-            objection: "Mbak, kalau nanti saya ada halangan hadir di Pertemuan Kelompok Mingguan karena sibuk di warung, bagaimana?",
+            objection: "Silakan, Mbak.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+
+          // MINIGAME INTRO STEP
+          {
+            speaker: "Narator",
+            portraitId: 9,
+            objection: "Suami sudah menyetujui. Sekarang kamu mulai wawancara Bu Ina untuk mengisi formulir UK.",
+            options: [{ text: "Mulai Wawancara", isCorrect: true }]
+          },
+
+          // STEP 4 Choice
+          {
+            speaker: "Narator",
+            portraitId: 9,
+            objection: "Survei dan pemeriksaan fisik telah selesai dilakukan. Apa yang kamu lakukan selanjutnya?",
             options: [
-              { text: "Ibu wajib disiplin hadir di Pertemuan Kelompok Mingguan (PKM) dan ikut tanggung renteng jika ada anggota kelompok yang kesulitan.", isCorrect: true },
-              { text: "Boleh tidak hadir Bu, yang penting uang angsurannya dititipkan tepat waktu ke ketua kelompok.", isCorrect: false },
-              { text: "Boleh saja Bu, sistem kehadiran dan tanggung renteng itu sifatnya sukarela.", isCorrect: false }
+              { text: "Tunda sinkronisasi data dan selesaikan nanti di kantor saja.", isCorrect: false },
+              { text: "Langsung pergi tanpa melakukan sinkronisasi data.", isCorrect: false },
+              { text: "Lakukan sinkronisasi di aplikasi Mekaar Digi.", isCorrect: true }
             ],
-            correctResponse: "BU LIA: \"Baik Mbak, saya bersedia disiplin hadir PKM setiap minggu dan setuju dengan aturan tanggung renteng kelompok.\"",
-            incorrectResponse: "Kurang tepat. Kehadiran PKM mingguan dan sistem tanggung renteng adalah pilar wajib yang harus dipahami oleh calon nasabah."
+            incorrectResponse: "Kurang tepat. Setelah selesai melakukan verifikasi fisik, segera lakukan sinkronisasi data di aplikasi Mekaar Digi agar data terkirim ke kantor."
+          },
+          // STEP 4 Normal Dialogue Lines
+          {
+            speaker: "AMINAH",
+            portraitId: 9,
+            objection: "Semua data sudah saya catat dan hasilnya sudah sesuai. Terima kasih Bu Lia dan Bapak. Proses selanjutnya adalah verifikasi oleh SAO atau Kepala Unit saya ya, Bu.",
+            options: [{ text: "Lanjut", isCorrect: true }]
           },
           {
             speaker: "BU LIA",
             portraitId: 9,
-            objection: "Semua berkas dan usaha saya sudah diperiksa, Mbak. Bagaimana hasil keputusan verifikasi lapangan untuk pengajuan saya?",
-            options: [
-              { text: "Alhamdulillah seluruh kriteria terpenuhi dengan sangat baik, saya menyetujui hasil Uji Kelayakan ini. Silakan Ibu menandatangani dokumen verifikasi.", isCorrect: true },
-              { text: "Mohon maaf Bu, terpaksa saya tolak karena usaha Ibu dinilai terlalu berisiko.", isCorrect: false },
-              { text: "Ibu tunggu saja kabar dari kantor kami tanpa batas waktu yang jelas ya.", isCorrect: false }
-            ],
-            correctResponse: "BU LIA: \"Alhamdulillah! Terima kasih banyak ya Mbak AO atas bantuannya. Semoga berkah.\"",
-            incorrectResponse: "Kurang tepat. Ketika semua aspek terpenuhi, segera setujui pengajuan dan lakukan penandatanganan berkas verifikasi kelayakan."
+            objection: "Iya, sama-sama Mbak. Alhamdulillah kalau semuanya lancar.",
+            options: [{ text: "Lanjut", isCorrect: true }]
           }
         ]
       }
@@ -465,7 +516,35 @@ const STATE = {
   cutsceneTransitioning: false,
   cabangScrollTeaseTimerId: null,
   cabangScrollLoopId: null,
-  cabangIsTeasing: false
+  cabangIsTeasing: false,
+  
+  // Yarn Spinner integration variables
+  useYarnDialogue: false,
+  currentYarnParentNode: "",
+  yarnVariables: {
+    BuIndah: false,
+    BuIndahWrong: false,
+    Warung: false,
+    Warungwrong: false,
+    BuLastri: false,
+    BuLastriWrong: false,
+    BuTitin: false,
+    BuTitinWrong: false,
+    BuWati: false,
+    BuWatiWrong: false,
+    BuIjah: false,
+    BuIjahWrong: false,
+    IzinRT: false,
+    acceptQuest1: false,
+    sudahtanyajual: false
+  },
+  yarnSteps: [],
+  yarnStepIndex: 0,
+  currentEncounterCorrect: false,
+  currentEncounterIncorrect: false,
+  pendingRecruits: 0,
+  currentAvatar: "",
+  currentExpression: "idle"
 };
 
 // Safety Riding Equipment Configuration
@@ -518,6 +597,9 @@ function loadLevelConfig(levelId) {
   
   if (levelId === 1) {
     CONFIG.encounters = CONFIG_LEVEL_1_BACKUP_ENCOUNTERS;
+    if (STATE.useYarnDialogue) {
+      CONFIG.totalNasabahGoal = 8;
+    }
   } else {
     CONFIG.encounters = levelData.encounters;
   }
@@ -531,7 +613,7 @@ function updateLevelSelectionUI() {
   const btnLvl2 = document.getElementById("btn-level-kelayakan");
   if (!btnLvl1 || !btnLvl2) return;
 
-  const starsLvl1 = parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0;
+  const starsLvl1 = parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 3;
   const starsLvl2 = parseInt(localStorage.getItem("mekaar_journey_level_2_stars")) || 0;
 
   // Level 1: always open
@@ -624,7 +706,10 @@ function initMapForCurrentLevel() {
 
   // Update individual interactive markers
   document.querySelectorAll(".map-encounter").forEach(el => {
-    const encId = el.getAttribute("data-id");
+    let encId = el.getAttribute("data-id");
+    if (STATE.currentLevel === 2 && encId === "wati") {
+      encId = "lia";
+    }
     const encData = CONFIG.encounters[encId];
 
     // If encounter is not part of this level's config, hide it
@@ -635,7 +720,7 @@ function initMapForCurrentLevel() {
 
     // Level 2 special map visibility rules:
     if (STATE.currentLevel === 2) {
-      if (encId === "wati") {
+      if (encId === "lia") {
         // Bu Lia's house is only shown if both clues are found!
         if (STATE.cluesFound.ibu && STATE.cluesFound.house) {
           el.style.display = "flex";
@@ -660,21 +745,79 @@ function initMapForCurrentLevel() {
     // Set location tag
     const tag = el.querySelector(".location-tag");
     if (tag) {
-      tag.innerText = encData.locationName;
+      let tagText = encData.locationName;
+      if (encData.isGroup && encData.recruitsCount > 1) {
+        tagText += ` (${encData.recruitsCount} Orang)`;
+      }
+      tag.innerText = tagText;
     }
 
     // Set map character sprite and class (group / single)
-    const charSprite = el.querySelector(".npc-character");
+    const wrapper = el.querySelector(".npc-character-wrapper");
+    const singleChar = el.querySelector(":scope > .npc-character");
+    
+    if (wrapper && singleChar) {
+      const isGroupEncounter = encData.isGroup && encData.recruitsCount > 1;
+
+      if (isGroupEncounter) {
+        wrapper.style.display = "flex";
+        singleChar.style.display = "none";
+        const m1 = wrapper.querySelector(".member-1");
+        const m2 = wrapper.querySelector(".member-2");
+        const m3 = wrapper.querySelector(".member-3");
+
+        if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
+          if (encId === "warung") {
+            if (m1) m1.style.backgroundImage = "url('nasabah/nasabah2idle.png')"; // Bu Ratna
+            if (m2) m2.style.backgroundImage = "url('nasabah/nasabah3idle.png')"; // Bu Nur
+            if (m3) m3.style.backgroundImage = "url('nasabah/nasabah10idle.png')"; // Bu Yanti
+          }
+        } else {
+          // Standard / Non-yarn mode: load distinct portraits from dialogues
+          if (encData.dialogues && encData.dialogues.length >= 3) {
+            if (m1) m1.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[0].portraitId, "idle")}')`;
+            if (m2) m2.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[1].portraitId, "idle")}')`;
+            if (m3) m3.style.backgroundImage = `url('${getPortraitUrl(encData.dialogues[2].portraitId, "idle")}')`;
+          }
+        }
+      } else {
+        wrapper.style.display = "none";
+        singleChar.style.display = "block";
+        if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
+          if (encId === "sayur") {
+            singleChar.style.backgroundImage = "url('nasabah/nasabah1idle.png')"; // Bu Indah (yarn)
+            if (tag) tag.innerText = encData.locationName; // "Rumah Warga" in yarn config
+          }
+        }
+      }
+    }
+
+    const charSprite = (wrapper && wrapper.style.display === "flex") ? null : singleChar;
     if (charSprite) {
-      if (encData.isGroup) {
+      if (encData.isGroup && encData.recruitsCount > 1) {
         charSprite.classList.add("npc-group");
       } else {
         charSprite.classList.remove("npc-group");
       }
 
-      const dialogue = encData.dialogues[0];
-      if (dialogue) {
-        charSprite.style.backgroundImage = `url('${getPortraitUrl(dialogue.portraitId, "idle")}')`;
+      if (STATE.currentLevel === 1 && STATE.useYarnDialogue) {
+        let imgUrl = "";
+        if (encId === "citra") imgUrl = "npc/citraidle.png";
+        else if (encId === "pakrt") imgUrl = "npc/pakrtneutral.png";
+        else if (encId === "warung") imgUrl = "nasabah/nasabah2idle.png"; // Bu Ratna
+        else if (encId === "siti") imgUrl = "nasabah/nasabah4idle.png"; // Bu Lastri
+        else if (encId === "tini") imgUrl = "nasabah/nasabah5dle.png"; // Bu Titin
+        else if (encId === "wati") imgUrl = "nasabah/nasabah9idle.png"; // Bu Wati
+        else if (encId === "minah") imgUrl = "nasabah/nasabah6idle.png"; // Bu Ijah
+        
+        if (imgUrl) {
+          charSprite.style.backgroundImage = `url('${imgUrl}')`;
+        }
+      } else {
+        const dialogue = encData.dialogues[0];
+        if (dialogue) {
+          charSprite.style.backgroundImage = `url('${getPortraitUrl(dialogue.portraitId, "idle")}')`;
+        }
       }
     }
   });
@@ -707,6 +850,9 @@ const ASSETS_TO_PRELOAD = [
   "motor.png",
   "player/femaleplayer.png",
   "player/femaleplayerblink.png",
+  "player/femaileplayerhappy.png",
+  "player/femaleplayerexplain.png",
+  "player/femaleplayerexplain1.png",
   "backpack-safetyriding/helm.png",
   "backpack-safetyriding/totebg.png",
   "backpack-safetyriding/dompet.png",
@@ -1140,15 +1286,19 @@ function finishTypewriter() {
   STATE.isTypewriterRunning = false;
 
   // Change portrait to idle when NPC finishes talking (no wobble)
-  const encData = CONFIG.encounters[STATE.activeEncounterId];
-  const dialogue = encData ? encData.dialogues[STATE.dialogueIndex] : null;
-  const portraitImg = document.getElementById("npc-portrait");
-  if (portraitImg && dialogue) {
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
-      portraitImg.className = "npc-portrait-img scene-mode";
-    } else {
-      portraitImg.src = getPortraitUrl(dialogue.portraitId, "idle");
-      portraitImg.className = "npc-portrait-img"; // Keep class clean, no wobble
+  if (STATE.useYarnDialogue) {
+    updateYarnPortraits();
+  } else {
+    const encData = CONFIG.encounters[STATE.activeEncounterId];
+    const dialogue = encData ? encData.dialogues[STATE.dialogueIndex] : null;
+    const portraitImg = document.getElementById("npc-portrait");
+    if (portraitImg && dialogue) {
+      if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
+        portraitImg.className = "npc-portrait-img scene-mode";
+      } else {
+        portraitImg.src = getPortraitUrl(dialogue.portraitId, "idle");
+        portraitImg.className = "npc-portrait-img"; // Keep class clean, no wobble
+      }
     }
   }
 
@@ -1332,8 +1482,440 @@ function updateMapHUD() {
   });
 }
 
+const ENCOUNTER_TO_YARN_NODE = {
+  citra: "Citra",
+  pakrt: "PakRT",
+  warung: "Warung",
+  sayur: "BuIndah",   // Gerobak Sayur -> BuIndah
+  siti: "BuLastri",    // Ibu Siti -> BuLastri
+  tini: "BuTitin",     // Ibu Tini -> BuTitin
+  wati: "BuWati",     // Ibu Wati -> BuWati
+  minah: "BuIjah",     // Gerobak Bakso -> BuIjah
+};
+
+let YARN_DIALOGUES = [];
+
+// Load yarn dialogues from olddialogue.json
+function loadYarnDialogues() {
+  return fetch('olddialogue.json')
+    .then(res => res.json())
+    .then(data => {
+      YARN_DIALOGUES = data;
+      console.log("Loaded Yarn Dialogues:", YARN_DIALOGUES.length);
+    })
+    .catch(err => {
+      console.error("Failed to load Yarn dialogues:", err);
+    });
+}
+
+function evaluateCondition(condStr) {
+  condStr = condStr.trim();
+  if (condStr.startsWith("$")) {
+    const match = condStr.match(/^\$([a-zA-Z0-9_]+)\s*(==|!=|=)\s*(true|false|[0-9]+)/);
+    if (match) {
+      const varName = match[1];
+      const op = match[2];
+      const valStr = match[3];
+      const actualVal = STATE.yarnVariables[varName];
+      let compareVal = valStr === "true" ? true : valStr === "false" ? false : parseInt(valStr);
+      if (op === "==" || op === "=") {
+        return actualVal === compareVal;
+      } else if (op === "!=") {
+        return actualVal !== compareVal;
+      }
+    }
+    const varName = condStr.substring(1).trim();
+    return !!STATE.yarnVariables[varName];
+  }
+  return false;
+}
+
+function preprocessDialogueBody(bodyText) {
+  const lines = bodyText.split("\n");
+  const resultLines = [];
+  let showCurrentBlock = true;
+  let ifStack = [];
+  
+  for (let line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("<<if ")) {
+      const cond = trimmed.substring(5, trimmed.length - 2);
+      const isTrue = evaluateCondition(cond);
+      ifStack.push({ hasTrue: isTrue, active: isTrue });
+      showCurrentBlock = isTrue;
+    } else if (trimmed.startsWith("<<elseif ")) {
+      const cond = trimmed.substring(9, trimmed.length - 2);
+      const frame = ifStack[ifStack.length - 1];
+      if (frame.hasTrue) {
+        frame.active = false;
+      } else {
+        const isTrue = evaluateCondition(cond);
+        frame.active = isTrue;
+        if (isTrue) frame.hasTrue = true;
+      }
+      showCurrentBlock = frame.active;
+    } else if (trimmed.startsWith("<<else>>")) {
+      const frame = ifStack[ifStack.length - 1];
+      frame.active = !frame.hasTrue;
+      showCurrentBlock = frame.active;
+    } else if (trimmed.startsWith("<<endif>>")) {
+      ifStack.pop();
+      showCurrentBlock = ifStack.length > 0 ? ifStack[ifStack.length - 1].active : true;
+    } else {
+      if (showCurrentBlock) {
+        resultLines.push(line);
+      }
+    }
+  }
+  return resultLines.join("\n");
+}
+
+function parseStepsFromText(text) {
+  const steps = [];
+  const lines = text.split("\n");
+  let currentStep = {
+    commands: [],
+    text: "",
+    options: []
+  };
+  
+  for (let line of lines) {
+    let trimmed = line.trim();
+    if (!trimmed) continue;
+    
+    if (trimmed.startsWith("[[") && trimmed.endsWith("]]")) {
+      const optionContent = trimmed.substring(2, trimmed.length - 2);
+      const parts = optionContent.split("|");
+      const text = parts[0].trim();
+      const target = parts[1] ? parts[1].trim() : text;
+      currentStep.options.push({ text, target });
+      continue;
+    }
+    
+    const commands = [];
+    const cmdRegex = /<<([^>]+)>>/g;
+    let match;
+    let lastIndex = 0;
+    let lineText = "";
+    
+    while ((match = cmdRegex.exec(line)) !== null) {
+      lineText += line.substring(lastIndex, match.index);
+      commands.push(match[1].trim());
+      lastIndex = cmdRegex.lastIndex;
+    }
+    lineText += line.substring(lastIndex);
+    lineText = lineText.trim();
+    
+    if (commands.length > 0) {
+      const hasNewAvatar = commands.some(c => c.startsWith("avatar "));
+      if (hasNewAvatar && currentStep.text) {
+        steps.push(currentStep);
+        currentStep = {
+          commands: [...commands],
+          text: lineText,
+          options: []
+        };
+      } else {
+        currentStep.commands.push(...commands);
+        if (lineText) {
+          if (currentStep.text) currentStep.text += "\n" + lineText;
+          else currentStep.text = lineText;
+        }
+      }
+    } else {
+      if (lineText) {
+        if (currentStep.text) currentStep.text += "\n" + lineText;
+        else currentStep.text = lineText;
+      }
+    }
+  }
+  
+  if (currentStep.text || currentStep.options.length > 0) {
+    steps.push(currentStep);
+  }
+  
+  return steps;
+}
+
+function getYarnPortraitUrl(avatarName, expression) {
+  expression = expression || "idle";
+  if (expression === "neutral") expression = "idle";
+  if (expression === "talking") expression = "talk";
+  if (expression === "happy") expression = "laugh";
+  if (expression === "confused") expression = "think";
+
+  const nameLower = avatarName.toLowerCase();
+  if (nameLower.includes("aminah")) {
+    if (expression === "laugh") {
+      return "player/femaileplayerhappy.png";
+    } else if (expression === "talk" || expression === "explain") {
+      return "player/femaleplayerexplain.png";
+    } else if (expression === "explain1") {
+      return "player/femaleplayerexplain1.png";
+    }
+    return "player/femaleplayer.png";
+  }
+  if (nameLower.includes("citra")) {
+    if (expression === "talk") {
+      return "npc/citratalk1.png";
+    }
+    return "npc/citraidle.png";
+  }
+  if (nameLower.includes("pak rt")) {
+    return expression === "laugh" ? "npc/pakrthappy.png" : "npc/pakrtneutral.png";
+  }
+  
+  let nasabahId = 1;
+  if (nameLower.includes("indah")) nasabahId = 1;
+  else if (nameLower.includes("ratna")) nasabahId = 2;
+  else if (nameLower.includes("nur")) nasabahId = 3;
+  else if (nameLower.includes("lastri")) nasabahId = 4;
+  else if (nameLower.includes("titin")) nasabahId = 5;
+  else if (nameLower.includes("ijah")) nasabahId = 6;
+  else if (nameLower.includes("yanti")) nasabahId = 7;
+  else if (nameLower.includes("penjual")) nasabahId = 8;
+  else if (nameLower.includes("wati")) nasabahId = 9;
+  else nasabahId = 1;
+
+  let prefix = `nasabah${nasabahId}`;
+  if (nasabahId === 2 && expression === "laugh") {
+    prefix = "nasbah2";
+  }
+  let exprFile = expression;
+  if (nasabahId === 5 && expression === "idle") {
+    exprFile = "dle";
+  }
+
+  return `nasabah/${prefix}${exprFile}.png`;
+}
+
+function updateYarnPortraits() {
+  const portraitImg = document.getElementById("npc-portrait");
+  const portraitBg = document.querySelector(".dialogue-portrait-bg");
+  if (!portraitImg || !portraitBg) return;
+
+  let multiContainer = document.getElementById("multi-portraits-container");
+  if (multiContainer) {
+    multiContainer.style.display = "none";
+  }
+
+  portraitImg.style.display = "block";
+  portraitImg.src = getYarnPortraitUrl(STATE.currentAvatar || "Aminah", STATE.currentExpression);
+  
+  portraitImg.className = "npc-portrait-img";
+  if (STATE.currentExpression === "happy") {
+    portraitImg.classList.add("happy");
+  } else if (STATE.currentExpression === "confused" || STATE.currentExpression === "think") {
+    portraitImg.classList.add("incorrect");
+  }
+}
+
+function triggerVignetteFlash(type) {
+  const overlay = document.getElementById("dialogue-vignette-overlay");
+  if (!overlay) return;
+
+  overlay.className = "vignette-overlay";
+  void overlay.offsetWidth; // Force reflow
+
+  if (type === "correct") {
+    overlay.classList.add("vignette-correct");
+  } else if (type === "incorrect") {
+    overlay.classList.add("vignette-incorrect");
+  }
+}
+
+function executeYarnCommand(cmd) {
+  cmd = cmd.trim();
+  const lower = cmd.toLowerCase();
+  
+  if (lower.startsWith("avatar ")) {
+    const avatarName = cmd.substring(7).trim();
+    STATE.currentAvatar = avatarName;
+    const speakerEl = document.getElementById("speaker-name");
+    if (speakerEl) speakerEl.innerText = avatarName.toUpperCase();
+    updateYarnPortraits();
+  } else if (["neutral", "talking", "happy", "think", "confused", "explain", "explain1"].includes(lower)) {
+    STATE.currentExpression = lower;
+    updateYarnPortraits();
+  } else if (lower.startsWith("set ")) {
+    const setContent = cmd.substring(4).trim();
+    const parts = setContent.split(/\s+to\s+|\s*=\s*/i);
+    if (parts.length === 2) {
+      const varName = parts[0].trim().replace(/^\$/, "");
+      const valStr = parts[1].trim();
+      let value = valStr === "true" ? true : valStr === "false" ? false : parseInt(valStr);
+      STATE.yarnVariables[varName] = value;
+    }
+  } else if (lower === "correct") {
+    playSound("correct");
+    STATE.currentEncounterCorrect = true;
+    triggerVignetteFlash("correct");
+  } else if (lower === "false") {
+    playSound("incorrect");
+    STATE.currentEncounterIncorrect = true;
+    triggerVignetteFlash("incorrect");
+  } else if (lower === "nasabahdone") {
+    STATE.pendingRecruits = 1;
+  } else if (lower === "nasabahdonewarung") {
+    STATE.pendingRecruits = 3;
+  } else if (lower === "misikumpulnasabah") {
+    STATE.hasPermission = true;
+  }
+}
+
+function playYarnNode(nodeTitle) {
+  const node = YARN_DIALOGUES.find(n => n.title === nodeTitle);
+  if (!node) {
+    console.error("Yarn node not found:", nodeTitle);
+    showScreen("map");
+    return;
+  }
+
+  const preprocessedText = preprocessDialogueBody(node.body);
+  const steps = parseStepsFromText(preprocessedText);
+  
+  STATE.yarnSteps = steps;
+  STATE.yarnStepIndex = 0;
+  STATE.currentEncounterCorrect = false;
+  STATE.currentEncounterIncorrect = false;
+  STATE.pendingRecruits = 0;
+  STATE.currentAvatar = "";
+  STATE.currentExpression = "idle";
+
+  const encData = CONFIG.encounters[STATE.activeEncounterId];
+  document.getElementById("dialogue-location-name").innerText = encData ? encData.locationName : nodeTitle;
+  document.getElementById("group-progress").style.display = "none";
+
+  showScreen("dialogue");
+  loadYarnStep();
+}
+
+function loadYarnStep() {
+  if (!STATE.yarnSteps || STATE.yarnSteps.length === 0) {
+    showScreen("map");
+    return;
+  }
+
+  const step = STATE.yarnSteps[STATE.yarnStepIndex];
+  
+  step.commands.forEach(cmd => {
+    executeYarnCommand(cmd);
+  });
+
+  updateYarnPortraits();
+
+  runTypewriter(step.text);
+
+  if (STATE.currentAvatar) {
+    document.getElementById("speaker-name").innerText = STATE.currentAvatar.toUpperCase();
+  }
+
+  const backBtn = document.getElementById("btn-dialogue-back");
+  if (backBtn) {
+    if (STATE.activeEncounterId === "citra") {
+      backBtn.style.display = "none";
+    } else {
+      backBtn.style.display = "flex";
+    }
+  }
+
+  const portraitBg = document.querySelector(".dialogue-portrait-bg");
+  if (portraitBg) {
+    if (STATE.activeEncounterId === "citra") {
+      portraitBg.style.background = "url('bgcabang.png') no-repeat center bottom";
+      portraitBg.style.backgroundSize = "cover";
+    } else {
+      portraitBg.style.background = "url('bg-enviroment.png') no-repeat center bottom";
+      portraitBg.style.backgroundSize = "cover";
+    }
+  }
+
+  const optionsList = document.getElementById("options-list");
+  if (optionsList) {
+    optionsList.innerHTML = "";
+    
+    let optionsToRender = [...step.options];
+    if (optionsToRender.length === 0) {
+      if (STATE.yarnStepIndex < STATE.yarnSteps.length - 1) {
+        optionsToRender.push({ text: "Lanjut", target: "next_step" });
+      } else {
+        if (STATE.currentEncounterIncorrect) {
+          optionsToRender.push({ text: "Kembali", target: "retry_encounter" });
+        } else {
+          optionsToRender.push({ text: "Selesai", target: "complete_encounter" });
+        }
+      }
+    }
+    
+    optionsToRender.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      if (opt.text.toLowerCase() === "lanjut") {
+        btn.classList.add("green");
+      }
+      btn.innerText = opt.text;
+      btn.addEventListener("click", () => handleYarnOptionSelect(opt));
+      optionsList.appendChild(btn);
+    });
+  }
+
+  const feedbackPanel = document.getElementById("dialogue-feedback");
+  if (feedbackPanel) {
+    feedbackPanel.classList.add("hidden");
+  }
+}
+
+function handleYarnOptionSelect(option) {
+  playSound("tap");
+  
+  if (option.target === "next_step") {
+    STATE.yarnStepIndex++;
+    loadYarnStep();
+  } else if (option.target === "retry_encounter") {
+    STATE.currentEncounterIncorrect = false;
+    showScreen("map");
+  } else if (option.target === "complete_encounter") {
+    STATE.completedEncounters.add(STATE.activeEncounterId);
+    
+    if (STATE.activeEncounterId === "citra") {
+      endCabangDialogue();
+      return;
+    }
+    
+    if (STATE.activeEncounterId === "pakrt") {
+      STATE.hasPermission = true;
+      const rMarker = document.querySelector("#encounter-pakrt .speech-bubble");
+      if (rMarker) rMarker.innerText = "✓";
+      showScreen("map");
+      return;
+    }
+    
+    const oldCount = STATE.collectedCount;
+    const recruits = STATE.pendingRecruits || 1;
+    STATE.collectedCount += recruits;
+    
+    if (STATE.collectedCount >= CONFIG.totalNasabahGoal) {
+      triggerVictory();
+    } else {
+      STATE.pendingHUDAnimation = { oldCount: oldCount, newCount: STATE.collectedCount };
+      showScreen("map");
+    }
+  } else {
+    playYarnNode(option.target);
+  }
+}
+
 // Start Encounter
 function startEncounter(encounterId) {
+  if (STATE.currentLevel === 2 && encounterId === "wati") {
+    encounterId = "lia";
+  }
+  // Clear any existing vignette animation class
+  const overlay = document.getElementById("dialogue-vignette-overlay");
+  if (overlay) {
+    overlay.className = "vignette-overlay";
+  }
+
   if (STATE.completedEncounters.has(encounterId)) {
     return; // Already completed
   }
@@ -1360,19 +1942,36 @@ function startEncounter(encounterId) {
   STATE.dialogueIndex = 0;
   STATE.isFirstTry = true;
 
-  const encData = CONFIG.encounters[encounterId];
-
-  // Set headers
-  document.getElementById("dialogue-location-name").innerText = encData.locationName;
-  if (encData.isGroup) {
-    document.getElementById("group-progress").style.display = "inline-block";
-    document.getElementById("group-progress").innerText = `1/${encData.dialogues.length}`;
-  } else {
-    document.getElementById("group-progress").style.display = "none";
+  // Set people count badge
+  const countText = document.getElementById("people-count-text");
+  if (countText) {
+    const peopleCount = (encounterId === "warung" && STATE.currentLevel === 1) ? 3 : 1;
+    countText.innerText = peopleCount;
   }
 
-  showScreen("dialogue");
-  loadDialogueStep();
+  const nodeTitle = ENCOUNTER_TO_YARN_NODE[encounterId];
+  const yarnNode = YARN_DIALOGUES.find(n => n.title === nodeTitle);
+
+  if (yarnNode && STATE.currentLevel === 1) {
+    STATE.useYarnDialogue = true;
+    STATE.currentYarnParentNode = nodeTitle;
+    playYarnNode(nodeTitle);
+  } else {
+    STATE.useYarnDialogue = false;
+    const encData = CONFIG.encounters[encounterId];
+
+    // Set headers
+    document.getElementById("dialogue-location-name").innerText = encData.locationName;
+    if (encData.isGroup) {
+      document.getElementById("group-progress").style.display = "inline-block";
+      document.getElementById("group-progress").innerText = `1/${encData.dialogues.length}`;
+    } else {
+      document.getElementById("group-progress").style.display = "none";
+    }
+
+    showScreen("dialogue");
+    loadDialogueStep();
+  }
 }
 
 // Load Dialogue Step
@@ -1389,14 +1988,25 @@ function loadDialogueStep() {
   // Set character portrait to "talk" mode initially
   const portraitImg = document.getElementById("npc-portrait");
   if (portraitImg) {
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
       portraitImg.className = "npc-portrait-img scene-mode";
-      const idx = STATE.dialogueIndex + 1;
-      let ext = ".jpg";
-      if (idx === 1 || idx === 3 || idx === 6) {
+      const idx = STATE.dialogueIndex;
+      let imgNum = 1;
+      let ext = ".jpeg";
+      if (idx >= 0 && idx <= 2) {
+        imgNum = 1;
+        ext = ".jpeg";
+      } else if (idx >= 3 && idx <= 5) {
+        imgNum = 2;
+        ext = ".jpg";
+      } else if (idx >= 6 && idx <= 10) {
+        imgNum = 3;
+        ext = ".jpeg";
+      } else if (idx >= 11) {
+        imgNum = 6;
         ext = ".jpeg";
       }
-      portraitImg.src = `ujikelayakan&verif/ukmeet${idx}${ext}`;
+      portraitImg.src = `ujikelayakan&verif/ukmeet${imgNum}${ext}`;
     } else {
       portraitImg.classList.remove("scene-mode");
       portraitImg.src = getPortraitUrl(dialogue.portraitId, "talk");
@@ -1423,6 +2033,16 @@ function loadDialogueStep() {
       optionsTitle.style.display = "none";
     } else {
       optionsTitle.style.display = "block";
+      if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
+        const hasOnlyLanjut = dialogue.options && dialogue.options.length === 1 && dialogue.options[0].text.toLowerCase() === "lanjut";
+        if (hasOnlyLanjut) {
+          optionsTitle.style.display = "none";
+        } else {
+          optionsTitle.innerText = "Pilih Tindakan yang tepat!";
+        }
+      } else {
+        optionsTitle.innerText = "Pilih Respon yang tepat!";
+      }
     }
   }
 
@@ -1443,6 +2063,9 @@ function loadDialogueStep() {
     dialogue.options.forEach((opt, idx) => {
       const btn = document.createElement("button");
       btn.className = "option-btn";
+      if (opt.text.toLowerCase() === "lanjut") {
+        btn.classList.add("green");
+      }
       btn.innerText = opt.text;
       btn.addEventListener("click", () => handleOptionSelect(opt, btn));
       optionsList.appendChild(btn);
@@ -1458,21 +2081,26 @@ function loadDialogueStep() {
 
 // Handle Option Selection
 function handleOptionSelect(option, buttonEl) {
-  if (STATE.activeEncounterId === "citra") {
+  const encData = CONFIG.encounters[STATE.activeEncounterId];
+  const dialogue = encData.dialogues[STATE.dialogueIndex];
+
+  if (STATE.activeEncounterId === "citra" || (dialogue.options && dialogue.options.length === 1)) {
     playSound("tap");
+    if (option.text === "Mulai Wawancara") {
+      startInterviewMinigame();
+      return;
+    }
     advanceDialogue();
     return;
   }
 
-  const encData = CONFIG.encounters[STATE.activeEncounterId];
-  const dialogue = encData.dialogues[STATE.dialogueIndex];
   const portraitImg = document.getElementById("npc-portrait");
   const feedbackPanel = document.getElementById("dialogue-feedback");
   const feedbackIcon = document.getElementById("feedback-icon");
   const feedbackTitle = document.getElementById("feedback-title");
   const feedbackResponse = document.getElementById("feedback-response");
 
-  if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
+  if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
     portraitImg.className = "npc-portrait-img scene-mode";
   } else {
     portraitImg.className = "npc-portrait-img"; // reset animations
@@ -1480,43 +2108,45 @@ function handleOptionSelect(option, buttonEl) {
 
   if (option.isCorrect) {
     playSound("correct");
-
-    // Add success animations
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
-      // Do not shake/move/bounce or change source for artwork sprite
-    } else {
-      portraitImg.src = getPortraitUrl(dialogue.portraitId, "laugh");
-      portraitImg.classList.add("happy");
-    }
-
-    // Show correct feedback
-    feedbackIcon.className = "feedback-icon correct";
-    feedbackTitle.innerText = "Tepat Sekali!";
-    feedbackTitle.className = "feedback-title correct";
-    feedbackResponse.innerText = dialogue.correctResponse;
+    triggerVignetteFlash("correct");
 
     // Track stats (excluding Pak RT)
     if (STATE.isFirstTry && STATE.activeEncounterId !== "pakrt") {
       STATE.firstTryCorrect++;
     }
 
-    // Setup Next button
-    const btnNext = document.getElementById("btn-feedback-next");
-    btnNext.innerText = "LANJUT";
-    btnNext.onclick = () => {
-      playSound("tap");
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
       advanceDialogue();
-    };
+    } else {
+      // Add success animations
+      portraitImg.src = getPortraitUrl(dialogue.portraitId, "laugh");
+      portraitImg.classList.add("happy");
 
-    feedbackPanel.classList.remove("hidden");
+      // Show correct feedback
+      feedbackIcon.className = "feedback-icon correct";
+      feedbackTitle.innerText = "Tepat Sekali!";
+      feedbackTitle.className = "feedback-title correct";
+      feedbackResponse.innerText = dialogue.correctResponse;
+
+      // Setup Next button
+      const btnNext = document.getElementById("btn-feedback-next");
+      btnNext.innerText = "LANJUT";
+      btnNext.onclick = () => {
+        playSound("tap");
+        advanceDialogue();
+      };
+
+      feedbackPanel.classList.remove("hidden");
+    }
   } else {
     playSound("incorrect");
+    triggerVignetteFlash("incorrect");
 
     // Mark as failed first try
     STATE.isFirstTry = false;
 
     // Add error animations
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
       // Do not shake/move/bounce or change source for artwork sprite
     } else {
       portraitImg.src = getPortraitUrl(dialogue.portraitId, "think");
@@ -1542,7 +2172,7 @@ function handleOptionSelect(option, buttonEl) {
       playSound("tap");
       feedbackPanel.classList.add("hidden");
       // Put character back to think/idle state
-      if (STATE.currentLevel === 2 && STATE.activeEncounterId === "wati") {
+      if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
         // Do not change the artwork portrait src or class
       } else {
         portraitImg.src = getPortraitUrl(dialogue.portraitId, "think");
@@ -1621,21 +2251,37 @@ function triggerVictory() {
   const ratingTextEl = document.getElementById("victory-rating-text");
 
   let starsEarned = 1;
-  if (STATE.firstTryCorrect === maxScore) {
+  if (STATE.currentLevel === 2) {
+    const minigameCorrect = STATE.minigameCorrect || 0;
+    if (minigameCorrect >= 8) {
+      starsEarned = 3;
+    } else if (minigameCorrect >= 6) {
+      starsEarned = 2;
+    } else {
+      starsEarned = 1;
+    }
+  } else {
+    if (STATE.firstTryCorrect === maxScore) {
+      starsEarned = 3;
+    } else if (STATE.firstTryCorrect >= Math.ceil(maxScore * 0.8)) {
+      starsEarned = 2;
+    } else {
+      starsEarned = 1;
+    }
+  }
+
+  if (starsEarned === 3) {
     starRatingImg.src = "3star.png";
     ratingTextEl.innerText = "Sangat Kompeten! (3 Bintang)";
     ratingTextEl.className = "stat-value text-gold";
-    starsEarned = 3;
-  } else if (STATE.firstTryCorrect >= Math.ceil(maxScore * 0.8)) {
+  } else if (starsEarned === 2) {
     starRatingImg.src = "2star.png";
     ratingTextEl.innerText = "Cukup Kompeten (2 Bintang)";
     ratingTextEl.className = "stat-value text-green";
-    starsEarned = 2;
   } else {
     starRatingImg.src = "1star.png";
     ratingTextEl.innerText = "Perlu Belajar Lagi (1 Bintang)";
     ratingTextEl.className = "stat-value text-dark";
-    starsEarned = 1;
   }
 
   // Save score to browser localStorage if it is higher than previous high score
@@ -1649,7 +2295,19 @@ function triggerVictory() {
   }
 
   // Update stats
-  document.getElementById("victory-correct-answers").innerText = `${STATE.firstTryCorrect} / ${maxScore}`;
+  if (STATE.currentLevel === 2) {
+    document.getElementById("victory-correct-answers").innerText = `${STATE.minigameCorrect || 0} / 9`;
+    const labelAnswers = document.querySelector("#victory-screen .stat-row:nth-child(1) .stat-label");
+    if (labelAnswers) {
+      labelAnswers.innerText = "Data Relevan Dicatat:";
+    }
+  } else {
+    document.getElementById("victory-correct-answers").innerText = `${STATE.firstTryCorrect} / ${maxScore}`;
+    const labelAnswers = document.querySelector("#victory-screen .stat-row:nth-child(1) .stat-label");
+    if (labelAnswers) {
+      labelAnswers.innerText = "Jawaban Benar:";
+    }
+  }
 
   const recruitsLabel = document.getElementById("victory-stat-label-recruits");
   const recruitsVal = document.getElementById("victory-stat-value-recruits");
@@ -1670,12 +2328,41 @@ function triggerVictory() {
 function resetGame() {
   STATE.collectedCount = 0;
   STATE.firstTryCorrect = 0;
+  STATE.minigameCorrect = 0;
+  STATE.minigameIncorrect = 0;
   STATE.completedEncounters.clear();
   STATE.activeEncounterId = null;
   STATE.dialogueIndex = 0;
   STATE.isFirstTry = true;
   STATE.hasPermission = false; // Reset permission status
   STATE.cluesFound = { ibu: false, house: false };
+
+  // Reset Yarn integration variables
+  STATE.currentYarnParentNode = "";
+  STATE.yarnVariables = {
+    BuIndah: false,
+    BuIndahWrong: false,
+    Warung: false,
+    Warungwrong: false,
+    BuLastri: false,
+    BuLastriWrong: false,
+    BuTitin: false,
+    BuTitinWrong: false,
+    BuWati: false,
+    BuWatiWrong: false,
+    BuIjah: false,
+    BuIjahWrong: false,
+    IzinRT: false,
+    acceptQuest1: false,
+    sudahtanyajual: false
+  };
+  STATE.yarnSteps = [];
+  STATE.yarnStepIndex = 0;
+  STATE.currentEncounterCorrect = false;
+  STATE.currentEncounterIncorrect = false;
+  STATE.pendingRecruits = 0;
+  STATE.currentAvatar = "";
+  STATE.currentExpression = "idle";
 
   // Set star icon in level selector card to match current progress
   updateLevelDetailStars();
@@ -2187,6 +2874,279 @@ function handleCabangExit() {
   showScreen("prep");
 }
 
+// Minigame variables
+const MINIGAME_CARDS = [
+  { text: "Nama lengkap saya Titin Sumarni", isRelevant: true },
+  { text: "Saya lahir di Magelang", isRelevant: true },
+  { text: "Tanggal lahirnya 7 September 1988", isRelevant: true },
+  { text: "Weton saya itu Senin Pahing", isRelevant: false },
+  { text: "Makanan favorit saya sayur lodeh", isRelevant: false },
+  { text: "Alamat saya di RT 02 RW 04", isRelevant: true },
+  { text: "Suami saya, Pak Bambang, yang jadi penanggung jawabnya", isRelevant: true },
+  { text: "Zodiak saya mah Virgo", isRelevant: false },
+  { text: "Nama panggilan saya waktu kecil itu Atin", isRelevant: false }
+];
+
+function startInterviewMinigame() {
+  STATE.screen = "minigame";
+  showScreen("minigame");
+
+  STATE.minigameCardIndex = 0;
+  STATE.minigameCorrect = 0;
+  STATE.minigameIncorrect = 0;
+
+  // Show swipe tutorial overlay
+  const tutorial = document.getElementById("swipe-tutorial-container");
+  if (tutorial) {
+    tutorial.style.display = "flex";
+    tutorial.style.opacity = "1";
+  }
+
+  // Set up minigame UI listeners
+  initMinigameDragHandlers();
+
+  loadMinigameCard();
+}
+
+function loadMinigameCard() {
+  if (STATE.minigameTimerId) {
+    clearInterval(STATE.minigameTimerId);
+  }
+
+  // Update progress bar
+  const progressPercent = (STATE.minigameCardIndex / MINIGAME_CARDS.length) * 100;
+  const progressFill = document.getElementById("minigame-progress-bar-fill");
+  if (progressFill) {
+    progressFill.style.width = `${progressPercent}%`;
+  }
+
+  // Check if finished
+  if (STATE.minigameCardIndex >= MINIGAME_CARDS.length) {
+    // Return to dialogue screen and advance
+    STATE.screen = "dialogue";
+    showScreen("dialogue");
+    advanceDialogue();
+    return;
+  }
+
+  const currentCard = MINIGAME_CARDS[STATE.minigameCardIndex];
+  const cardEl = document.getElementById("swipe-card");
+  const cardTextEl = document.getElementById("swipe-card-text");
+
+  if (cardTextEl) {
+    cardTextEl.innerText = currentCard.text;
+  }
+
+  if (cardEl) {
+    cardEl.className = "swipe-card";
+    cardEl.style.transform = "translate(0px, 0px) rotate(0deg)";
+    cardEl.style.opacity = "1";
+  }
+
+  // Restart 15s Timer
+  STATE.minigameTimeRemaining = 15;
+  const timerBar = document.getElementById("minigame-timer-bar");
+  const timerText = document.getElementById("minigame-timer-text");
+  if (timerBar) timerBar.style.width = "100%";
+  if (timerText) timerText.innerText = "15s";
+
+  STATE.minigameTimerId = setInterval(() => {
+    STATE.minigameTimeRemaining -= 0.1;
+    if (STATE.minigameTimeRemaining <= 0) {
+      clearInterval(STATE.minigameTimerId);
+      // Timeout counts as incorrect/abalkan
+      playSound("incorrect");
+      STATE.minigameIncorrect++;
+      STATE.minigameCardIndex++;
+      loadMinigameCard();
+    } else {
+      if (timerBar) {
+        timerBar.style.width = `${(STATE.minigameTimeRemaining / 15) * 100}%`;
+      }
+      if (timerText) {
+        timerText.innerText = `${Math.ceil(STATE.minigameTimeRemaining)}s`;
+      }
+    }
+  }, 100);
+}
+
+function handleMinigameSwipe(direction) {
+  if (STATE.minigameTimerId) {
+    clearInterval(STATE.minigameTimerId);
+  }
+
+  // Clear swipe overlays
+  const overlayLeft = document.getElementById("swipe-feedback-left");
+  const overlayRight = document.getElementById("swipe-feedback-right");
+  if (overlayLeft) {
+    overlayLeft.style.opacity = "0";
+    overlayLeft.classList.remove("active");
+  }
+  if (overlayRight) {
+    overlayRight.style.opacity = "0";
+    overlayRight.classList.remove("active");
+  }
+
+  const currentCard = MINIGAME_CARDS[STATE.minigameCardIndex];
+  const cardEl = document.getElementById("swipe-card");
+
+  // Determine correctness
+  // Right swipe = CATAT (Relevant)
+  // Left swipe = ABAIKAN (Not Relevant)
+  const swipedRight = direction === "right";
+  const userChoiceCorrect = (swipedRight && currentCard.isRelevant) || (!swipedRight && !currentCard.isRelevant);
+
+  if (userChoiceCorrect) {
+    playSound("correct");
+    STATE.minigameCorrect++;
+  } else {
+    playSound("incorrect");
+    STATE.minigameIncorrect++;
+  }
+
+  // Play fly-out animation
+  if (cardEl) {
+    cardEl.classList.add(swipedRight ? "swiped-right" : "swiped-left");
+  }
+
+  STATE.minigameCardIndex++;
+  setTimeout(() => {
+    loadMinigameCard();
+  }, 400);
+}
+
+let minigameDragInitialized = false;
+function initMinigameDragHandlers() {
+  if (minigameDragInitialized) return;
+  minigameDragInitialized = true;
+
+  const cardEl = document.getElementById("swipe-card");
+  const overlayLeft = document.getElementById("swipe-feedback-left");
+  const overlayRight = document.getElementById("swipe-feedback-right");
+
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+
+  // Drag and Touch helpers
+  function startDrag(e) {
+    if (STATE.screen !== "minigame") return;
+    isDragging = true;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    startX = clientX;
+    startY = clientY;
+
+    // Hide Lottie tutorial container when dragging starts
+    const tutorial = document.getElementById("swipe-tutorial-container");
+    if (tutorial) {
+      tutorial.style.opacity = "0";
+      setTimeout(() => {
+        if (tutorial.style.opacity === "0") {
+          tutorial.style.display = "none";
+        }
+      }, 300);
+    }
+
+    if (cardEl) {
+      cardEl.classList.remove("resetting");
+    }
+  }
+
+  function moveDrag(e) {
+    if (!isDragging || !cardEl) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const deltaX = clientX - startX;
+    const deltaY = clientY - startY;
+
+    // Rotate and translate card based on deltaX
+    const rotation = deltaX * 0.1;
+    cardEl.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotation}deg)`;
+
+    // Handle left/right breathing feedback overlays
+    if (deltaX > 10) {
+      if (overlayRight) {
+        overlayRight.style.opacity = Math.min(deltaX / 120, 0.6);
+        if (deltaX > 60) {
+          overlayRight.classList.add("active");
+        } else {
+          overlayRight.classList.remove("active");
+        }
+      }
+      if (overlayLeft) {
+        overlayLeft.style.opacity = "0";
+        overlayLeft.classList.remove("active");
+      }
+    } else if (deltaX < -10) {
+      if (overlayLeft) {
+        overlayLeft.style.opacity = Math.min(-deltaX / 120, 0.6);
+        if (deltaX < -60) {
+          overlayLeft.classList.add("active");
+        } else {
+          overlayLeft.classList.remove("active");
+        }
+      }
+      if (overlayRight) {
+        overlayRight.style.opacity = "0";
+        overlayRight.classList.remove("active");
+      }
+    } else {
+      if (overlayLeft) {
+        overlayLeft.style.opacity = "0";
+        overlayLeft.classList.remove("active");
+      }
+      if (overlayRight) {
+        overlayRight.style.opacity = "0";
+        overlayRight.classList.remove("active");
+      }
+    }
+  }
+
+  function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Reset overlay indicators
+    if (overlayLeft) {
+      overlayLeft.style.opacity = "0";
+      overlayLeft.classList.remove("active");
+    }
+    if (overlayRight) {
+      overlayRight.style.opacity = "0";
+      overlayRight.classList.remove("active");
+    }
+
+    const transformMatrix = window.getComputedStyle(cardEl).transform;
+    let deltaX = 0;
+    if (transformMatrix && transformMatrix !== "none") {
+      const values = transformMatrix.split('(')[1].split(')')[0].split(',');
+      deltaX = parseFloat(values[4]) || 0;
+    }
+
+    if (deltaX > 100) {
+      handleMinigameSwipe("right");
+    } else if (deltaX < -100) {
+      handleMinigameSwipe("left");
+    } else {
+      // Reset card position
+      cardEl.classList.add("resetting");
+      cardEl.style.transform = "translate(0px, 0px) rotate(0deg)";
+    }
+  }
+
+  if (cardEl) {
+    cardEl.addEventListener("mousedown", startDrag);
+    cardEl.addEventListener("touchstart", startDrag, { passive: true });
+  }
+
+  window.addEventListener("mousemove", moveDrag);
+  window.addEventListener("touchmove", moveDrag, { passive: false });
+
+  window.addEventListener("mouseup", endDrag);
+  window.addEventListener("touchend", endDrag);
+}
+
 // Show Permission Warning Modal
 function showPermissionRequiredModal() {
   document.getElementById("permission-modal").classList.add("active");
@@ -2197,6 +3157,9 @@ function showPermissionRequiredModal() {
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize Cabang Screen Mechanics
   initCabangScreenDragScroll();
+
+  // Load Yarn dialogues for the fork
+  loadYarnDialogues();
 
   // Initialize Level Configuration and Level Selector UI on load
   loadLevelConfig(1);
@@ -2422,6 +3385,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("btn-start-level").addEventListener("click", () => {
     document.getElementById("level-detail-overlay").classList.remove("active");
+    if (STATE.currentLevel === 1) {
+      STATE.useYarnDialogue = true;
+    } else {
+      STATE.useYarnDialogue = false;
+    }
     loadLevelConfig(STATE.currentLevel);
     resetGame();
     resetPrepScreen();
@@ -2478,6 +3446,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Victory Screen Buttons
   document.getElementById("btn-replay").addEventListener("click", () => {
+    if (STATE.currentLevel === 1) {
+      STATE.useYarnDialogue = true;
+    } else {
+      STATE.useYarnDialogue = false;
+    }
     loadLevelConfig(STATE.currentLevel);
     resetGame();
     resetPrepScreen();
@@ -2647,6 +3620,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-prep-settings").addEventListener("click", () => {
+    openSettingsModal(false);
+  });
+
+  document.getElementById("btn-minigame-settings").addEventListener("click", () => {
     openSettingsModal(false);
   });
 

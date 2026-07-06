@@ -1,0 +1,252 @@
+[
+	{
+		"title": "BuIndah",
+		"tags": "",
+		"body": "<<if $BuIndah == true>>\n<<avatar Bu Indah>> <<popeffect>> <<neutral>>\nSaya Tertarik Mba, tolong diinfokan proses lanjutannya yah nanti\n\n<<elseif $BuIndahWrong == true>>\n<<avatar Aminah>> <<popeffect>> <<neutral>> <<aminah_assalamualikum>>\nAssalamualaikum Bu, maaf saya datang lagi.\n<<avatar Bu Indah>> <<popeffect>> <<talking>>  \nWaalaikumsalam. Eh Neng, gimana? Masih mau nawarin yang tadi?\n[[PNM Mekaar itu layanan pemberdayaan berbasis kelompok khusus ibu-ibu.|indahcorrect]]\n[[PNM Mekaar itu layanan pinjaman uang berbasis perorangan.|indahfalse]]\n\n<<else>>\n<<avatar Bu Indah>> <<avatar Aminah>> <<popeffect>> <<neutral>> <<aminah_assalamualikum>>\nAssalamualaikum, selamat pagi Bu. Permisi, maaf mengganggu waktunya sebentar. Perkenalkan saya Aminah dari PNM Mekaar.\n<<avatar Bu Indah>> <<popeffect>> <<talking>> <<npc2_pnmapa>> \nWaalaikumsalam. Oh, dari PNM Mekaar? Itu teh apa ya Neng? Semacam koperasi simpan pinjam atau bank keliling gitu?\n[[PNM Mekaar itu layanan pemberdayaan berbasis kelompok khusus ibu-ibu.|indahcorrect]]\n[[PNM Mekaar itu layanan pinjaman uang berbasis perorangan.|indahfalse]]\n<<endif>>",
+		"position": {
+			"x": 1481,
+			"y": -636
+		},
+		"colorID": 8
+	},
+	{
+		"title": "help",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>>  <<set $BuIndah to true >>\nTenang Bu, jangan panik! Ibu tolong panggil yang lain lewat grup WA dulu, biar saya bantu cari bukunya",
+		"position": {
+			"x": 1270,
+			"y": -895
+		},
+		"colorID": 8
+	},
+	{
+		"title": "Citra",
+		"tags": "",
+		"body": "<<if $acceptQuest1 == true>> \n<<avatar Citra>> <<neutral>>  << citra_selamattugas>> \nJangan lupa baca posternya ya, selamat bertugas!\n<<else>>\n<<avatar Citra>> <<neutral>> <<citra_selamatpagi>> \nHalo Aminah! Selamat datang di Desa Sukamaju. tugas pertamamu adalah SOSIALISASI\n<<avatar Citra>> <<neutral>>  \nTarget kita: Cari 10 Ibu-ibu yang punya potensi usaha untuk kita ajak gabung. Ingat ya, yang dicari itu Ibu-ibu prasejahtera yang mau usaha\n<<avatar Citra>> <<neutral>> <<misiposter>> <<citra_poster>>  <<set $acceptQuest1 to true >> \nTAPI TUNGGU DULU! Sebelum berangkat, pastikan kamu sudah paham kebijakan dan prosedur. Kita sudah tempel 3 Poster di dinding kantor. Baca terlebih dahulu semuanya, sebagai bekalmu agar lebih jelas lagi dilapangan. Kalau belum baca, jangan berangkat dulu ya!\n\n<<endif>>",
+		"position": {
+			"x": 1269,
+			"y": -1109
+		},
+		"colorID": 8
+	},
+	{
+		"title": "indahcorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<talking>> <<nasabahdone>> <<set $BuIndah to true >> <<correct>> <<aminah_mekaaritu>>\nPNM Mekaar itu layanan pemberdayaan berbasis kelompok khusus ibu-ibu. Dananya digunakan untuk modal usaha produktif, dengan sistem angsuran mingguan yang ringan, Bu\n<<avatar Bu Indah>>  <<happy>> <<npc1_wah>> \nSaya Tertarik bu , tolong diinfokan proses lanjutannya yah nanti",
+		"position": {
+			"x": 1588,
+			"y": -397
+		},
+		"colorID": 4
+	},
+	{
+		"title": "indahfalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<set $BuIndahWrong = true>> <<false>> \nPNM Mekaar itu layanan pinjaman uang berbasis perorangan, Bu. Jadi Ibu bisa pinjam sendiri buat belanja keperluan sehari-hari dengan cicilan mingguan.\n<<avatar Bu Indah>> <<think>>\nWaduh, kalau sendiri saya takut nggak bisa bayar. Bukan buat usaha ya?",
+		"position": {
+			"x": 1370,
+			"y": -397
+		},
+		"colorID": 1
+	},
+	{
+		"title": "PakRT",
+		"tags": "",
+		"body": "<<if $IzinRT == true>> \n<<avatar Pak RT>> <<neutral>>\nbagaimana sosialisasinya mbak\n<<else>>\n<<avatar Pak RT>> <<avatar Aminah>>  <<neutral>> <<talking>>  <<aminah_assalamualikum>>\nAssalamualaikum, selamat pagi Pak RT. Mohon maaf mengganggu waktunya sebentar.\n<<avatar Pak RT>> <<choose>> <<neutral>> <<pakrt_waalaikumsalam >> \nWaalaikumsalam Mbak. Ada keperluan apa ya ? Saya Pak Budi, RT di sini\n[[Saya ingin mengenalkan program modal usaha khusus ibu-ibu prasejahtera |pakrtcorrect]]\n[[ Saya ingin mengenalkan pinjaman uang usaha yang bunganya kecil |pakrtfalse]]\n<<endif>>",
+		"position": {
+			"x": 1572,
+			"y": -1115
+		},
+		"colorID": 8
+	},
+	{
+		"title": "pakrtcorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<aoexplain>> <<correct>>  <<set $IzinRT to true >> <<talking>> \nPerkenalkan saya Aminah dari PNM Mekaar. Niat saya ingin bersilaturahmi dan mengenalkan program modal usaha khusus ibu-ibu prasejahtera di sini agar punya usaha mandiri.\n<<avatar Pak RT>> <<happy>> <<misikumpulnasabah>> <<pakrt_izinkan>> \nOhh PNM yaa, kalau niatnya membantu warga saya biar maju, Bapak izinkan. Silakan Mba Aminah.",
+		"position": {
+			"x": 1702,
+			"y": -887
+		},
+		"colorID": 4
+	},
+	{
+		"title": "pakrtfalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Pak RT>> <<false>> \nWaduh... 'Bunga kecil' ya? Maaf nih Neng, sales koperasi keliling bulan lalu juga bilangnya begitu. Manis di awal.",
+		"position": {
+			"x": 1489,
+			"y": -894
+		},
+		"colorID": 1
+	},
+	{
+		"title": "Warung",
+		"tags": "",
+		"body": "<<if $Warung == true>>\n<<avatar Bu Ratna>> <<talk>> <<happy>> \nNanti kita infoin lagi ya neng!\n\n<<elseif $Warungwrong== true>>\n<<avatar Aminah>> <<popeffect>> <<neutral>>\nAssalamualaikum Ibu-ibu, maaf saya datang lagi.\n<<avatar Bu Ratna>>  <<talking>> \nWaalaikumsalam. Eh Neng, gimana? Masih mau nawarin yang tadi?\n<<avatar Bu Ratna>> <<talk>> <<neutral>>\nBisa dijelasin lagi neng, PNM Mekaar itu sistemnya gimana sih?\n[[Ada jaminan sedikit kok Bu, cuma BPKB motor aja |warungfalse1]]\n[[Di PNM Mekaar tidak ada agunan atau jaminan fisik sama sekali |warungcorrect1]]\n\n<<else>>\n<<avatar Bu Ratna>> <<avatar Aminah>> <<talk>> <<neutral>> <<aminah_assalamualaikum>> \nAssalamualaikum ibu-ibu... Wah, wangi gorengannya sedap sekali sampai tercium ke jalan.\n<<avatar Bu Ratna>> <<talk>> <<neutral>>  <<npc2_pagineng>>  \nWaalaikumsalam, eh Neng geulis. Sini Neng mampir, masih hangat nih bakwannya. Neng siapa ya? Kayaknya baru lihat.\n<<avatar Aminah>> <<talk>> <<neutral>> \nPerkenalkan Bu, saya Aminah dari PNM Mekaar Unit Sukamaju, Kami ini perusahaan BUMN milik pemerintah yang tugas khususnya memberikan modal usaha dan bimbingan bagi ibu-ibu supaya usahanya makin maju.\n<<avatar Bu Ratna>> <<talk>> <<neutral>> <<npc_ketawa>> <<npc1_ketawa>> \nWah, kebetulan banget ada Neng Aminah di sini. Jujur aja Neng, saya tuh dari kemarin pengen nambah modal buat isi stok toko, tapi bingung caranya.\n<<avatar Bu Ratna>> <<talk>> <<neutral>> \nNgomong-ngomong Neng, kalau di PNM ini sistemnya gimana ya.\n[[Ada jaminan sedikit kok Bu, cuma BPKB motor aja |warungfalse1]]\n[[Di PNM Mekaar tidak ada agunan or jaminan fisik sama sekali |warungcorrect1]]\n<<endif>>",
+		"position": {
+			"x": 1029,
+			"y": -638
+		},
+		"colorID": 7
+	},
+	{
+		"title": "warungfalse2",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Bu Ratna>> <<set $Warungwrong = true>> <<talk>> <<confused>> <<false>> \nSerius bisa sendiri? Tetangga saya di desa sebelah bilang Mekaar itu wajib berkelompok lho Neng. Neng ini beneran petugas resmi bukan sih? Kok infonya beda? Saya jadi takut penipuan deh..",
+		"position": {
+			"x": 913,
+			"y": -175
+		},
+		"colorID": 1
+	},
+	{
+		"title": "warungcorrect2",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Bu Ratna>> <<neutral>> <<correct>> \nOalah, harus 10 orang ya? Gampang itu mah! Di sini kan tempat kumpul, nanti saya ajakin tetangga lain biar genap 10 orang! Tetangga depan rumah juga pasti mau\n<<avatar Bu Yanti>> <<talk>> <<happy>> \nSaya ikut deh kalau gitu. Lumayan buat tambah modal toko kelontong saya.\n<<avatar Bu Nur>> <<talk>> <<happy>> \nSaya juga mau Neng, bismillah buat nambah usaha kue saya.\n<<avatar Aminah>> <<talk>> <<happy>> <<set $Warung to true>> <<nasabahdonewarung>>\nAlhamdulillah. Nanti kalau anggotanya sudah terkumpul 10 orang, kabari saya ya Bu. Tahap selanjutnya kita akan lanjut survei dulu untuk memastikan rumah dan usahanya berjalan lancar.",
+		"position": {
+			"x": 1145,
+			"y": -167
+		},
+		"colorID": 4
+	},
+	{
+		"title": "warungfalse1",
+		"tags": "",
+		"body": "<<hidchoose>> <<set $Warungwrong = true>> <<avatar Bu Ratna>> <<confused>> <<false>> \nWaduh... BPKB? Motor aja saya masih kredit Neng. Kirain Mekaar mau bantu rakyat kecil tanpa ribet. Kalau harus ada jaminan mah, saya mundur deh. Nggak sanggup",
+		"position": {
+			"x": 912,
+			"y": -400
+		},
+		"colorID": 1
+	},
+	{
+		"title": "warungcorrect1",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Bu Ratna>>  <<neutral>> <<correct>> \nLho? Beneran Neng? Nggak pakai sertifikat? Wah, alhamdulillah kalau gitu, saya jadi tenang dengernya. Kalau modal kepercayaan sih insyaallah saya amanah.\n<<avatar Bu Nur>> <<talk>> <<neutral>>\nAlhamdulillah kalau memudahkan... Tapi Neng, ibu-ibu di sini kalau hari raya pasti repot. Duit habis buat beli baju anak, belum lagi masak opor. Kalau pas Lebaran atau Natal ditagih angsuran, aduh pusing kepala saya.\n<<avatar Aminah>> <<talk>> <<talking>>\nJangan khawatir Bu Nur. PNM Mekaar sangat mengerti kebutuhan ibu-ibu. Kalau Hari Raya Keagamaan seperti Idul Fitri atau Natal, angsurannya DILIBURKAN. Jadi Ibu bisa fokus ibadah dan lebaran sama keluarga tanpa dikejar setoran\n<<avatar Bu Ratna>> <<talk>> <<happy>> \nWah, enak banget ya! Saya jadi minat nih Neng. Kebetulan penggorengan saya udah bolong, butuh modal buat beli alat masak baru biar jualan makin laku. Caranya gimana kalau saya mau daftar sekarang? Saya daftar sendiri bisa kan?\n[[Ibu daftar sendiri saja, nanti langsung saya cairkan dananya besok |warungfalse2]]\n[[Ibu cukup ajak tetangga sekitar minimal 10 orang untuk membuat kelompok |warungcorrect2]]",
+		"position": {
+			"x": 1146,
+			"y": -400
+		},
+		"colorID": 4
+	},
+	{
+		"title": "BuLastri",
+		"tags": "",
+		"body": "<<if $BuLastri == true>>\n<<avatar Bu Lastri>> <<neutral>>\nSaya Tertarik Mba, tolong diinfokan proses lanjutannya yah nanti\n\n<<elseif $BuLastriWrong == true>>\n<<avatar Aminah>>  <<neutral>>\nAssalamualaikum Bu, maaf saya datang lagi.\n<<avatar Bu Lastri>> <<talking>> \nWaalaikumsalam. Eh Mba Aminah, gimana? Masih mau nawarin yang tadi?\n[[PNM Mekaar itu layanan pemberdayaan berbasis kelompok khusus ibu-ibu.|lastricorrect]]\n[[PNM Mekaar itu layanan pinjaman uang berbasis perorangan.|lastrifalse]]\n\n<<else>>\n<<avatar Bu Lastri>> <<avatar Aminah>> <<neutral>> <<aminah_permisiibu>> \nPermisi Bu. Perkenalkan saya Aminah dari PNM Mekaar. Kami adalah BUMN milik pemerintah yang khusus memberikan modal usaha dan pembinaan bagi ibu-ibu agar usahanya makin maju.\n<<avatar Bu Lastri>>  <<talking>> <<npc3_iyamba>> \nOh, dari BUMN ya? Boleh sih Neng, kebetulan saya butuh modal buat nambah stok pulsa dan token listrik\n<<avatar Bu Lastri>>  <<talking>>\nTapi Mba, Saya mau pinjamannya aja, gak usah ikut kumpul-kumpul mingguan (PKM) ya? Ribet Mba, saya sibuk ngurus anak, nggak sempat kalau harus kumpul-kumpul segala\n[[PKM itu wajib Bu, sebentar kok buat silaturahmi.|lastricorrect]]\n[[Boleh Bu, angsurannya titip tetangga saja.|lastrifalse]]\n<<endif>>",
+		"position": {
+			"x": 1914,
+			"y": -637
+		},
+		"colorID": 8
+	},
+	{
+		"title": "lastricorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>>  <<talking>> <<nasabahdone>> <<set $BuLastri to true >> <<correct>> <<aminah_jadiginibu>>\nMohon maaf Bu, pertemuan mingguan (PKM) itu wajib karena itu nyawanya Mekaar. Tapi tenang Bu, cuma sebentar kok. Di sana kita bisa sekalian silaturahmi dan saling bantu kalau ada ibu-ibu yang usahanya lagi sepi\n<<avatar Bu Lastri>>  <<happy>> <<npc3_ohgtu>> \nYa sudah kalau wajib dan sebentar mah saya usahain deh. Lagian bener juga sih, itung-itung istirahat sebentar dari ngurus rumah. Boleh bawa anak kan Neng?\n<<avatar Aminah>> <<happy>> <<aminah_ketawa>>\nBoleh banget Bu, asal anaknya anteng yah..",
+		"position": {
+			"x": 2023,
+			"y": -399
+		},
+		"colorID": 4
+	},
+	{
+		"title": "lastrifalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<set $BuLastriWrong = true>> <<false>>  \nBoleh kok Bu, nggak apa-apa. Kalau Ibu sibuk, nanti angsurannya titip ke tetangga sebelah aja, yang penting bayar\n<<avatar Bu Lastri>>  <<think>> <<npc3_hmm>> \nLho? Kok gampang banget? Tetangga saya itu mulutnya ember lho Neng, kalau uang saya dibawa kabur atau dia lupa bayarin gimana\n<<avatar Bu Lastri>>  <<think>> \nKok aturannya main titip-titipan kayak arisan bodong sih? Aduh, nggak jadi deh Neng. Ngeri saya kalau pengelolaannya nggak rapi begini.",
+		"position": {
+			"x": 1808,
+			"y": -400
+		},
+		"colorID": 1
+	},
+	{
+		"title": "BuTitin",
+		"tags": "",
+		"body": "<<if $BuTitin == true>>\n<<avatar Bu Titin>> <<neutral>>\nSaya Tertarik Mba, tolong diinfokan proses lanjutannya yah nanti\n\n<<elseif $BuTitinWrong == true>>\n<<avatar Aminah>>  <<neutral>>\nAssalamualaikum Bu, maaf saya datang lagi.\n<<avatar Bu Titin>> <<talking>> \nWaalaikumsalam. Eh Mba Aminah, gimana? Masih mau nawarin yang tadi?\n[[ Nanti saat Survei, saya bantu jelaskan ke Bapak.|titincorrect]]\n[[ Jangan bilang suami Bu, diem-diem aja..|titinfalse]]\n\n<<else>>\n<<avatar Bu Titin>> <<avatar Aminah>> <<neutral>> <<aminah_persmisiibu>> \nPermisi Bu Perkenalkan saya Aminah dari PNM Mekaar. Kami adalah BUMN milik pemerintah yang khusus memberikan modal usaha dan pembinaan bagi ibu-ibu agar usahanya makin maju.\n<<avatar Bu Titin>>  <<talking>> <<npc4_halomba>> \nWah, modal usaha ya mba? Sebenernya saya mau banget buat nambah dagangan\n<<avatar Bu Titin>>  <<talking>> <<npc_hmm3 >> \nTapi suami saya galak Mba. Nanti kalau saya ikut beginian malah dimarahin, dikira saya ngutang buat foya-foya atau beli baju baru.\n[[ Nanti saat Survei, saya bantu jelaskan ke Bapak.|titincorrect]]\n[[ Jangan bilang suami Bu, diem-diem aja..|titinfalse]]\n<<endif>>",
+		"position": {
+			"x": 2343,
+			"y": -623
+		},
+		"colorID": 8
+	},
+	{
+		"title": "titincorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<talking>> <<nasabahdone>> <<set $BuTitin to true >> <<correct>> <<aminah_beginiibu>>\nJangan takut Bu. Nanti kan ada tahapan Uji Kelayakan (Survei). Saat saya datang resmi ke rumah Ibu untuk survei usaha, saya akan bantu jelaskan langsung ke Bapak.\n<<hidchoose>> <<avatar Aminah>> <<talking>>\nKita kasih pengertian pelan-pelan bahwa ini adalah modal usaha produktif resmi dari BUMN untuk bantu ekonomi keluarga.\n<<avatar Bu Titin>>  <<happy>> <<npc4_ohbgtu>> \nOh... jadi nanti mba datang lagi ke rumah ketemu Bapak langsung pas survei? Syukur deh kalau gitu\n<<avatar Bu Titin>>  <<Titin>> <<talking>> \nSoalnya kalau ada petugas seragam kayak mba yang jelasin resmi, biasanya Bapak segan dan lebih percaya. \n<<avatar Aminah>> <<happy>> <<aminah_ketawa >> \nSiap Bu. Bismillah, semoga Bapak setuju \n<<avatar Aminah>> <<talking>> \nKira-kira kapan Ibu dan Bapak ada waktu luang untuk saya kunjungi (Uji Kelayakan)? Biar pas saya datang, Bapak ada di rumah.\n<<avatar Bu Titin>>  <<think>> <<npc_hmm1>> \nMmm... Kebetulan Bapak pulangnya sore terus minggu ini. Besok sore jam 4 bisa Neng? Biasanya Bapak lagi santai tuh sambil ngopi.\n<<avatar Aminah>> <<talking>> \nBisa banget Bu. Insyaallah besok sore jam 4 saya ke rumah ya. Terima kasih Bu Titin.",
+		"position": {
+			"x": 2449,
+			"y": -395
+		},
+		"colorID": 4
+	},
+	{
+		"title": "titinfalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<set $BuTitinWrong = true>> <<false>> \nJangan bilang suami Bu, diem-diem aja. Nanti uangnya Ibu puter buat usaha, kalau udah untung kan Bapak nggak bakal marah\n<<avatar Bu Titin>>  <<think>> \nAstaghfirullah, jangan Neng! Kalau ketahuan saya bohong, bisa habis saya diamuk suami\n<<avatar Bu Titin>>  <<neutral>> \nSaya nggak berani kalau harus kucing-kucingan begitu. Maaf ya Neng, saya nggak jadi ikut",
+		"position": {
+			"x": 2236,
+			"y": -398
+		},
+		"colorID": 1
+	},
+	{
+		"title": "BuWati",
+		"tags": "",
+		"body": "<<if $BuWati == true>>\n<<avatar Bu Wati>> <<neutral>>\nSaya Tertarik Mba, tolong diinfokan proses lanjutannya yah nanti\n\n<<elseif $BuWatiWrong == true>>\n<<avatar Aminah>> <<neutral>>\nAssalamualaikum Bu Wati, maaf saya datang lagi.\n<<avatar Bu Wati>> <<talking>>\nWaalaikumsalam. Eh Neng Aminah, gimana? Masih mau nawarin pendampingan usaha tadi?\n[[PNM memberikan pelatihan dan pendampingan usaha berkala untuk membantu mengembangkan usaha Ibu.|waticorrect]]\n[[Kami hanya meminjamkan uang saja Bu, setelah itu sukses atau bangkrut ditanggung masing-masing.|watifalse]]\n\n<<else>>\n<<avatar Bu Wati>> <<avatar Aminah>> <<neutral>>\nAssalamualaikum, selamat siang Bu Wati. Sedang sibuk dengan ternak ayamnya ya Bu? Perkenalkan saya Aminah dari PNM Mekaar.\n<<avatar Bu Wati>> <<talking>>\nWaalaikumsalam Neng. Iya nih, lagi kasih makan ayam. Mekaar ya? Neng, apa setelah dapat pinjaman modal usaha kami dibiarkan begitu saja, atau ada bimbingan untuk usaha ternak ayam saya ini?\n[[PNM memberikan pelatihan dan pendampingan usaha berkala untuk membantu mengembangkan usaha Ibu.|waticorrect]]\n[[Kami hanya meminjamkan uang saja Bu, setelah itu sukses atau bangkrut ditanggung masing-masing.|watifalse]]\n<<endif>>",
+		"position": {
+			"x": 1540,
+			"y": -145
+		},
+		"colorID": 0
+	},
+	{
+		"title": "waticorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<explain>> <<nasabahdone>> <<set $BuWati to true >> <<correct>>\nBenar Bu Wati, di PNM Mekaar kami tidak hanya memberikan modal usaha, tapi juga memberikan pelatihan dan pendampingan usaha berkala agar usaha ternak ayam Ibu semakin berkembang dan maju.\n<<avatar Bu Wati>> <<happy>>\nWah hebat ya, tidak cuma dikasih modal tapi diajari juga cara mengelola bisnis yang baik! Bagus sekali neng, saya tertarik gabung kalau begitu.",
+		"position": {
+			"x": 1656,
+			"y": 91
+		},
+		"colorID": 4
+	},
+	{
+		"title": "watifalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<set $BuWatiWrong = true>> <<false>>\nKami hanya meminjamkan uang saja Bu, setelah itu urusan sukses atau bangkrut ditanggung masing-masing anggota kelompok.\n<<avatar Bu Wati>> <<think>>\nWaduh, kalau dibiarkan begitu saja tanpa dibimbing saya takut salah kelola modalnya neng, malah rugi nanti. Saya kurang tertarik kalau begitu.",
+		"position": {
+			"x": 1426,
+			"y": 99
+		},
+		"colorID": 1
+	},
+	{
+		"title": "BuIjah",
+		"tags": "",
+		"body": "<<if $BuIjah == true>>\n<<avatar Bu Ijah>> <<neutral>>\nSaya Tertarik Mba, tolong diinfokan proses lanjutannya yah nanti\n\n<<elseif $BuIjahWrong == true>>\n<<avatar Aminah>> <<neutral>>\nAssalamualaikum Bu Ijah, maaf saya datang lagi.\n<<avatar Bu Ijah>> <<talking>>\nWaalaikumsalam. Eh Neng Aminah, gimana? Masih mau nawarin modal usaha tadi?\n[[PNM Mekaar memberikan modal usaha khusus kelompok untuk ibu-ibu prasejahtera agar bisa mandiri.|ijahcorrect]]\n[[PNM Mekaar memberikan pinjaman perorangan untuk siapa saja yang butuh uang cepat.|ijahfalse]]\n\n<<else>>\n<<avatar Bu Ijah>> <<avatar Aminah>> <<neutral>>\nAssalamualaikum, selamat siang Bu Ijah. Sedang mempersiapkan dagangan baksonya ya Bu? Perkenalkan saya Aminah dari PNM Mekaar.\n<<avatar Bu Ijah>> <<talking>>\nWaalaikumsalam Neng. Iya nih, lagi siapin mangkok. Mekaar ya? Itu layanan pinjaman modal usaha seperti apa ya neng?\n[[PNM Mekaar memberikan modal usaha khusus kelompok untuk ibu-ibu prasejahtera agar bisa mandiri.|ijahcorrect]]\n[[PNM Mekaar memberikan pinjaman perorangan untuk siapa saja yang butuh uang cepat.|ijahfalse]]\n<<endif>>",
+		"position": {
+			"x": 1270,
+			"y": -895
+		},
+		"colorID": 8
+	},
+	{
+		"title": "ijahcorrect",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<explain>> <<nasabahdone>> <<set $BuIjah to true >> <<correct>>\nKami memberikan layanan permodalan tanpa agunan yang berbasis kelompok khusus untuk ibu-ibu prasejahtera yang ingin memulai atau mengembangkan usaha produktifnya, Bu.\n<<avatar Bu Ijah>> <<happy>>\nOh, berkelompok dan untuk modal usaha ya neng. Bagus sekali itu, saya tertarik gabung agar bisa menambah modal dagang bakso saya.",
+		"position": {
+			"x": 1370,
+			"y": -650
+		},
+		"colorID": 4
+	},
+	{
+		"title": "ijahfalse",
+		"tags": "",
+		"body": "<<hidchoose>> <<avatar Aminah>> <<set $BuIjahWrong = true>> <<false>>\nPNM Mekaar memberikan pinjaman perorangan untuk siapa saja yang butuh uang cepat tanpa perlu repot berkelompok.\n<<avatar Bu Ijah>> <<think>>\nWaduh neng, kalau perorangan saya takut tidak bisa disiplin mengangsurnya sendiri. Saya kurang tertarik kalau begitu.",
+		"position": {
+			"x": 1170,
+			"y": -650
+		},
+		"colorID": 1
+	}
+]
