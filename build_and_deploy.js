@@ -76,8 +76,12 @@ if (fs.existsSync(forkDir)) {
   // Fix script src: yarn_fork/game.js → game.js (now at root)
   html = html.replace(/src="yarn_fork\/game\.js/g, 'src="game.js');
 
+  // Cache busting: update ?v=... queries to use build timestamp
+  const buildVersion = Date.now();
+  html = html.replace(/(game\.js|style\.css)\?v=[a-zA-Z0-9.-]+/gi, `$1?v=${buildVersion}`);
+
   fs.writeFileSync(distIndex, html, 'utf-8');
-  console.log('  ✔ Patched dist/index.html (removed <base>, fixed script paths)');
+  console.log(`  ✔ Patched dist/index.html (removed <base>, fixed paths, cache busted v=${buildVersion})`);
 
   // Patch game.js to load olddialogue.json from root instead of yarn_fork subdirectory
   const distGame = path.join(distDir, 'game.js');
