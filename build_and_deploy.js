@@ -54,10 +54,10 @@ for (let entry of rootEntries) {
   copyRecursive(path.join(__dirname, entry), path.join(distDir, entry));
 }
 
-// Promote yarn_fork files to root (overwrite index.html & game.js)
+// Promote yarn_fork files to root (overwrite index.html, game.js & olddialogue.json)
 const forkDir = path.join(__dirname, 'yarn_fork');
 if (fs.existsSync(forkDir)) {
-  const forkFiles = ['index.html', 'game.js'];
+  const forkFiles = ['index.html', 'game.js', 'olddialogue.json'];
   for (const file of forkFiles) {
     const src = path.join(forkDir, file);
     if (fs.existsSync(src)) {
@@ -78,6 +78,15 @@ if (fs.existsSync(forkDir)) {
 
   fs.writeFileSync(distIndex, html, 'utf-8');
   console.log('  ✔ Patched dist/index.html (removed <base>, fixed script paths)');
+
+  // Patch game.js to load olddialogue.json from root instead of yarn_fork subdirectory
+  const distGame = path.join(distDir, 'game.js');
+  if (fs.existsSync(distGame)) {
+    let js = fs.readFileSync(distGame, 'utf-8');
+    js = js.replace(/fetch\(['"]yarn_fork\/olddialogue\.json['"]\)/g, "fetch('olddialogue.json')");
+    fs.writeFileSync(distGame, js, 'utf-8');
+    console.log('  ✔ Patched dist/game.js (updated olddialogue.json fetch path)');
+  }
 }
 
 console.log('Dist build complete. Running Netlify deploy...');
