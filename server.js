@@ -16,10 +16,11 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  // Decode URL in case of spaces/special chars
-  let filePath = path.join(__dirname, decodeURIComponent(req.url));
+  // Strip query parameters before mapping to filesystem
+  const urlPath = req.url.split('?')[0];
+  let filePath = path.join(__dirname, decodeURIComponent(urlPath));
   
-  if (req.url === '/') {
+  if (urlPath === '/') {
     filePath = path.join(__dirname, 'index.html');
   }
 

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playpen+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <!-- Lottie Player for tap hint animation -->
-  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.js"></script>
 </head>
 <body>
 
@@ -171,9 +171,11 @@
         <div class="top-header-bar">
           <div class="top-header-card">
             <h1 class="top-header-title">Cabang PNM Sukamaju</h1>
-            <p class="top-header-sub">Dapatkan pengarahan dari KUM Citra</p>
+            <p class="top-header-sub" id="cabang-objective-text">Tugas: Temui & dapatkan pengarahan dari KUM Citra</p>
             <div class="top-header-line-container">
-              <div class="hud-progress-bar-bg" style="height: 4px; background-color: #ddd;"></div>
+              <div class="hud-progress-bar-bg" style="height: 4px; background-color: #ddd;">
+                <div id="cabang-objective-progress" style="height: 100%; width: 0%; background-color: var(--pnm-green); transition: width 0.4s ease;"></div>
+              </div>
             </div>
           </div>
           <div class="top-header-actions">
@@ -205,6 +207,32 @@
               <div class="npc-character-sprite"></div>
             </div>
           </div>
+        </div>
+
+        <!-- Swipe Left Hint (First time - guide to Citra) -->
+        <div id="cabang-swipe-left-hint" class="cabang-swipe-hint">
+          <dotlottie-player
+            src="https://lottie.host/22b7d114-e32a-49d9-aced-3e89df68fbc3/V0NZ1VMydr.lottie"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+            style="width: 210px; height: 210px;"
+          ></dotlottie-player>
+          <span class="swipe-hint-text">Geser untuk menemui Citra</span>
+        </div>
+
+        <!-- Swipe Right Hint (After Citra - guide to exit door) -->
+        <div id="cabang-swipe-right-hint" class="cabang-swipe-hint">
+          <dotlottie-player
+            src="https://lottie.host/6a87a6bd-11f9-47d5-b65d-88feb97f8450/EMcc628MVF.lottie"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+            style="width: 210px; height: 210px;"
+          ></dotlottie-player>
+          <span class="swipe-hint-text">Geser ke pintu keluar</span>
         </div>
 
         <!-- Dialogue Box (Bottom Overlay, hidden initially) -->
@@ -267,7 +295,7 @@
               speed="1"
               loop
               autoplay
-              style="width: 80px; height: 80px;"
+              style="width: 112px; height: 112px;"
             ></dotlottie-player>
           </div>
           <div class="prep-grid">
@@ -358,6 +386,16 @@
             </p>
             <button id="btn-close-prep-feedback" class="btn btn-primary btn-full-width">MENGERTI</button>
           </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2D: VIDEO CUTSCENE (Riding to Village) -->
+      <div id="cutscene-screen" class="game-screen">
+        <div class="cutscene-container">
+          <video id="cutscene-video" playsinline preload="auto">
+            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3AFO85m3yq1v2iumMppWE8MOW0i/hf_20260625_152454_56b06f06-2d2c-4235-a425-3d62d9247590.mp4" type="video/mp4">
+          </video>
+          <button id="btn-skip-cutscene" class="cutscene-skip-btn">Lewati ▸▸</button>
         </div>
       </div>
 
@@ -538,8 +576,8 @@
           <!-- Performance details -->
           <div class="victory-stats-card">
             <div class="stat-row">
-              <span class="stat-label">Nasabah Direkrut:</span>
-              <span class="stat-value text-green">10 / 10</span>
+              <span id="victory-stat-label-recruits" class="stat-label">Nasabah Direkrut:</span>
+              <span id="victory-stat-value-recruits" class="stat-value text-green">10 / 10</span>
             </div>
             <div class="stat-row">
               <span class="stat-label">Jawaban Tepat (Percobaan 1):</span>

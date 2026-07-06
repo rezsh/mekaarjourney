@@ -976,6 +976,20 @@ body {
   transform: translateY(2px);
   box-shadow: 0 0px 0px transparent;
 }
+.option-btn.green {
+  background-color: var(--pnm-green);
+  color: white;
+  border-color: var(--pnm-green-dark);
+  box-shadow: 0 3px 0px var(--pnm-green-dark);
+}
+.option-btn.green:hover {
+  background-color: var(--pnm-green-dark);
+}
+.option-btn.green:active {
+  background-color: var(--pnm-green-dark);
+  transform: translateY(2px);
+  box-shadow: 0 0px 0px transparent;
+}
 
 /* Dialogue Feedback Sliding Panel */
 .dialogue-feedback-panel {
@@ -1092,6 +1106,7 @@ body {
   color: var(--text-dark);
   line-height: 1.5;
   font-weight: 500;
+  white-space: pre-line;
 }
 
 /* SCREEN 5: VICTORY / LEVEL COMPLETE */
@@ -1898,6 +1913,72 @@ body {
   }
 }
 
+/* SCREEN: VIDEO CUTSCENE */
+.cutscene-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cutscene-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cutscene-skip-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-family: var(--font-game);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.15s ease;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: cutscene-skip-fadein 0.5s ease 2s forwards;
+}
+
+.cutscene-skip-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.05);
+}
+
+.cutscene-skip-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes cutscene-skip-fadein {
+  to { opacity: 1; }
+}
+
+#cutscene-screen.fade-out {
+  animation: fade-out 0.5s ease forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* SCREEN: CABANG PNM SUKAMAJU */
 .cabang-viewport {
   width: 100%;
@@ -2013,6 +2094,46 @@ body {
   animation: door-glow-pulse 1.5s infinite alternate;
 }
 
+dotlottie-player {
+  display: block;
+}
+
+/* Cabang Swipe Hint Indicators */
+.cabang-swipe-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.65));
+}
+
+.cabang-swipe-hint.visible {
+  opacity: 1;
+}
+
+.swipe-hint-text {
+  font-family: var(--font-game);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 6px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Citra NPC (Aligned with red floor marker) */
 .npc-citra {
   position: absolute;
@@ -2047,6 +2168,20 @@ body {
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
   transform: scaleX(-1);
   /* Mirror the sprite horizontally so she faces left */
+}
+
+/* Citra Green Glow Objective Highlight */
+.npc-citra.glowing-objective .npc-character-sprite {
+  animation: citra-green-glow-breath 2s infinite alternate ease-in-out;
+}
+
+@keyframes citra-green-glow-breath {
+  0% {
+    filter: drop-shadow(0 0 4px rgba(46, 204, 113, 0.45));
+  }
+  100% {
+    filter: drop-shadow(0 0 16px rgba(46, 204, 113, 0.95));
+  }
 }
 
 .speech-bubble-indicator {
@@ -2197,4 +2332,276 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* scene-mode for Level 2 Uji Kelayakan full screen slides */
+.npc-portrait-img.scene-mode {
+  height: 100% !important;
+  width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  margin-top: 0 !important;
+  filter: none !important;
+  border-radius: 0 !important;
+}
+
+@keyframes map-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -75%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -75%) scale(1.1);
+    filter: drop-shadow(0 0 10px var(--gold));
+  }
+}
+.map-encounter.blinking {
+  animation: map-blink 1.2s ease-in-out infinite !important;
+}
+
+/* MINIGAME SCREEN */
+#minigame-screen {
+  display: none;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000;
+}
+
+#minigame-screen.active {
+  display: flex;
+}
+
+.minigame-header-container {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.minigame-header-card {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid var(--pnm-green-dark);
+  border-radius: 16px;
+  padding: 12px 20px;
+  flex-grow: 1;
+  max-width: 320px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.minigame-header-title {
+  font-family: var(--font-game);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--pnm-green-dark);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.minigame-header-sub {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  margin: 2px 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.minigame-progress-line-container {
+  width: 100%;
+}
+
+.minigame-progress-bar-bg {
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#minigame-progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--pnm-green);
+  transition: width 0.3s ease;
+}
+
+.minigame-settings-actions {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* TIMER BAR */
+#minigame-timer-container {
+  position: absolute;
+  top: 115px;
+  left: 16px;
+  right: 16px;
+  z-index: 100;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#minigame-timer-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #f1c40f, #e74c3c);
+  transition: width 0.1s linear;
+  z-index: 1;
+}
+
+#minigame-timer-text {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-game);
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* PLAY AREA */
+.minigame-play-area {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  background: url('ukmingame.jpeg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SWIPE CARD CONTAINER */
+.swipe-card-container {
+  width: 210px;
+  height: 160px;
+  position: absolute;
+  bottom: 100px;
+  z-index: 20;
+  perspective: 1000px;
+}
+
+.swipe-card {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 3px solid var(--pnm-green);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+  transform-origin: center bottom;
+  transition: transform 0.1s ease;
+}
+
+.swipe-card:active {
+  cursor: grabbing;
+}
+
+.swipe-card.swiped-left {
+  transform: translate(-500px, 50px) rotate(-30deg) !important;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.swipe-card.swiped-right {
+  transform: translate(500px, 50px) rotate(30deg) !important;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.swipe-card.resetting {
+  transform: translate(0, 0) rotate(0) !important;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2) !important;
+}
+
+.swipe-card-text {
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pnm-green-dark);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* SWIPE FEEDBACK OVERLAYS */
+.swipe-feedback-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.swipe-feedback-left {
+  left: 0;
+  background: linear-gradient(90deg, rgba(231, 76, 60, 0.45) 0%, rgba(231, 76, 60, 0) 100%);
+}
+
+.swipe-feedback-right {
+  right: 0;
+  background: linear-gradient(270deg, rgba(46, 204, 113, 0.45) 0%, rgba(46, 204, 113, 0) 100%);
+}
+
+@keyframes pulse-breathing {
+  0%, 100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.swipe-feedback-overlay.active {
+  animation: pulse-breathing 1.0s ease-in-out infinite;
+}
+
+/* SWIPE TUTORIAL OVERLAY */
+.swipe-tutorial-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }

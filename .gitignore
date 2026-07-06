@@ -1,2 +1,5 @@
 # Local Netlify folder
 .netlify
+.agents/
+dist/
+deploy_log.txt
