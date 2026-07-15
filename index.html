@@ -626,6 +626,7 @@
           </button>
           <div class="encounter-indicator">
             <span id="dialogue-location-name">Warung Sedap</span>
+            <span id="dialogue-pov-badge" class="pov-badge hidden">AO AMINAH</span>
             <div id="people-count-badge" class="people-count-badge">
               <svg viewBox="0 0 24 24" width="16" height="16">
                 <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/>
@@ -680,6 +681,95 @@
             </div>
             <button id="btn-feedback-next" class="btn btn-primary btn-full-width">LANJUT</button>
           </div>
+
+          <!-- MINIGAME 1: PILIH DOKUMEN (BOARD MODE) -->
+          <div id="verifdocs-board" class="dialogue-board-minigame verifdocs-container hidden">
+            <div class="board-minigame-title">Verifikasi Dokumen</div>
+            <div class="verif-feedback-msg" id="verifdocs-feedback">Pilih 3 dokumen wajib yang benar.</div>
+            <div class="verifdocs-grid-board">
+              <div class="verifdoc-card" data-doc="ktp">
+                <div class="doc-icon">🪪</div>
+                <div class="doc-title">KTP</div>
+              </div>
+              <div class="verifdoc-card" data-doc="tabungan">
+                <div class="doc-icon">🏦</div>
+                <div class="doc-title">Tabungan</div>
+              </div>
+              <div class="verifdoc-card" data-doc="ijazah">
+                <div class="doc-icon">🎓</div>
+                <div class="doc-title">Ijazah</div>
+              </div>
+              <div class="verifdoc-card" data-doc="domisili">
+                <div class="doc-icon">🏠</div>
+                <div class="doc-title">Domisili</div>
+              </div>
+              <div class="verifdoc-card" data-doc="kk">
+                <div class="doc-icon">👨‍👩‍👧‍👦</div>
+                <div class="doc-title">KK</div>
+              </div>
+              <div class="verifdoc-card" data-doc="bpjs">
+                <div class="doc-icon">🏥</div>
+                <div class="doc-title">BPJS</div>
+              </div>
+            </div>
+            <div style="padding: 0 10px; width: 100%; box-sizing: border-box;">
+              <button id="btn-verifdocs-confirm" class="btn btn-primary btn-full-width" style="margin-top: 0;">KONFIRMASI</button>
+            </div>
+          </div>
+
+          <!-- MINIGAME 2: COMPARISON TABLE (BOARD MODE) -->
+          <div id="mirrordocs-board" class="dialogue-board-minigame mirrordocs-container hidden">
+            <div class="board-minigame-title">Perbandingan Data Dokumen</div>
+            <div class="verif-feedback-msg" id="mirrordocs-feedback">Temukan 2 data yang tidak sesuai.</div>
+            <div class="comparison-table-scroll">
+              <div class="comparison-table">
+                <div class="comparison-header">
+                  <div class="col-field">Field</div>
+                  <div class="col-survei">Survei</div>
+                  <div class="col-dokumen">Fisik</div>
+                </div>
+                <div class="comparison-row" data-field="nama">
+                  <div class="col-field">Nama</div>
+                  <div class="col-survei">Ina Lestari</div>
+                  <div class="col-dokumen">Ina Lestari</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+                <div class="comparison-row" data-field="nik">
+                  <div class="col-field">NIK</div>
+                  <div class="col-survei">3204...001</div>
+                  <div class="col-dokumen">3204...001</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+                <div class="comparison-row" data-field="alamat">
+                  <div class="col-field">Alamat</div>
+                  <div class="col-survei">Jl. Melati 5</div>
+                  <div class="col-dokumen">Jl. Melati 5</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+                <div class="comparison-row" data-field="tgl_lahir">
+                  <div class="col-field">Tgl Lahir</div>
+                  <div class="col-survei">12 Mei 1985</div>
+                  <div class="col-dokumen">12 Mei 1986</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+                <div class="comparison-row" data-field="status">
+                  <div class="col-field">Status</div>
+                  <div class="col-survei">Menikah</div>
+                  <div class="col-dokumen">Menikah</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+                <div class="comparison-row" data-field="no_kk">
+                  <div class="col-field">No. KK</div>
+                  <div class="col-survei">3204xxxx</div>
+                  <div class="col-dokumen">3204xxxy</div>
+                  <div class="row-status-indicator"></div>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 0 10px; width: 100%; box-sizing: border-box;">
+              <button id="btn-mirrordocs-confirm" class="btn btn-primary btn-full-width" style="margin-top: 0;">KONFIRMASI</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -732,6 +822,84 @@
                 loop
                 autoplay>
               </dotlottie-player>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4C: MINIGAME FOTO (Uji Kelayakan) -->
+      <div id="photominigame-screen" class="game-screen">
+        <div class="viewfinder-container" id="photo-viewfinder">
+          <!-- Panoramic Environment Sprite -->
+          <img id="photo-panorama-img" src="photominigame.jpeg" alt="Room Panorama">
+          
+          <!-- Camera Directional Arrows -->
+          <div class="camera-arrow arrow-left" id="camera-arrow-left">◀</div>
+          <div class="camera-arrow arrow-right" id="camera-arrow-right">▶</div>
+          
+          <!-- Viewfinder Grid overlay -->
+          <div class="camera-grid">
+            <div class="grid-line horizontal-1"></div>
+            <div class="grid-line horizontal-2"></div>
+            <div class="grid-line vertical-1"></div>
+            <div class="grid-line vertical-2"></div>
+          </div>
+
+          <!-- Camera Reticle in center -->
+          <div class="camera-reticle" id="camera-reticle">
+            <div class="reticle-circle"></div>
+            <div class="reticle-bracket bracket-tl"></div>
+            <div class="reticle-bracket bracket-tr"></div>
+            <div class="reticle-bracket bracket-bl"></div>
+            <div class="reticle-bracket bracket-br"></div>
+            <span class="reticle-text" id="reticle-text">MENCARI SUDUT...</span>
+          </div>
+
+          <!-- Flash Overlay -->
+          <div class="shutter-flash" id="shutter-flash"></div>
+
+          <!-- Top Camera HUD (Thumbnails and guidelines) -->
+          <div class="camera-hud-top">
+            <div class="camera-hud-title">UJI KELAYAKAN: FOTO RUMAH</div>
+            <div class="photo-progress-indicator">
+              <div class="photo-thumb-badge locked" id="thumb-left">
+                <div class="thumb-wrapper">
+                  <div class="thumb-preview" style="background-image: url('photominigame.jpeg'); background-position: 10% center;"></div>
+                  <div class="thumb-checkmark">✓</div>
+                </div>
+                <span>SUDUT KIRI</span>
+              </div>
+              <div class="photo-thumb-badge locked" id="thumb-center">
+                <div class="thumb-wrapper">
+                  <div class="thumb-preview" style="background-image: url('photominigame.jpeg'); background-position: 50% center;"></div>
+                  <div class="thumb-checkmark">✓</div>
+                </div>
+                <span>SUDUT TENGAH</span>
+              </div>
+              <div class="photo-thumb-badge locked" id="thumb-right">
+                <div class="thumb-wrapper">
+                  <div class="thumb-preview" style="background-image: url('photominigame.jpeg'); background-position: 90% center;"></div>
+                  <div class="thumb-checkmark">✓</div>
+                </div>
+                <span>SUDUT KANAN</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom UI Area (Shutter button and hint) -->
+          <div class="camera-hud-bottom">
+            <div class="camera-hint-text" id="camera-hint-text">Geser layar ke kiri atau kanan untuk mencari sudut ruangan</div>
+            <div class="shutter-btn-outer">
+              <button id="btn-shutter" class="shutter-btn" title="Ambil Foto"></button>
+            </div>
+          </div>
+
+          <!-- Transition overlay for completion -->
+          <div class="photo-transition-overlay" id="photo-transition-overlay">
+            <div class="photo-transition-card">
+              <div class="photo-transition-icon">✓</div>
+              <div class="photo-transition-title">3/3 FOTO TERSIMPAN</div>
+              <div class="photo-transition-sub">Dokumentasi Uji Kelayakan Selesai</div>
             </div>
           </div>
         </div>
@@ -842,6 +1010,15 @@
             
             <button id="btn-close-instructions" class="btn btn-primary btn-full-width">MENGERTI</button>
           </div>
+        </div>
+      <!-- TIME SKIP TRANSITION OVERLAY -->
+      <div class="time-skip-overlay" id="time-skip-overlay">
+        <div class="time-skip-content">
+          <div class="time-skip-clock">
+            <div class="clock-hand hour"></div>
+            <div class="clock-hand minute"></div>
+          </div>
+          <div class="time-skip-text">Beberapa saat kemudian...</div>
         </div>
       </div>
 

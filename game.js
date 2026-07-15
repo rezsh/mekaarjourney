@@ -478,6 +478,84 @@ const LEVEL_CONFIGS = {
             portraitId: 9,
             objection: "Iya, sama-sama Mbak. Alhamdulillah kalau semuanya lancar.",
             options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "Narator",
+            portraitId: 9,
+            objection: "Kamu adalah KUM (Ketua Unit Mekaar) yang bertugas melakukan verifikasi. Kamu telah tiba di rumah Bu Ina.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Assalamualaikum Bu Lia, perkenalkan saya Citra, KUM dari Kuningan Mulia. Kedatangan saya untuk memverifikasi data pengajuan pembiayaan Ibu.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BU LIA",
+            portraitId: 9,
+            objection: "Oh iya, Mbak. Silakan masuk.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Apa benar ini dengan Ibu Ina? Saya mau memastikan data hasil survei atau Uji Kelayakan kemarin yang dilakukan oleh Mbak Aminah.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BU LIA",
+            portraitId: 9,
+            objection: "Iya betul, Mbak. Ada yang perlu saya siapkan?",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Yang perlu disiapkan itu...",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "KTP, KK asli, serta surat domisili aktif jika alamat Ibu tidak sesuai dengan KTP ya, Bu.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BU LIA",
+            portraitId: 9,
+            objection: "Oke, saya siapkan dan ambil ya, Mbak. Sebentar ya.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Baik, Bu. Saya cek dulu berkasnya ya.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BU LIA",
+            portraitId: 9,
+            objection: "Silakan, Mbak Citra.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Baik, dokumennya sudah saya cek kembali dan sudah sesuai ya, Bu.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "BU LIA",
+            portraitId: 9,
+            objection: "Alhamdulillah. Terima kasih, Mbak Citra. Cairnya kapan ya, Mbak? Hehe.",
+            options: [{ text: "Lanjut", isCorrect: true }]
+          },
+          {
+            speaker: "KUM CITRA",
+            portraitId: 9,
+            objection: "Insya Allah tidak lama, Bu. Setelah seluruh proses verifikasi dan persetujuan selesai, kami akan segera menghubungi Ibu.",
+            options: [{ text: "Selesai", isCorrect: true }]
           }
         ]
       }
@@ -488,6 +566,15 @@ const LEVEL_CONFIGS = {
 const STATE = {
   currentLevel: 1,
   cluesFound: { ibu: false, house: false },
+  photoMinigame: {
+    captured: {
+      left: false,
+      center: false,
+      right: false
+    },
+    currentX: 0,
+    activeTarget: null
+  },
   screen: "menu", // menu, level_select, map, dialogue, victory
   collectedCount: 0,
   firstTryCorrect: 0,
@@ -1185,6 +1272,47 @@ function playSound(type) {
     gainNode.gain.linearRampToValueAtTime(0, now + 0.08);
     osc.start(now);
     osc.stop(now + 0.08);
+  }
+  else if (type === "beep") {
+    // Synthetic short focus beep
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1000, now);
+    gainNode.gain.setValueAtTime(0.12, now);
+    gainNode.gain.linearRampToValueAtTime(0, now + 0.05);
+    osc.start(now);
+    osc.stop(now + 0.05);
+  }
+  else if (type === "shutter") {
+    // Synthetic shutter sound: rapid high click + slide
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(2000, now);
+    osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
+    gainNode.gain.setValueAtTime(0.35, now);
+    gainNode.gain.linearRampToValueAtTime(0, now + 0.15);
+    osc.start(now);
+    osc.stop(now + 0.15);
+    
+    // Add a second noise-like click using bandpass-filtered triangle wave
+    const osc2 = ctx.createOscillator();
+    const gainNode2 = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    
+    osc2.type = "triangle";
+    osc2.frequency.setValueAtTime(150, now);
+    osc2.frequency.exponentialRampToValueAtTime(10, now + 0.1);
+    
+    filter.type = "bandpass";
+    filter.frequency.setValueAtTime(1000, now);
+    
+    osc2.connect(filter);
+    filter.connect(gainNode2);
+    gainNode2.connect(ctx.destination);
+    
+    gainNode2.gain.setValueAtTime(0.25, now);
+    gainNode2.gain.linearRampToValueAtTime(0, now + 0.1);
+    
+    osc2.start(now);
+    osc2.stop(now + 0.1);
   }
   else if (type === "correct") {
     // Uplifting arpeggio chime (C5 -> E5 -> G5 -> C6)
@@ -1979,6 +2107,23 @@ function loadDialogueStep() {
   const encData = CONFIG.encounters[STATE.activeEncounterId];
   const dialogue = encData.dialogues[STATE.dialogueIndex];
 
+  // Update POV Badge dynamically
+  const povBadge = document.getElementById("dialogue-pov-badge");
+  if (povBadge) {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
+      povBadge.classList.remove("hidden");
+      if (STATE.dialogueIndex >= 15) {
+        povBadge.innerText = "KUM CITRA";
+        povBadge.className = "pov-badge kum";
+      } else {
+        povBadge.innerText = "AO AMINAH";
+        povBadge.className = "pov-badge ao";
+      }
+    } else {
+      povBadge.classList.add("hidden");
+    }
+  }
+
   // Set speaker name
   document.getElementById("speaker-name").innerText = dialogue.speaker;
 
@@ -1991,22 +2136,23 @@ function loadDialogueStep() {
     if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
       portraitImg.className = "npc-portrait-img scene-mode";
       const idx = STATE.dialogueIndex;
-      let imgNum = 1;
-      let ext = ".jpeg";
       if (idx >= 0 && idx <= 2) {
-        imgNum = 1;
-        ext = ".jpeg";
+        portraitImg.src = "ujikelayakan&verif/ukmeet1.jpeg";
       } else if (idx >= 3 && idx <= 5) {
-        imgNum = 2;
-        ext = ".jpg";
+        portraitImg.src = "ujikelayakan&verif/ukmeet2.jpg";
       } else if (idx >= 6 && idx <= 10) {
-        imgNum = 3;
-        ext = ".jpeg";
-      } else if (idx >= 11) {
-        imgNum = 6;
-        ext = ".jpeg";
+        portraitImg.src = "ujikelayakan&verif/ukmeet3.jpeg";
+      } else if (idx >= 11 && idx <= 14) {
+        portraitImg.src = "ujikelayakan&verif/ukmeet6.jpeg";
+      } else if (idx >= 15 && idx <= 17) {
+        portraitImg.src = "ujikelayakan&verif/verif1.jpeg";
+      } else if (idx >= 18 && idx <= 22) {
+        portraitImg.src = "ujikelayakan&verif/verif2.jpeg";
+      } else if (idx >= 23 && idx <= 24) {
+        portraitImg.src = "ujikelayakan&verif/verif3.jpeg";
+      } else if (idx >= 25 && idx <= 27) {
+        portraitImg.src = "ujikelayakan&verif/verif4.jpeg";
       }
-      portraitImg.src = `ujikelayakan&verif/ukmeet${imgNum}${ext}`;
     } else {
       portraitImg.classList.remove("scene-mode");
       portraitImg.src = getPortraitUrl(dialogue.portraitId, "talk");
@@ -2088,6 +2234,29 @@ function handleOptionSelect(option, buttonEl) {
     playSound("tap");
     if (option.text === "Mulai Wawancara") {
       startInterviewMinigame();
+      return;
+    }
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
+        (STATE.dialogueIndex === 10 || (dialogue.objection === "Silakan, Mbak." && dialogue.speaker === "BU LIA"))) {
+      startPhotoMinigame();
+      return;
+    }
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
+        (STATE.dialogueIndex === 14 || dialogue.objection.includes("Alhamdulillah kalau semuanya lancar"))) {
+      console.log("TRANSITION TRIGGERED at dialogueIndex:", STATE.dialogueIndex);
+      triggerTimeSkipTransition(() => {
+        advanceDialogue();
+      });
+      return;
+    }
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
+        (STATE.dialogueIndex === 20 || dialogue.objection.includes("Yang perlu disiapkan itu"))) {
+      startVerifDocsMinigame();
+      return;
+    }
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
+        (STATE.dialogueIndex === 24 || (dialogue.objection === "Silakan, Mbak Citra." && dialogue.speaker === "BU LIA"))) {
+      startMirrorDocsMinigame();
       return;
     }
     advanceDialogue();
@@ -2872,6 +3041,626 @@ function handleCabangExit() {
   // Transition to safety riding
   resetPrepScreen();
   showScreen("prep");
+}
+
+// ==========================================================================
+// PHOTO MINIGAME LOGIC (CAMERA SCRIPT)
+// ==========================================================================
+
+const PHOTO_TARGETS = {
+  left: 220,
+  center: 688,
+  right: 1156
+};
+
+function startPhotoMinigame() {
+  STATE.screen = "photominigame";
+  showScreen("photominigame");
+
+  // Reset captured state
+  STATE.photoMinigame = {
+    captured: {
+      left: false,
+      center: false,
+      right: false
+    },
+    currentX: 0,
+    activeTarget: null
+  };
+
+  // Reset HUD badges to locked
+  const targets = ["left", "center", "right"];
+  targets.forEach(t => {
+    const badge = document.getElementById(`thumb-${t}`);
+    if (badge) {
+      badge.className = "photo-thumb-badge locked";
+    }
+  });
+
+  // Reset panorama position
+  const panoramaImgEl = document.getElementById("photo-panorama-img");
+  if (panoramaImgEl) {
+    panoramaImgEl.style.transform = "translateX(0px)";
+  }
+
+  // Hide transition complete overlay
+  const overlay = document.getElementById("photo-transition-overlay");
+  if (overlay) {
+    overlay.classList.remove("active");
+  }
+
+  // Reset hints
+  const hintEl = document.getElementById("camera-hint-text");
+  if (hintEl) {
+    hintEl.innerText = "Geser layar ke kiri atau kanan untuk mencari sudut ruangan";
+    hintEl.style.opacity = "0.8";
+  }
+
+  // Initialize drag events
+  initPhotoMinigameDragHandlers();
+
+  // Initial target proximity check after minor layout render delay
+  setTimeout(() => {
+    checkTargetProximity();
+  }, 100);
+}
+
+let photoMinigameDragInitialized = false;
+function initPhotoMinigameDragHandlers() {
+  if (photoMinigameDragInitialized) return;
+  photoMinigameDragInitialized = true;
+
+  const viewfinderEl = document.getElementById("photo-viewfinder");
+  const panoramaImgEl = document.getElementById("photo-panorama-img");
+  const shutterBtn = document.getElementById("btn-shutter");
+
+  if (shutterBtn) {
+    shutterBtn.addEventListener("click", handleShutterClick);
+  }
+
+  let isDragging = false;
+  let startX = 0;
+  let startScrollX = 0;
+  let velocity = 0;
+  let lastTime = 0;
+  let lastClientX = 0;
+  let momentumId = null;
+
+  function onStart(e) {
+    if (STATE.screen !== "photominigame") return;
+    isDragging = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startScrollX = STATE.photoMinigame.currentX;
+    lastTime = performance.now();
+    lastClientX = startX;
+    velocity = 0;
+
+    if (momentumId) {
+      cancelAnimationFrame(momentumId);
+      momentumId = null;
+    }
+
+    // Fade in hint text slightly on drag
+    const hint = document.getElementById("camera-hint-text");
+    if (hint) {
+      hint.style.opacity = "0.5";
+    }
+  }
+
+  function onMove(e) {
+    if (!isDragging || STATE.screen !== "photominigame") return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const deltaX = clientX - startX;
+
+    // Track speed for inertia
+    const now = performance.now();
+    const dt = now - lastTime;
+    if (dt > 0) {
+      const dx = clientX - lastClientX;
+      velocity = -dx / dt; // drag scroll direction speed
+      lastTime = now;
+      lastClientX = clientX;
+    }
+
+    // Dragging left (negative deltaX) moves the panorama to the right (increases scroll/currentX)
+    let nextX = startScrollX - deltaX;
+
+    const V = viewfinderEl.clientWidth;
+    const W = panoramaImgEl.clientWidth;
+    const maxScrollX = Math.max(0, W - V);
+
+    STATE.photoMinigame.currentX = Math.max(0, Math.min(nextX, maxScrollX));
+    panoramaImgEl.style.transform = `translateX(${-STATE.photoMinigame.currentX}px)`;
+
+    checkTargetProximity();
+  }
+
+  function onEnd() {
+    isDragging = false;
+    
+    // Trigger inertia scroll if released with velocity
+    if (Math.abs(velocity) > 0.05) {
+      const friction = 0.95;
+      const momentumStep = () => {
+        if (isDragging || STATE.screen !== "photominigame") return;
+        velocity *= friction;
+
+        const V = viewfinderEl.clientWidth;
+        const W = panoramaImgEl.clientWidth;
+        const maxScrollX = Math.max(0, W - V);
+
+        STATE.photoMinigame.currentX += velocity * 16.6;
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(STATE.photoMinigame.currentX, maxScrollX));
+        panoramaImgEl.style.transform = `translateX(${-STATE.photoMinigame.currentX}px)`;
+
+        checkTargetProximity();
+
+        if (Math.abs(velocity) > 0.01) {
+          momentumId = requestAnimationFrame(momentumStep);
+        } else {
+          momentumId = null;
+        }
+      };
+      momentumId = requestAnimationFrame(momentumStep);
+    }
+  }
+
+  // Mouse Listeners
+  viewfinderEl.addEventListener("mousedown", onStart);
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("mouseup", onEnd);
+
+  // Touch Listeners
+  viewfinderEl.addEventListener("touchstart", onStart, { passive: true });
+  window.addEventListener("touchmove", onMove, { passive: true });
+  window.addEventListener("touchend", onEnd);
+
+  // Keyboard shortcuts for testing the photo minigame
+  window.addEventListener("keydown", (e) => {
+    if (STATE.screen !== "photominigame") return;
+    const key = e.key.toLowerCase();
+    if (["l", "c", "r", "s"].includes(key)) {
+      const V = viewfinderEl.clientWidth;
+      const W = panoramaImgEl.clientWidth;
+      const scale = W / 1376;
+      const maxScrollX = Math.max(0, W - V);
+      
+      if (key === "l") {
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.left * scale - V/2, maxScrollX));
+      } else if (key === "c") {
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.center * scale - V/2, maxScrollX));
+      } else if (key === "r") {
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.right * scale - V/2, maxScrollX));
+      } else if (key === "s") {
+        handleShutterClick();
+        return;
+      }
+      
+      panoramaImgEl.style.transform = `translateX(${-STATE.photoMinigame.currentX}px)`;
+      checkTargetProximity();
+    }
+  });
+}
+
+function checkTargetProximity() {
+  const viewfinderEl = document.getElementById("photo-viewfinder");
+  const panoramaImgEl = document.getElementById("photo-panorama-img");
+  const reticleEl = document.getElementById("camera-reticle");
+  const reticleText = document.getElementById("reticle-text");
+
+  if (!viewfinderEl || !panoramaImgEl || !reticleEl) return;
+
+  const V = viewfinderEl.clientWidth;
+  const W = panoramaImgEl.clientWidth;
+  if (W === 0) return;
+
+  const scale = W / 1376;
+  const pointingX = STATE.photoMinigame.currentX + V / 2;
+  const tolerance = 45; // range in pixels on rendered image
+
+  let activeTarget = null;
+  for (const [key, targetPx] of Object.entries(PHOTO_TARGETS)) {
+    const targetRenderedX = targetPx * scale;
+    if (Math.abs(pointingX - targetRenderedX) < tolerance) {
+      activeTarget = key;
+      break;
+    }
+  }
+
+  // Play focus lock beep sound
+  if (activeTarget && !STATE.photoMinigame.captured[activeTarget] && STATE.photoMinigame.lastActiveTarget !== activeTarget) {
+    playSound("beep");
+  }
+  STATE.photoMinigame.lastActiveTarget = activeTarget;
+
+  STATE.photoMinigame.activeTarget = activeTarget;
+
+  if (activeTarget) {
+    reticleEl.classList.add("capturable");
+    if (STATE.photoMinigame.captured[activeTarget]) {
+      reticleText.innerText = "SUDUT TERGAMBAR";
+      reticleEl.classList.add("already-captured");
+    } else {
+      reticleText.innerText = "SIAP AMBIL FOTO!";
+      reticleEl.classList.remove("already-captured");
+    }
+  } else {
+    reticleEl.className = "camera-reticle";
+    reticleText.innerText = "MENCARI SUDUT...";
+  }
+
+  // Update directional helper arrows
+  let hasLeftUncaptured = false;
+  let hasRightUncaptured = false;
+  for (const [key, targetPx] of Object.entries(PHOTO_TARGETS)) {
+    if (!STATE.photoMinigame.captured[key]) {
+      const targetRenderedX = targetPx * scale;
+      if (targetRenderedX < pointingX - 60) {
+        hasLeftUncaptured = true;
+      }
+      if (targetRenderedX > pointingX + 60) {
+        hasRightUncaptured = true;
+      }
+    }
+  }
+  const arrowLeft = document.getElementById("camera-arrow-left");
+  const arrowRight = document.getElementById("camera-arrow-right");
+  if (arrowLeft) {
+    arrowLeft.classList.toggle("active", hasLeftUncaptured);
+  }
+  if (arrowRight) {
+    arrowRight.classList.toggle("active", hasRightUncaptured);
+  }
+}
+
+function handleShutterClick() {
+  if (STATE.screen !== "photominigame") return;
+
+  // Flash white visual feedback
+  const flash = document.getElementById("shutter-flash");
+  if (flash) {
+    flash.style.opacity = "1";
+    setTimeout(() => {
+      flash.style.opacity = "0";
+    }, 150);
+  }
+
+  playSound("shutter");
+
+  const target = STATE.photoMinigame.activeTarget;
+  if (target) {
+    if (STATE.photoMinigame.captured[target]) {
+      showCameraHint("Sudut ini sudah difoto!");
+      return;
+    }
+
+    // Mark as captured
+    STATE.photoMinigame.captured[target] = true;
+
+    // Visual feedback in progress HUD
+    const badge = document.getElementById(`thumb-${target}`);
+    if (badge) {
+      badge.classList.remove("locked");
+      badge.classList.add("captured");
+    }
+
+    // Pop animation on captured preview badge
+    const thumbWrapper = badge ? badge.querySelector(".thumb-wrapper") : null;
+    if (thumbWrapper) {
+      thumbWrapper.style.transform = "scale(1.2)";
+      setTimeout(() => {
+        thumbWrapper.style.transform = "scale(1)";
+      }, 300);
+    }
+
+    showCameraHint(`Foto sudut ${target.toUpperCase()} berhasil diambil!`);
+
+    // Update reticle status text
+    checkTargetProximity();
+
+    // Check completion status
+    const allCaptured = Object.values(STATE.photoMinigame.captured).every(v => v === true);
+    if (allCaptured) {
+      triggerPhotoMinigameComplete();
+    }
+  } else {
+    showCameraHint("Sudut kurang pas, coba geser lagi!");
+  }
+}
+
+function showCameraHint(msg) {
+  const hintEl = document.getElementById("camera-hint-text");
+  if (hintEl) {
+    hintEl.innerText = msg;
+    hintEl.style.opacity = "1";
+    if (STATE.cameraHintTimeoutId) clearTimeout(STATE.cameraHintTimeoutId);
+    STATE.cameraHintTimeoutId = setTimeout(() => {
+      if (STATE.screen === "photominigame") {
+        hintEl.style.opacity = "0.7";
+      }
+    }, 2500);
+  }
+}
+
+function triggerPhotoMinigameComplete() {
+  playSound("correct");
+
+  // Show victory overlay
+  const overlay = document.getElementById("photo-transition-overlay");
+  if (overlay) {
+    overlay.classList.add("active");
+  }
+
+  setTimeout(() => {
+    if (overlay) overlay.classList.remove("active");
+
+    STATE.screen = "dialogue";
+    showScreen("dialogue");
+    advanceDialogue();
+  }, 2500);
+}
+
+// ==========================================================================
+// TIME SKIP TRANSITION LOGIC
+// ==========================================================================
+function triggerTimeSkipTransition(callback) {
+  const overlay = document.getElementById("time-skip-overlay");
+  if (!overlay) {
+    if (callback) callback();
+    return;
+  }
+  playSound("tap");
+  overlay.classList.add("active");
+  
+  setTimeout(() => {
+    if (callback) callback();
+    setTimeout(() => {
+      overlay.classList.remove("active");
+    }, 1500);
+  }, 1200);
+}
+
+// Toggle minigame contents inside dialogue board
+function setDialogueBoardMinigameMode(minigameId) {
+  const board = document.querySelector(".dialogue-board");
+  if (!board) return;
+  
+  if (minigameId) {
+    board.classList.add("minigame-active");
+    board.querySelectorAll(".dialogue-board-minigame").forEach(el => el.classList.add("hidden"));
+    const target = document.getElementById(minigameId);
+    if (target) {
+      target.classList.remove("hidden");
+    }
+  } else {
+    board.classList.remove("minigame-active");
+    board.querySelectorAll(".dialogue-board-minigame").forEach(el => el.classList.add("hidden"));
+  }
+}
+
+// ==========================================================================
+// MINIGAME 1: CHOOSE VERIFICATION DOCUMENTS (BOARD MODE)
+// ==========================================================================
+let verifDocsMinigameInitialized = false;
+function startVerifDocsMinigame() {
+  showScreen("dialogue");
+  STATE.screen = "verifdocs";
+  setDialogueBoardMinigameMode("verifdocs-board");
+  
+  // Clear any previous selection
+  STATE.verifDocsSelected = new Set();
+  
+  const cards = document.querySelectorAll(".verifdocs-grid-board .verifdoc-card");
+  cards.forEach(card => {
+    card.classList.remove("selected");
+  });
+  
+  const feedbackMsg = document.getElementById("verifdocs-feedback");
+  if (feedbackMsg) {
+    feedbackMsg.innerText = "Pilih 3 dokumen wajib yang benar. (Terpilih: 0/3)";
+    feedbackMsg.className = "verif-feedback-msg";
+  }
+  
+  initVerifDocsHandlers();
+}
+
+function initVerifDocsHandlers() {
+  if (verifDocsMinigameInitialized) return;
+  verifDocsMinigameInitialized = true;
+  
+  const cards = document.querySelectorAll(".verifdocs-grid-board .verifdoc-card");
+  const updateVerifProgress = () => {
+    const feedback = document.getElementById("verifdocs-feedback");
+    if (feedback) {
+      const count = STATE.verifDocsSelected.size;
+      feedback.innerText = `Pilih 3 dokumen wajib yang benar. (Terpilih: ${count}/3)`;
+      feedback.className = "verif-feedback-msg";
+    }
+  };
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      if (STATE.screen !== "verifdocs") return;
+      playSound("tap");
+      const docType = card.getAttribute("data-doc");
+      if (STATE.verifDocsSelected.has(docType)) {
+        STATE.verifDocsSelected.delete(docType);
+        card.classList.remove("selected");
+      } else {
+        STATE.verifDocsSelected.add(docType);
+        card.classList.add("selected");
+      }
+      updateVerifProgress();
+    });
+  });
+  
+  const btnConfirm = document.getElementById("btn-verifdocs-confirm");
+  if (btnConfirm) {
+    btnConfirm.addEventListener("click", () => {
+      if (STATE.screen !== "verifdocs") return;
+      
+      const feedbackMsg = document.getElementById("verifdocs-feedback");
+      const container = document.getElementById("verifdocs-board");
+      
+      // Target correct set: ktp, kk, domisili
+      const correctSet = new Set(["ktp", "kk", "domisili"]);
+      
+      // Check if selected matches correctSet exactly
+      let isCorrect = STATE.verifDocsSelected.size === correctSet.size && 
+                      [...STATE.verifDocsSelected].every(x => correctSet.has(x));
+                      
+      if (isCorrect) {
+        playSound("correct");
+        if (feedbackMsg) {
+          feedbackMsg.innerText = "Tepat sekali! Memverifikasi dokumen...";
+          feedbackMsg.className = "verif-feedback-msg success";
+        }
+        
+        setTimeout(() => {
+          setDialogueBoardMinigameMode(null);
+          STATE.screen = "dialogue";
+          advanceDialogue();
+        }, 1500);
+      } else {
+        playSound("incorrect");
+        triggerVignetteFlash("incorrect");
+        if (feedbackMsg) {
+          feedbackMsg.innerText = "Coba cek lagi, Mbak!";
+          feedbackMsg.className = "verif-feedback-msg error";
+        }
+        if (container) {
+          container.classList.add("shake-element");
+          setTimeout(() => {
+            container.classList.remove("shake-element");
+          }, 400);
+        }
+      }
+    });
+  }
+}
+
+// ==========================================================================
+// MINIGAME 2: MIRROR DATA COMPARISON (BOARD MODE)
+// ==========================================================================
+let mirrorDocsMinigameInitialized = false;
+function startMirrorDocsMinigame() {
+  showScreen("dialogue");
+  STATE.screen = "mirrordocs";
+  setDialogueBoardMinigameMode("mirrordocs-board");
+  
+  // Clear any previous selection
+  STATE.mismatchesSelected = new Set();
+  
+  const rows = document.querySelectorAll("#mirrordocs-board .comparison-row");
+  rows.forEach(row => {
+    row.className = "comparison-row"; // Reset selected, error, correct classes
+  });
+  
+  const feedbackMsg = document.getElementById("mirrordocs-feedback");
+  if (feedbackMsg) {
+    feedbackMsg.innerText = "Temukan 2 data yang tidak sesuai. (Terpilih: 0/2)";
+    feedbackMsg.className = "verif-feedback-msg";
+  }
+  
+  initMirrorDocsHandlers();
+}
+
+function initMirrorDocsHandlers() {
+  if (mirrorDocsMinigameInitialized) return;
+  mirrorDocsMinigameInitialized = true;
+  
+  const rows = document.querySelectorAll("#mirrordocs-board .comparison-row");
+  const updateMirrorProgress = () => {
+    const feedback = document.getElementById("mirrordocs-feedback");
+    if (feedback) {
+      const count = STATE.mismatchesSelected.size;
+      feedback.innerText = `Temukan 2 data yang tidak sesuai. (Terpilih: ${count}/2)`;
+      feedback.className = "verif-feedback-msg";
+    }
+  };
+
+  rows.forEach(row => {
+    row.addEventListener("click", () => {
+      if (STATE.screen !== "mirrordocs") return;
+      playSound("tap");
+      const fieldName = row.getAttribute("data-field");
+      
+      // Clean previous error marks on this row
+      row.classList.remove("error-validated");
+      
+      if (STATE.mismatchesSelected.has(fieldName)) {
+        STATE.mismatchesSelected.delete(fieldName);
+        row.classList.remove("selected");
+      } else {
+        STATE.mismatchesSelected.add(fieldName);
+        row.classList.add("selected");
+      }
+      updateMirrorProgress();
+    });
+  });
+  
+  const btnConfirm = document.getElementById("btn-mirrordocs-confirm");
+  if (btnConfirm) {
+    btnConfirm.addEventListener("click", () => {
+      if (STATE.screen !== "mirrordocs") return;
+      
+      const feedbackMsg = document.getElementById("mirrordocs-feedback");
+      const container = document.getElementById("mirrordocs-board");
+      
+      // Target correct mistakes: tgl_lahir and no_kk
+      const correctMismatches = new Set(["tgl_lahir", "no_kk"]);
+      
+      // Check if selected matches correctMismatches exactly
+      let isCorrect = STATE.mismatchesSelected.size === correctMismatches.size &&
+                      [...STATE.mismatchesSelected].every(x => correctMismatches.has(x));
+                      
+      if (isCorrect) {
+        playSound("correct");
+        if (feedbackMsg) {
+          feedbackMsg.innerText = "Sempurna! Semua perbedaan data telah diidentifikasi.";
+          feedbackMsg.className = "verif-feedback-msg success";
+        }
+        
+        // Highlight rows green
+        rows.forEach(row => {
+          const field = row.getAttribute("data-field");
+          if (correctMismatches.has(field)) {
+            row.classList.add("correct-validated");
+          }
+        });
+        
+        setTimeout(() => {
+          setDialogueBoardMinigameMode(null);
+          STATE.screen = "dialogue";
+          advanceDialogue();
+        }, 1800);
+      } else {
+        playSound("incorrect");
+        triggerVignetteFlash("incorrect");
+        if (feedbackMsg) {
+          feedbackMsg.innerText = "Coba periksa kembali, Mbak!";
+          feedbackMsg.className = "verif-feedback-msg error";
+        }
+        
+        // Visual indicator: mark selected incorrect rows with cross
+        rows.forEach(row => {
+          const field = row.getAttribute("data-field");
+          if (STATE.mismatchesSelected.has(field)) {
+            if (!correctMismatches.has(field)) {
+              row.classList.add("error-validated");
+            }
+          }
+        });
+        
+        if (container) {
+          container.classList.add("shake-element");
+          setTimeout(() => {
+            container.classList.remove("shake-element");
+          }, 400);
+        }
+      }
+    });
+  }
 }
 
 // Minigame variables
@@ -3662,6 +4451,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 3800);
   }
+
+  // Initialize Level 2 Minigames Event Listeners
+  initVerifDocsHandlers();
+  initMirrorDocsHandlers();
 
   // Initialize star score presentation on first load
   updateLevelDetailStars();
