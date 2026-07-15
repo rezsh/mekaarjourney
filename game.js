@@ -412,7 +412,7 @@ const LEVEL_CONFIGS = {
           {
             speaker: "Narator",
             portraitId: 9,
-            objection: "Suami Bu Lia telah datang menemui kalian. Apa yang kamu lakukan selanjutnya?",
+            objection: "Suami Bu Lia telah datang menemui kamu. Apa yang kamu lakukan selanjutnya?",
             options: [
               { text: "Lewati perkenalan dan langsung mulai wawancara.", isCorrect: false },
               { text: "Perkenalkan diri dengan jelas dan jelaskan tujuan survei.", isCorrect: true },
@@ -2136,13 +2136,17 @@ function loadDialogueStep() {
     if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia") {
       portraitImg.className = "npc-portrait-img scene-mode";
       const idx = STATE.dialogueIndex;
-      if (idx >= 0 && idx <= 2) {
+      if (idx >= 0 && idx <= 1) {
         portraitImg.src = "ujikelayakan&verif/ukmeet1.jpeg";
-      } else if (idx >= 3 && idx <= 5) {
+      } else if (idx === 2) {
         portraitImg.src = "ujikelayakan&verif/ukmeet2.jpg";
-      } else if (idx >= 6 && idx <= 10) {
+      } else if (idx >= 3 && idx <= 5) {
         portraitImg.src = "ujikelayakan&verif/ukmeet3.jpeg";
-      } else if (idx >= 11 && idx <= 14) {
+      } else if (idx === 6 || idx === 7) {
+        portraitImg.src = "ujikelayakan&verif/ukmeet4.jpg";
+      } else if (idx === 8) {
+        portraitImg.src = "ujikelayakan&verif/ukmeet5.jpg";
+      } else if (idx >= 9 && idx <= 14) {
         portraitImg.src = "ujikelayakan&verif/ukmeet6.jpeg";
       } else if (idx >= 15 && idx <= 17) {
         portraitImg.src = "ujikelayakan&verif/verif1.jpeg";
