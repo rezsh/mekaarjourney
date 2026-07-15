@@ -2147,7 +2147,7 @@ function loadDialogueStep() {
       } else if (idx === 8) {
         portraitImg.src = "ujikelayakan&verif/ukmeet5.jpg";
       } else if (idx >= 9 && idx <= 14) {
-        portraitImg.src = "ujikelayakan&verif/ukmeet6.jpeg";
+        portraitImg.src = "ujikelayakan&verif/ukmeet4.jpg";
       } else if (idx >= 15 && idx <= 17) {
         portraitImg.src = "ujikelayakan&verif/verif1.jpeg";
       } else if (idx >= 18 && idx <= 22) {
