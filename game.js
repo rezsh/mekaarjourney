@@ -264,7 +264,7 @@ const LEVEL_CONFIGS = {
           {
             speaker: "CITRA (KUM)",
             portraitId: "citra",
-            objection: "Selamat pagi! Hari ini tugasmu adalah melakukan Uji Kelayakan & Verifikasi terhadap calon nasabah baru kita, Bu Lia.",
+            objection: "Selamat pagi {playername}! Hari ini tugasmu adalah melakukan Uji Kelayakan & Verifikasi terhadap calon nasabah baru kita, Bu Lia.",
             options: [{ text: "Lanjut", isCorrect: true }],
             correctResponse: ""
           },
@@ -300,7 +300,7 @@ const LEVEL_CONFIGS = {
           {
             speaker: "PAK RT",
             portraitId: "pakrt",
-            objection: "Selamat pagi, Neng AO. Mau mencari rumah warga untuk Uji Kelayakan ya? Silakan tanya ke ibu-ibu yang sedang berkumpul di warung atau rumah warga lainnya.",
+            objection: "Selamat pagi, Neng {playername}. Mau mencari rumah warga untuk Uji Kelayakan ya? Silakan tanya ke ibu-ibu yang sedang berkumpul di warung atau rumah warga lainnya.",
             options: [
               { text: "Terima kasih Pak RT, saya akan mencari informasi terlebih dahulu.", isCorrect: true },
               { text: "Iya Pak, saya langsung cari sendiri saja tanpa petunjuk.", isCorrect: false }
@@ -1213,6 +1213,15 @@ function validateRidingPrep() {
   }
 }
 
+// Replace {playername} placeholder with user custom name
+function replacePlayerName(text) {
+  if (!text) return text;
+  const name = localStorage.getItem("mekaar_player_name") || "Aminah";
+  let processed = text.replace(/\{playername\}/gi, name);
+  processed = processed.replace(/Aminah/gi, name);
+  return processed;
+}
+
 // Handle Portrait Asset Filename Typos
 function getPortraitUrl(id, state) {
   // Special overrides for typos
@@ -1372,6 +1381,9 @@ function runTypewriter(text) {
   if (!textEl) return;
   textEl.textContent = "";
   let charIndex = 0;
+
+  // Replace player name placeholder
+  text = replacePlayerName(text);
 
   // Hide options container initially
   const optionsContainer = document.querySelector(".options-container");
@@ -1981,7 +1993,7 @@ function loadYarnStep() {
       if (opt.text.toLowerCase() === "lanjut") {
         btn.classList.add("green");
       }
-      btn.innerText = opt.text;
+      btn.innerText = replacePlayerName(opt.text);
       btn.addEventListener("click", () => handleYarnOptionSelect(opt));
       optionsList.appendChild(btn);
     });
@@ -2216,7 +2228,7 @@ function loadDialogueStep() {
       if (opt.text.toLowerCase() === "lanjut") {
         btn.classList.add("green");
       }
-      btn.innerText = opt.text;
+      btn.innerText = replacePlayerName(opt.text);
       btn.addEventListener("click", () => handleOptionSelect(opt, btn));
       optionsList.appendChild(btn);
     });
@@ -2299,7 +2311,7 @@ function handleOptionSelect(option, buttonEl) {
       feedbackIcon.className = "feedback-icon correct";
       feedbackTitle.innerText = "Tepat Sekali!";
       feedbackTitle.className = "feedback-title correct";
-      feedbackResponse.innerText = dialogue.correctResponse;
+      feedbackResponse.innerText = replacePlayerName(dialogue.correctResponse);
 
       // Setup Next button
       const btnNext = document.getElementById("btn-feedback-next");
@@ -2330,7 +2342,7 @@ function handleOptionSelect(option, buttonEl) {
     feedbackIcon.className = "feedback-icon incorrect";
     feedbackTitle.innerText = "Kurang Tepat!";
     feedbackTitle.className = "feedback-title incorrect";
-    feedbackResponse.innerText = dialogue.incorrectResponse;
+    feedbackResponse.innerText = replacePlayerName(dialogue.incorrectResponse);
 
     // Disable this option button to prevent re-clicks
     buttonEl.style.opacity = "0.5";
@@ -2670,6 +2682,16 @@ function openSettingsModal(fromMainMenu = false) {
   const btnResume = document.getElementById("btn-pause-resume");
   if (btnResume) {
     btnResume.innerText = fromMainMenu ? "KEMBALI" : "LANJUTKAN GAME";
+  }
+
+  const nameSettingRow = document.getElementById("settings-player-name-row");
+  if (nameSettingRow) {
+    nameSettingRow.style.display = fromMainMenu ? "flex" : "none";
+  }
+
+  const nameInput = document.getElementById("settings-player-name-input");
+  if (nameInput) {
+    nameInput.value = localStorage.getItem("mekaar_player_name") || "Aminah";
   }
 
   const btnMenu = document.getElementById("btn-pause-menu");
@@ -4080,11 +4102,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Main Menu Buttons
   document.getElementById("btn-play").addEventListener("click", () => {
-    // Show level selection popup modal
-    // Set level card star to match current high score star (default: check completed history)
-    updateLevelSelectionUI();
-    document.getElementById("level-select-overlay").classList.add("active");
-    playSound("tap");
+    const playerName = localStorage.getItem("mekaar_player_name");
+    if (!playerName) {
+      document.getElementById("name-input-modal").classList.add("active");
+      playSound("tap");
+    } else {
+      updateLevelSelectionUI();
+      document.getElementById("level-select-overlay").classList.add("active");
+      playSound("tap");
+    }
   });
 
   document.getElementById("btn-options").addEventListener("click", () => {
@@ -4094,6 +4120,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Pause Modal Handlers
   document.getElementById("btn-pause-resume").addEventListener("click", () => {
+    const nameInput = document.getElementById("settings-player-name-input");
+    const nameSettingRow = document.getElementById("settings-player-name-row");
+    
+    // Only verify if the name input row is visible (meaning we are on Main Menu settings)
+    if (nameSettingRow && nameSettingRow.style.display !== "none" && nameInput) {
+      const newName = nameInput.value.trim();
+      const currentSavedName = localStorage.getItem("mekaar_player_name") || "Aminah";
+      
+      if (newName && newName !== currentSavedName) {
+        const confirmText = document.getElementById("name-confirm-text");
+        if (confirmText) {
+          confirmText.innerText = `Apakah Anda yakin ingin mengubah nama menjadi "${newName}"?`;
+        }
+        document.getElementById("name-confirm-modal").classList.add("active");
+        playSound("tap");
+        return; // wait for confirmation
+      }
+    }
+    
     document.getElementById("pause-modal").classList.remove("active");
     playSound("tap");
   });
@@ -4459,6 +4504,51 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize Level 2 Minigames Event Listeners
   initVerifDocsHandlers();
   initMirrorDocsHandlers();
+
+  // Name Input Submissions & Listeners
+  document.getElementById("btn-submit-name").addEventListener("click", () => {
+    const nameInput = document.getElementById("first-time-name-input");
+    const name = nameInput.value.trim();
+    if (!name) {
+      nameInput.style.borderColor = "#d32f2f";
+      playSound("incorrect");
+      return;
+    }
+    localStorage.setItem("mekaar_player_name", name);
+    document.getElementById("name-input-modal").classList.remove("active");
+    playSound("tap");
+
+    // Continue to level select
+    updateLevelSelectionUI();
+    document.getElementById("level-select-overlay").classList.add("active");
+  });
+
+  document.getElementById("first-time-name-input").addEventListener("input", (e) => {
+    e.target.style.borderColor = "";
+  });
+
+  document.getElementById("btn-confirm-name-yes").addEventListener("click", () => {
+    const nameInput = document.getElementById("settings-player-name-input");
+    if (nameInput) {
+      const newName = nameInput.value.trim();
+      if (newName) {
+        localStorage.setItem("mekaar_player_name", newName);
+      }
+    }
+    document.getElementById("name-confirm-modal").classList.remove("active");
+    document.getElementById("pause-modal").classList.remove("active");
+    playSound("tap");
+  });
+
+  document.getElementById("btn-confirm-name-no").addEventListener("click", () => {
+    const nameInput = document.getElementById("settings-player-name-input");
+    if (nameInput) {
+      nameInput.value = localStorage.getItem("mekaar_player_name") || "Aminah";
+    }
+    document.getElementById("name-confirm-modal").classList.remove("active");
+    document.getElementById("pause-modal").classList.remove("active");
+    playSound("tap");
+  });
 
   // Initialize star score presentation on first load
   updateLevelDetailStars();

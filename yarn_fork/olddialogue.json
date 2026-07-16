@@ -22,7 +22,7 @@
 	{
 		"title": "Citra",
 		"tags": "",
-		"body": "<<if $acceptQuest1 == true>> \n<<avatar Citra>> <<neutral>>  << citra_selamattugas>> \nJangan lupa baca posternya ya, selamat bertugas!\n<<else>>\n<<avatar Citra>> <<neutral>> <<citra_selamatpagi>> \nHalo Aminah! Selamat datang di Desa Sukamaju. tugas pertamamu adalah SOSIALISASI\n<<avatar Citra>> <<neutral>>  \nTarget kita: Cari 10 Ibu-ibu yang punya potensi usaha untuk kita ajak gabung. Ingat ya, yang dicari itu Ibu-ibu prasejahtera yang mau usaha\n<<avatar Citra>> <<neutral>> <<misiposter>> <<citra_poster>>  <<set $acceptQuest1 to true >> \nTAPI TUNGGU DULU! Sebelum berangkat, pastikan kamu sudah paham kebijakan dan prosedur. Kita sudah tempel 3 Poster di dinding kantor. Baca terlebih dahulu semuanya, sebagai bekalmu agar lebih jelas lagi dilapangan. Kalau belum baca, jangan berangkat dulu ya!\n\n<<endif>>",
+		"body": "<<if $acceptQuest1 == true>> \n<<avatar Citra>> <<neutral>>  << citra_selamattugas>> \nJangan lupa baca posternya ya, selamat bertugas!\n<<else>>\n<<avatar Citra>> <<neutral>> <<citra_selamatpagi>> \nHalo {playername}! Selamat datang di Desa Sukamaju. tugas pertamamu adalah SOSIALISASI\n<<avatar Citra>> <<neutral>>  \nTarget kita: Cari 10 Ibu-ibu yang punya potensi usaha untuk kita ajak gabung. Ingat ya, yang dicari itu Ibu-ibu prasejahtera yang mau usaha\n<<avatar Citra>> <<neutral>> <<misiposter>> <<citra_poster>>  <<set $acceptQuest1 to true >> \nTAPI TUNGGU DULU! Sebelum berangkat, pastikan kamu sudah paham kebijakan dan prosedur. Kita sudah tempel 3 Poster di dinding kantor. Baca terlebih dahulu semuanya, sebagai bekalmu agar lebih jelas lagi dilapangan. Kalau belum baca, jangan berangkat dulu ya!\n\n<<endif>>",
 		"position": {
 			"x": 1269,
 			"y": -1109

@@ -972,6 +972,11 @@
               <button id="pause-fullscreen-toggle" class="btn btn-secondary">FULLSCREEN</button>
             </div>
             
+            <div class="pause-setting-row" style="flex-direction: column; align-items: stretch; gap: 4px; margin-bottom: 12px;">
+              <span class="setting-label">Nama Player:</span>
+              <input type="text" id="settings-player-name-input" placeholder="Masukkan nama..." maxLength="15" style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid var(--wood-light); font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: var(--text-dark); background-color: #fff; text-align: center;">
+            </div>
+            
             <div class="pause-actions" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 10px;">
               <button id="btn-pause-resume" class="btn btn-primary">LANJUTKAN GAME</button>
               <button id="btn-pause-instructions" class="btn btn-secondary">PETUNJUK BERMAIN</button>
@@ -1012,6 +1017,41 @@
             <button id="btn-close-instructions" class="btn btn-primary btn-full-width">MENGERTI</button>
           </div>
         </div>
+      </div>
+
+      <!-- APP MODAL: PLAYER NAME INPUT (FIRST TIME) -->
+      <div id="name-input-modal" class="modal-overlay">
+        <div class="modal-card animate-pop" style="max-width: 320px;">
+          <div class="wood-banner">
+            <h2>NAMA PLAYER</h2>
+          </div>
+          <div class="modal-card-content" style="display: flex; flex-direction: column; gap: 15px; align-items: center; padding: 20px;">
+            <p style="color: var(--text-dark); text-align: center; font-size: 13px; font-weight: 600; line-height: 1.4; margin: 0;">
+              Selamat datang di Mekaar Journey! Silakan masukkan nama Anda untuk memulai petualangan.
+            </p>
+            <input type="text" id="first-time-name-input" placeholder="Nama Anda..." maxLength="15" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--wood-light); font-family: var(--font-primary); font-size: 14px; font-weight: 600; text-align: center; color: var(--text-dark); background-color: #fff;">
+            <button id="btn-submit-name" class="btn btn-primary btn-full-width">MULAI BERMAIN</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP MODAL: NAME CHANGE CONFIRMATION -->
+      <div id="name-confirm-modal" class="modal-overlay" style="z-index: 210;">
+        <div class="modal-card animate-pop" style="max-width: 300px;">
+          <div class="wood-banner">
+            <h2>KONFIRMASI</h2>
+          </div>
+          <div class="modal-card-content" style="display: flex; flex-direction: column; gap: 15px; align-items: center; padding: 20px;">
+            <p id="name-confirm-text" style="color: var(--text-dark); text-align: center; font-size: 13px; font-weight: 600; line-height: 1.4; margin: 0;">
+              Apakah Anda yakin ingin mengubah nama?
+            </p>
+            <div style="display: flex; gap: 10px; width: 100%;">
+              <button id="btn-confirm-name-yes" class="btn btn-primary" style="flex: 1;">YA</button>
+              <button id="btn-confirm-name-no" class="btn btn-secondary" style="flex: 1; background-color: #d32f2f; border-bottom: 4px solid #b71c1c;">TIDAK</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- TIME SKIP TRANSITION OVERLAY -->
       <div class="time-skip-overlay" id="time-skip-overlay">
         <div class="time-skip-content">
