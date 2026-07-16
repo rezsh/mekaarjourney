@@ -4145,6 +4145,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Only verify if the name input row is visible (meaning we are on Main Menu settings)
     if (nameSettingRow && nameSettingRow.style.display !== "none" && nameInput) {
       const newName = nameInput.value.trim();
+      
+      // Validation: Player cannot leave empty blank on the name input
+      if (!newName) {
+        nameInput.style.borderColor = "#d32f2f";
+        playSound("incorrect");
+        return; // prevent leaving settings
+      }
+      
       const currentSavedName = localStorage.getItem("mekaar_player_name") || "Aminah";
       const currentSavedGender = localStorage.getItem("mekaar_player_gender") || "female";
       const tempGender = STATE.tempSettingsGender || currentSavedGender;
@@ -4615,12 +4623,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameInput = document.getElementById("settings-player-name-input");
     if (nameInput) {
       nameInput.value = localStorage.getItem("mekaar_player_name") || "Aminah";
+      nameInput.style.borderColor = "";
     }
     STATE.tempSettingsGender = localStorage.getItem("mekaar_player_gender") || "female";
     document.getElementById("name-confirm-modal").classList.remove("active");
     document.getElementById("pause-modal").classList.remove("active");
     playSound("tap");
   });
+
+  const settingsPlayerNameInput = document.getElementById("settings-player-name-input");
+  if (settingsPlayerNameInput) {
+    settingsPlayerNameInput.addEventListener("input", (e) => {
+      e.target.style.borderColor = "";
+    });
+  }
 
   // Initialize star score presentation on first load
   updateLevelDetailStars();
