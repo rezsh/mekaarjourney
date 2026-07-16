@@ -3375,3 +3375,642 @@ dotlottie-player {
   color: #ff4d4d !important;
   font-size: 10px;
 }
+
+/* ==========================================================================
+   LEVEL 3: PKM STYLING
+   ========================================================================== */
+
+#pkm-screen {
+  background-color: var(--bg-cream);
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#pkm-screen.active {
+  display: flex;
+}
+
+/* Header & HUD */
+.pkm-header-container {
+  padding: 12px 16px;
+  background-color: #fff;
+  border-bottom: 2px solid #e0d5c8;
+  z-index: 30;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.pkm-header-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pkm-header-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--pnm-green-dark);
+  text-transform: uppercase;
+}
+
+.pkm-header-sub {
+  font-size: 11px;
+  color: #666;
+  font-weight: 400;
+}
+
+.pkm-progress-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.pkm-dot {
+  flex: 1;
+  height: 6px;
+  background-color: #e0d5c8;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.pkm-dot.active {
+  background-color: var(--pnm-green);
+}
+
+.pkm-dot.completed {
+  background-color: var(--pnm-blue);
+}
+
+/* Environment Bg Area */
+.pkm-bg-area {
+  position: relative;
+  flex: 1;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 4px solid var(--wood-light);
+}
+
+.pkm-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.pkm-overlay-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pkm-overlay-layer.hidden {
+  display: none !important;
+}
+
+/* Stage 1: Drag targets (Drop zones) */
+#pkm-stage-1-zones {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 15px 25px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.pkm-dropzone {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 8px 12px;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.pkm-dropzone.dragover {
+  background: rgba(0, 131, 67, 0.25);
+  border-color: var(--pnm-green);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(0, 131, 67, 0.3);
+}
+
+.dropzone-label {
+  font-family: var(--font-game);
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.dropzone-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 44px;
+}
+
+/* Floating interactive nasabah portraits inside drops */
+.pkm-char-card {
+  background: white;
+  border-radius: 8px;
+  padding: 4px;
+  width: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  cursor: grab;
+  pointer-events: auto;
+  transition: transform 0.2s ease;
+}
+
+.pkm-char-card:active {
+  cursor: grabbing;
+}
+
+.pkm-char-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+
+.pkm-char-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #f0f0f0;
+  border: 1.5px solid var(--pnm-green);
+}
+
+.pkm-char-name {
+  font-size: 7px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-dark);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Stage 1 customer pool */
+.pkm-interactive-panel {
+  background-color: var(--bg-cream);
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 2px solid #e0d5c8;
+}
+
+.pkm-interactive-panel.hidden {
+  display: none !important;
+}
+
+.pool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.icon-btn-info {
+  background-color: var(--pnm-blue);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pkm-seating-pool {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 2px 10px 2px;
+  min-height: 80px;
+}
+
+.pkm-seating-pool::-webkit-scrollbar {
+  height: 4px;
+}
+.pkm-seating-pool::-webkit-scrollbar-thumb {
+  background-color: var(--wood-light);
+  border-radius: 2px;
+}
+
+/* Stage 3: App Prompt & App Overlay */
+.app-prompt-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  border: 1px solid #e0d5c8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-prompt-card p {
+  font-size: 11px;
+  color: var(--text-dark);
+}
+
+/* Phone Mockup Frame */
+.mekar-digi-phone {
+  width: 90%;
+  max-width: 380px;
+  height: 85%;
+  background-color: #f7f9fc;
+  border-radius: 36px;
+  border: 8px solid #222;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.phone-status-bar {
+  background-color: #fff;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.phone-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 16px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.app-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--pnm-green-dark);
+}
+
+.app-header p {
+  font-size: 11px;
+  color: #777;
+  margin-top: 4px;
+}
+
+.app-legend {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f1f8f4;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-top: 10px;
+  font-size: 9px;
+  color: #444;
+  border: 1px solid #d4ede1;
+}
+
+.app-nasabah-list {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-nasabah-row {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eef1f6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.app-nasabah-row.correct {
+  border-color: #2ec971;
+  background-color: #f2fcf6;
+}
+
+.app-nasabah-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-nasabah-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.app-nasabah-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.app-code-select-container {
+  display: flex;
+  gap: 4px;
+}
+
+.app-code-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1.5px solid #dcdfe6;
+  background-color: #fff;
+  color: #606266;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.app-code-btn:hover {
+  border-color: var(--pnm-green);
+  color: var(--pnm-green);
+}
+
+.app-code-btn.selected {
+  background-color: var(--pnm-green);
+  border-color: var(--pnm-green);
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 131, 67, 0.3);
+}
+
+.app-code-btn.wrong {
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+  color: white;
+}
+
+.phone-footer {
+  background-color: #fff;
+  padding: 16px;
+  border-top: 1px solid #eee;
+}
+
+/* Stage 3: Visual Indicators in room scene */
+.pkm-visual-indicator {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.pkm-visual-indicator.present-paid {
+  background-color: #2ec971;
+  color: white;
+}
+.pkm-visual-indicator.absent {
+  background-color: #f56c6c;
+  color: white;
+}
+.pkm-visual-indicator.present-nopay {
+  background-color: var(--gold);
+  color: var(--text-dark);
+}
+
+/* Stage 4: Money Counting Game */
+.money-sorting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.money-target-info {
+  background-color: var(--gold);
+  border-radius: 8px;
+  padding: 3px 8px;
+  color: var(--text-dark);
+  font-size: 10px;
+}
+
+.money-bills-pool {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 2px;
+  min-height: 70px;
+}
+
+.money-bill {
+  width: 80px;
+  height: 46px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 11px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  cursor: grab;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  pointer-events: auto;
+}
+
+.money-bill.denom-100k { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.money-bill.denom-50k { background: linear-gradient(135deg, #3498db, #2980b9); }
+.money-bill.denom-20k { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+.money-bill.denom-10k { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+
+.money-bill:active {
+  cursor: grabbing;
+}
+
+.money-bill.dragging {
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+
+.money-bill-mini-label {
+  font-size: 7px;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.money-bins-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.money-bin {
+  background: white;
+  border: 2px dashed #ccd1d9;
+  border-radius: 10px;
+  padding: 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  transition: all 0.2s ease;
+}
+
+.money-bin.dragover {
+  background-color: rgba(0, 131, 67, 0.1);
+  border-color: var(--pnm-green);
+  box-shadow: 0 0 10px rgba(0, 131, 67, 0.15);
+}
+
+.bin-label {
+  font-size: 9px;
+  font-weight: bold;
+  color: #656d78;
+}
+
+.bin-value {
+  font-family: var(--font-game);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--pnm-green-dark);
+  margin-top: 2px;
+}
+
+/* Stage 4: Visual transparent bubble in scene */
+.pkm-raised-hand-money {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.money-count-label {
+  font-size: 9px;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.counting-bubble {
+  font-family: var(--font-game);
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+/* Reference Modal Pop Table */
+.pkm-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.pkm-ref-table th,
+.pkm-ref-table td {
+  padding: 10px 12px;
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.pkm-ref-table th {
+  background-color: #f7f9fc;
+  color: var(--text-dark);
+  font-weight: bold;
+}
+
+.pkm-ref-table td {
+  color: #444;
+}
+
+.pkm-ref-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Signature Area */
+.signature-line-area {
+  border: 2px dashed #ccd1d9;
+  background-color: #fafbfc;
+  height: 120px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.sign-helper-text {
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Animations for drag-drop snaps */
+@keyframes drag-success-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+.drag-correct-pulse {
+  animation: drag-success-pulse 0.5s ease-out;
+}

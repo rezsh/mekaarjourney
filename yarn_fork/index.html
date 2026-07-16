@@ -187,7 +187,7 @@
                 <span class="level-name">PKM</span>
                 <span class="level-sub">Pertemuan Kelompok Mingguan</span>
               </div>
-              <div class="level-status-badge dev">DEV</div>
+              <div class="level-status-badge">KUNCI</div>
             </button>
 
             <button id="btn-close-level-select" class="btn btn-secondary btn-full-width" style="margin-top: 5px;">KEMBALI</button>
@@ -902,6 +902,191 @@
               <div class="photo-transition-title">3/3 FOTO TERSIMPAN</div>
               <div class="photo-transition-sub">Dokumentasi Uji Kelayakan Selesai</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4D: PKM (Pertemuan Kelompok Mingguan) SCREEN -->
+      <div id="pkm-screen" class="game-screen">
+        <!-- PKM HUD / Header -->
+        <div class="pkm-header-container">
+          <div class="pkm-header-card">
+            <h1 class="pkm-header-title">Pertemuan Kelompok Mingguan</h1>
+            <p id="pkm-header-sub" class="pkm-header-sub">Tahap 0: Pembukaan</p>
+            <div class="pkm-progress-dots">
+              <span class="pkm-dot active" data-stage="0"></span>
+              <span class="pkm-dot" data-stage="1"></span>
+              <span class="pkm-dot" data-stage="2"></span>
+              <span class="pkm-dot" data-stage="3"></span>
+              <span class="pkm-dot" data-stage="4"></span>
+              <span class="pkm-dot" data-stage="5"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Environment / Visual Area -->
+        <div class="pkm-bg-area" id="pkm-bg-area">
+          <img id="pkm-bg-img" src="pkm/pkmintro.jpeg" alt="PKM Scene" class="pkm-bg-img">
+          
+          <!-- Visual Overlay Items for Stage 1 (mat areas / markers) -->
+          <div id="pkm-stage-1-zones" class="pkm-overlay-layer hidden">
+            <div class="pkm-dropzone" data-subgroup="A">
+              <div class="dropzone-label">Sub-Kelompok A</div>
+              <div class="dropzone-slots"></div>
+            </div>
+            <div class="pkm-dropzone" data-subgroup="B">
+              <div class="dropzone-label">Sub-Kelompok B</div>
+              <div class="dropzone-slots"></div>
+            </div>
+            <div class="pkm-dropzone" data-subgroup="C">
+              <div class="dropzone-label">Sub-Kelompok C</div>
+              <div class="dropzone-slots"></div>
+            </div>
+          </div>
+
+          <!-- Visual Overlay Items for Stage 3 (customer floating indicators) -->
+          <div id="pkm-stage-3-indicators" class="pkm-overlay-layer hidden">
+            <!-- Floated customers with raised hand/sign indicators -->
+          </div>
+
+          <!-- Visual Overlay Items for Stage 4 (transparent counting bills representation) -->
+          <div id="pkm-stage-4-workspace" class="pkm-overlay-layer hidden">
+            <div class="pkm-raised-hand-money">
+              <span class="money-count-label">Uang Angsuran Dihitung:</span>
+              <span id="pkm-counting-bubble" class="counting-bubble">Menunggu...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dialogue Box Overlay (For Stages 0, 2, 5, and Minigame intros) -->
+        <div id="pkm-dialogue-panel" class="dialogue-board">
+          <div class="speaker-name-container">
+            <span id="pkm-speaker-name" class="speaker-name">AO AMINAH</span>
+          </div>
+          <div class="dialogue-content-box">
+            <p id="pkm-dialogue-text" class="dialogue-text">Loading...</p>
+          </div>
+          <div class="options-container" style="display: flex;">
+            <div id="pkm-options-list" class="options-list">
+              <button id="btn-pkm-dialogue-next" class="option-btn">Lanjut</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 1 Container: Customer Pool -->
+        <div id="pkm-stage-1-pool" class="pkm-interactive-panel hidden">
+          <div class="pool-header">
+            <span>Seret ibu nasabah ke baris sub-kelompok yang sesuai!</span>
+            <button id="btn-pkm-show-ref" class="icon-btn-info">📋 Daftar Kelompok</button>
+          </div>
+          <div id="pkm-seating-pool-grid" class="pkm-seating-pool">
+            <!-- Draggable Nasabah items populate here -->
+          </div>
+        </div>
+
+        <!-- Stage 3 Container: App Button HUD -->
+        <div id="pkm-stage-3-hud" class="pkm-interactive-panel hidden">
+          <div class="app-prompt-card">
+            <p>Buka aplikasi <strong>Mekar Digi</strong> untuk mencatat absensi dan pembayaran nasabah!</p>
+            <button id="btn-pkm-open-app" class="btn btn-primary">BUKA MEKAR DIGI</button>
+          </div>
+        </div>
+
+        <!-- Stage 4 Container: Money Counting Dashboard -->
+        <div id="pkm-stage-4-dashboard" class="pkm-interactive-panel hidden">
+          <div class="money-sorting-header">
+            <span>Kelompokkan uang angsuran berdasarkan pecahan!</span>
+            <div class="money-target-info">Target: <strong id="pkm-money-target-val">Rp 2.400.000</strong></div>
+          </div>
+          <div id="pkm-money-pool" class="money-bills-pool">
+            <!-- Random money bills to drag -->
+          </div>
+          <div class="money-bins-container">
+            <div class="money-bin" data-denom="100000">
+              <div class="bin-label">Rp100.000</div>
+              <div class="bin-value" id="bin-val-100k">Rp0</div>
+            </div>
+            <div class="money-bin" data-denom="50000">
+              <div class="bin-label">Rp50.000</div>
+              <div class="bin-value" id="bin-val-50k">Rp0</div>
+            </div>
+            <div class="money-bin" data-denom="20000">
+              <div class="bin-label">Rp20.000</div>
+              <div class="bin-value" id="bin-val-20k">Rp0</div>
+            </div>
+            <div class="money-bin" data-denom="10000">
+              <div class="bin-label">Rp10.000</div>
+              <div class="bin-value" id="bin-val-10k">Rp0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- POPUP OVERLAY: Reference Subgroup List -->
+      <div id="pkm-ref-popup" class="modal-overlay">
+        <div class="modal-card animate-pop" style="max-height: 80%;">
+          <div class="wood-banner">
+            <h2>Daftar Sub-Kelompok</h2>
+          </div>
+          <div class="modal-card-content" style="overflow-y: auto; max-height: 350px;">
+            <table class="pkm-ref-table">
+              <thead>
+                <tr>
+                  <th>Nama Nasabah</th>
+                  <th>Sub-Kelompok</th>
+                </tr>
+              </thead>
+              <tbody id="pkm-ref-table-body">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+            <button id="btn-pkm-close-ref" class="btn btn-secondary btn-full-width" style="margin-top: 15px;">TUTUP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP OVERLAY: Mekar Digi Phone Mockup -->
+      <div id="pkm-app-modal" class="modal-overlay">
+        <div class="mekar-digi-phone animate-pop">
+          <div class="phone-status-bar">
+            <span>09:41</span>
+            <span style="font-weight: bold; color: var(--pnm-green);">Mekar Digi</span>
+            <span>100% 🔋</span>
+          </div>
+          <div class="phone-content">
+            <div class="app-header">
+              <h3>Absensi Pertemuan</h3>
+              <p>Masukkan kode kehadiran masing-masing nasabah</p>
+              <div class="app-legend">
+                <span><strong>1</strong>: Hadir & Bayar</span>
+                <span><strong>2</strong>: Tidak Hadir</span>
+                <span><strong>3</strong>: Hadir, Belum Bayar</span>
+              </div>
+            </div>
+            <div class="app-nasabah-list" id="pkm-app-nasabah-list">
+              <!-- Scrollable rows with dropdown/code selectors -->
+            </div>
+          </div>
+          <div class="phone-footer">
+            <button id="btn-pkm-submit-app" class="btn btn-primary btn-full-width" style="margin: 0; background: var(--pnm-green-dark); border-bottom-color: #004522;">SIMPAN DATA</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: Confirm Signing -->
+      <div id="pkm-sign-modal" class="modal-overlay">
+        <div class="modal-card animate-pop">
+          <div class="wood-banner">
+            <h2>Tandatangan Berkas</h2>
+          </div>
+          <div class="modal-card-content">
+            <p style="color: var(--text-dark); font-size: 14px; text-align: center; margin-bottom: 20px; line-height: 1.5;">
+              Seluruh transaksi pertemuan mingguan hari ini telah selesai dicatat.<br>Silakan tanda tangani berita acara untuk menutup pertemuan.
+            </p>
+            <div class="signature-line-area">
+              <span class="sign-helper-text">Ketuk tombol di bawah untuk menandatangani secara digital</span>
+            </div>
+            <button id="btn-pkm-sign-confirm" class="btn btn-primary btn-full-width" style="margin-top: 15px;">TANDA TANGANI</button>
           </div>
         </div>
       </div>
