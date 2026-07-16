@@ -2694,6 +2694,25 @@ function openSettingsModal(fromMainMenu = false) {
     nameInput.value = localStorage.getItem("mekaar_player_name") || "Aminah";
   }
 
+  const currentSavedGender = localStorage.getItem("mekaar_player_gender") || "female";
+  STATE.tempSettingsGender = currentSavedGender;
+  
+  const femaleCard = document.getElementById("settings-gender-female");
+  const maleCard = document.getElementById("settings-gender-male");
+  if (femaleCard && maleCard) {
+    if (currentSavedGender === "female") {
+      femaleCard.classList.add("active");
+      femaleCard.style.borderColor = "var(--pnm-green)";
+      maleCard.classList.remove("active");
+      maleCard.style.borderColor = "var(--wood-light)";
+    } else {
+      maleCard.classList.add("active");
+      maleCard.style.borderColor = "var(--pnm-green)";
+      femaleCard.classList.remove("active");
+      femaleCard.style.borderColor = "var(--wood-light)";
+    }
+  }
+
   const btnMenu = document.getElementById("btn-pause-menu");
   if (btnMenu) {
     btnMenu.style.display = fromMainMenu ? "none" : "block";
@@ -4127,11 +4146,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nameSettingRow && nameSettingRow.style.display !== "none" && nameInput) {
       const newName = nameInput.value.trim();
       const currentSavedName = localStorage.getItem("mekaar_player_name") || "Aminah";
+      const currentSavedGender = localStorage.getItem("mekaar_player_gender") || "female";
+      const tempGender = STATE.tempSettingsGender || currentSavedGender;
       
-      if (newName && newName !== currentSavedName) {
+      if ((newName && newName !== currentSavedName) || tempGender !== currentSavedGender) {
         const confirmText = document.getElementById("name-confirm-text");
         if (confirmText) {
-          confirmText.innerText = `Apakah Anda yakin ingin mengubah nama menjadi "${newName}"?`;
+          confirmText.innerText = "Apakah Anda yakin ingin menyimpan perubahan nama/gender?";
         }
         document.getElementById("name-confirm-modal").classList.add("active");
         playSound("tap");
@@ -4505,6 +4526,30 @@ document.addEventListener("DOMContentLoaded", () => {
   initVerifDocsHandlers();
   initMirrorDocsHandlers();
 
+  // Gender Selection State (First Time)
+  let selectedGender = "female";
+
+  const optFemale = document.getElementById("gender-option-female");
+  const optMale = document.getElementById("gender-option-male");
+  if (optFemale && optMale) {
+    optFemale.addEventListener("click", () => {
+      selectedGender = "female";
+      optFemale.classList.add("active");
+      optFemale.style.borderColor = "var(--pnm-green)";
+      optMale.classList.remove("active");
+      optMale.style.borderColor = "var(--wood-light)";
+      playSound("tap");
+    });
+    optMale.addEventListener("click", () => {
+      selectedGender = "male";
+      optMale.classList.add("active");
+      optMale.style.borderColor = "var(--pnm-green)";
+      optFemale.classList.remove("active");
+      optFemale.style.borderColor = "var(--wood-light)";
+      playSound("tap");
+    });
+  }
+
   // Name Input Submissions & Listeners
   document.getElementById("btn-submit-name").addEventListener("click", () => {
     const nameInput = document.getElementById("first-time-name-input");
@@ -4515,6 +4560,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     localStorage.setItem("mekaar_player_name", name);
+    localStorage.setItem("mekaar_player_gender", selectedGender);
     document.getElementById("name-input-modal").classList.remove("active");
     playSound("tap");
 
@@ -4527,6 +4573,28 @@ document.addEventListener("DOMContentLoaded", () => {
     e.target.style.borderColor = "";
   });
 
+  // Settings Gender Selection Listeners
+  const setFemale = document.getElementById("settings-gender-female");
+  const setMale = document.getElementById("settings-gender-male");
+  if (setFemale && setMale) {
+    setFemale.addEventListener("click", () => {
+      STATE.tempSettingsGender = "female";
+      setFemale.classList.add("active");
+      setFemale.style.borderColor = "var(--pnm-green)";
+      setMale.classList.remove("active");
+      setMale.style.borderColor = "var(--wood-light)";
+      playSound("tap");
+    });
+    setMale.addEventListener("click", () => {
+      STATE.tempSettingsGender = "male";
+      setMale.classList.add("active");
+      setMale.style.borderColor = "var(--pnm-green)";
+      setFemale.classList.remove("active");
+      setFemale.style.borderColor = "var(--wood-light)";
+      playSound("tap");
+    });
+  }
+
   document.getElementById("btn-confirm-name-yes").addEventListener("click", () => {
     const nameInput = document.getElementById("settings-player-name-input");
     if (nameInput) {
@@ -4534,6 +4602,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (newName) {
         localStorage.setItem("mekaar_player_name", newName);
       }
+    }
+    if (STATE.tempSettingsGender) {
+      localStorage.setItem("mekaar_player_gender", STATE.tempSettingsGender);
     }
     document.getElementById("name-confirm-modal").classList.remove("active");
     document.getElementById("pause-modal").classList.remove("active");
@@ -4545,6 +4616,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nameInput) {
       nameInput.value = localStorage.getItem("mekaar_player_name") || "Aminah";
     }
+    STATE.tempSettingsGender = localStorage.getItem("mekaar_player_gender") || "female";
     document.getElementById("name-confirm-modal").classList.remove("active");
     document.getElementById("pause-modal").classList.remove("active");
     playSound("tap");

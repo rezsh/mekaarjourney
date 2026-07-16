@@ -971,9 +971,21 @@
               <button id="pause-fullscreen-toggle" class="btn btn-secondary">FULLSCREEN</button>
             </div>
             
-            <div class="pause-setting-row" style="flex-direction: column; align-items: stretch; gap: 4px; margin-bottom: 12px;">
+            <div id="settings-player-name-row" class="pause-setting-row" style="flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px;">
               <span class="setting-label">Nama Player:</span>
-              <input type="text" id="settings-player-name-input" placeholder="Masukkan nama..." maxLength="15" style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid var(--wood-light); font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: var(--text-dark); background-color: #fff; text-align: center;">
+              <input type="text" id="settings-player-name-input" placeholder="Masukkan nama..." maxLength="15" style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid var(--wood-light); font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: var(--text-dark); background-color: #fff; text-align: center; margin-bottom: 4px;">
+              
+              <span class="setting-label">Gender Player:</span>
+              <div class="gender-selection-container" style="display: flex; gap: 15px; width: 100%;">
+                <div id="settings-gender-female" class="gender-card active" style="flex: 1; display: flex; flex-direction: column; align-items: center; border: 2px solid var(--pnm-green); border-radius: 8px; padding: 6px; cursor: pointer; background: rgba(0,0,0,0.03); transition: all 0.2s;">
+                  <img src="player/femaleplayer.png" style="width: 40px; height: 40px; object-fit: contain; border-radius: 50%;">
+                  <span style="font-size: 10px; font-weight: 700; margin-top: 2px; color: var(--text-dark);">Perempuan</span>
+                </div>
+                <div id="settings-gender-male" class="gender-card" style="flex: 1; display: flex; flex-direction: column; align-items: center; border: 2px solid var(--wood-light); border-radius: 8px; padding: 6px; cursor: pointer; background: rgba(0,0,0,0.03); transition: all 0.2s;">
+                  <img src="player/femaleplayer.png" style="width: 40px; height: 40px; object-fit: contain; border-radius: 50%; filter: brightness(0);">
+                  <span style="font-size: 10px; font-weight: 700; margin-top: 2px; color: var(--text-dark);">Laki-laki</span>
+                </div>
+              </div>
             </div>
             
             <div class="pause-actions" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 10px;">
@@ -1026,8 +1038,20 @@
           </div>
           <div class="modal-card-content" style="display: flex; flex-direction: column; gap: 15px; align-items: center; padding: 20px;">
             <p style="color: var(--text-dark); text-align: center; font-size: 13px; font-weight: 600; line-height: 1.4; margin: 0;">
-              Selamat datang di Mekaar Journey! Silakan masukkan nama Anda untuk memulai petualangan.
+              Selamat datang di Mekaar Journey! Silakan pilih gender dan masukkan nama Anda.
             </p>
+            
+            <div class="gender-selection-container" style="display: flex; gap: 15px; width: 100%;">
+              <div id="gender-option-female" class="gender-card active" style="flex: 1; display: flex; flex-direction: column; align-items: center; border: 2px solid var(--pnm-green); border-radius: 8px; padding: 8px; cursor: pointer; background: rgba(0,0,0,0.03); transition: all 0.2s;">
+                <img src="player/femaleplayer.png" style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;">
+                <span style="font-size: 11px; font-weight: 700; margin-top: 4px; color: var(--text-dark);">Perempuan</span>
+              </div>
+              <div id="gender-option-male" class="gender-card" style="flex: 1; display: flex; flex-direction: column; align-items: center; border: 2px solid var(--wood-light); border-radius: 8px; padding: 8px; cursor: pointer; background: rgba(0,0,0,0.03); transition: all 0.2s;">
+                <img src="player/femaleplayer.png" style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%; filter: brightness(0);">
+                <span style="font-size: 11px; font-weight: 700; margin-top: 4px; color: var(--text-dark);">Laki-laki</span>
+              </div>
+            </div>
+
             <input type="text" id="first-time-name-input" placeholder="Nama Anda..." maxLength="15" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--wood-light); font-family: var(--font-primary); font-size: 14px; font-weight: 600; text-align: center; color: var(--text-dark); background-color: #fff;">
             <button id="btn-submit-name" class="btn btn-primary btn-full-width">MULAI BERMAIN</button>
           </div>
