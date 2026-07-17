@@ -940,17 +940,23 @@
           
           <!-- Visual Overlay Items for Stage 1 (mat areas / markers) -->
           <div id="pkm-stage-1-zones" class="pkm-overlay-layer hidden">
-            <div class="pkm-dropzone" data-subgroup="A">
-              <div class="dropzone-label">Sub-Kelompok A <span class="dropzone-counter" id="counter-mat-A">(0/4)</span></div>
-              <div class="dropzone-slots"></div>
-            </div>
-            <div class="pkm-dropzone" data-subgroup="B">
-              <div class="dropzone-label">Sub-Kelompok B <span class="dropzone-counter" id="counter-mat-B">(0/4)</span></div>
-              <div class="dropzone-slots"></div>
-            </div>
-            <div class="pkm-dropzone" data-subgroup="C">
-              <div class="dropzone-label">Sub-Kelompok C <span class="dropzone-counter" id="counter-mat-C">(0/4)</span></div>
-              <div class="dropzone-slots"></div>
+            <!-- Seated sprites populate here dynamically -->
+            <div id="pkm-seated-sprites-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
+            <!-- The 3 target dropzones/buttons placed side-by-side -->
+            <div class="pkm-target-boxes-row">
+              <div class="pkm-target-box" data-subgroup="A">
+                <span class="pkm-target-label">KELOMPOK 1</span>
+                <span class="pkm-target-counter" id="counter-mat-A">(0/4)</span>
+              </div>
+              <div class="pkm-target-box" data-subgroup="B">
+                <span class="pkm-target-label">KELOMPOK 2</span>
+                <span class="pkm-target-counter" id="counter-mat-B">(0/4)</span>
+              </div>
+              <div class="pkm-target-box" data-subgroup="C">
+                <span class="pkm-target-label">KELOMPOK 3</span>
+                <span class="pkm-target-counter" id="counter-mat-C">(0/4)</span>
+              </div>
             </div>
           </div>
 

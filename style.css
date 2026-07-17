@@ -3499,40 +3499,158 @@ dotlottie-player {
   background: rgba(0, 0, 0, 0.2);
 }
 
-.pkm-dropzone {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px dashed rgba(255, 255, 255, 0.4);
+#pkm-stage-1-zones {
+  display: block !important;
+  padding: 0 !important;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+.pkm-target-boxes-row {
+  position: absolute;
+  bottom: 270px; /* Floats above the pool container */
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 110;
+  pointer-events: auto;
+}
+
+.pkm-target-box {
+  flex: 1;
   border-radius: 12px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  padding: 8px 12px;
-  min-height: 80px;
+  padding: 10px 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 2.5px dashed transparent;
 }
 
-.pkm-dropzone.dragover {
-  background: rgba(0, 131, 67, 0.25);
-  border-color: var(--pnm-green);
-  transform: scale(1.02);
-  box-shadow: 0 0 15px rgba(0, 131, 67, 0.3);
+/* Kelompok 1 (Subgroup A) - Green color scheme */
+.pkm-target-box[data-subgroup="A"] {
+  background: rgba(76, 175, 80, 0.12);
+  border-color: rgba(76, 175, 80, 0.6);
+}
+.pkm-target-box[data-subgroup="A"]:hover {
+  transform: translateY(-2px);
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.9);
+}
+.pkm-target-box[data-subgroup="A"].dragover {
+  background: rgba(76, 175, 80, 0.35);
+  border-color: #4caf50;
+  border-style: solid;
+  transform: scale(1.04);
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+.pkm-target-box[data-subgroup="A"] .pkm-target-counter {
+  color: #4caf50;
+  border-color: rgba(76, 175, 80, 0.4);
 }
 
-.dropzone-label {
+/* Kelompok 2 (Subgroup B) - Orange color scheme */
+.pkm-target-box[data-subgroup="B"] {
+  background: rgba(255, 152, 0, 0.12);
+  border-color: rgba(255, 152, 0, 0.6);
+}
+.pkm-target-box[data-subgroup="B"]:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 152, 0, 0.9);
+}
+.pkm-target-box[data-subgroup="B"].dragover {
+  background: rgba(255, 152, 0, 0.35);
+  border-color: #ff9800;
+  border-style: solid;
+  transform: scale(1.04);
+  box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+}
+.pkm-target-box[data-subgroup="B"] .pkm-target-counter {
+  color: #ff9800;
+  border-color: rgba(255, 152, 0, 0.4);
+}
+
+/* Kelompok 3 (Subgroup C) - Blue/Cyan color scheme */
+.pkm-target-box[data-subgroup="C"] {
+  background: rgba(3, 169, 244, 0.12);
+  border-color: rgba(3, 169, 244, 0.6);
+}
+.pkm-target-box[data-subgroup="C"]:hover {
+  transform: translateY(-2px);
+  background: rgba(3, 169, 244, 0.2);
+  border-color: rgba(3, 169, 244, 0.9);
+}
+.pkm-target-box[data-subgroup="C"].dragover {
+  background: rgba(3, 169, 244, 0.35);
+  border-color: #03a9f4;
+  border-style: solid;
+  transform: scale(1.04);
+  box-shadow: 0 0 15px rgba(3, 169, 244, 0.5);
+}
+.pkm-target-box[data-subgroup="C"] .pkm-target-counter {
+  color: #03a9f4;
+  border-color: rgba(3, 169, 244, 0.4);
+}
+
+.pkm-target-label {
   font-family: var(--font-game);
   font-size: 11px;
   font-weight: 800;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  color: #ffffff;
+  text-shadow: 0 1.5px 3px rgba(0,0,0,0.8);
+  letter-spacing: 0.5px;
 }
 
-.dropzone-slots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  min-height: 44px;
+.pkm-target-counter {
+  font-family: var(--font-game);
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  text-shadow: none;
+}
+
+.pkm-target-counter.completed {
+  color: #00ff88 !important;
+  border-color: rgba(0, 255, 136, 0.4) !important;
+}
+
+/* Seated characters popping onto the mat background */
+.pkm-seated-wrapper {
+  position: absolute;
+  width: 105px;
+  height: 130px;
+  transform-origin: bottom center;
+}
+
+.pkm-seated-nasabah {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Floating interactive nasabah portraits inside drops */

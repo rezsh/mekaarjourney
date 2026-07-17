@@ -5152,16 +5152,39 @@ function finishPkmTypewriter() {
 }
 
 // Stage 1: Seating Arrangement
+const PKM_SEATING_COORDINATES = {
+  // Row 4 (Back) - y: 37%
+  nur:   { left: "29.5%", top: "37%", scale: 0.62, zIndex: 10 },
+  siti:  { left: "50%",   top: "37%", scale: 0.62, zIndex: 10 },
+  indah: { left: "70.5%", top: "37%", scale: 0.62, zIndex: 10 },
+  
+  // Row 3 - y: 43%
+  desi:  { left: "27%",   top: "43%", scale: 0.72, zIndex: 12 },
+  ratna: { left: "50%",   top: "43%", scale: 0.72, zIndex: 12 },
+  yulia: { left: "73%",   top: "43%", scale: 0.72, zIndex: 12 },
+  
+  // Row 2 - y: 51%
+  ijah:  { left: "23%",   top: "51%", scale: 0.85, zIndex: 14 },
+  lia:   { left: "50%",   top: "51%", scale: 0.85, zIndex: 14 },
+  rini:  { left: "77%",   top: "51%", scale: 0.85, zIndex: 14 },
+  
+  // Row 1 (Front) - y: 63%
+  lastri:{ left: "16%",   top: "63%", scale: 1.02, zIndex: 16 },
+  ning:  { left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },
+  yanti: { left: "84%",   top: "63%", scale: 1.02, zIndex: 16 }
+};
+
 let pkmSelectedSeatingCard = null;
 
 function setupStage1Seating() {
   STATE.pkmSeatingCorrect = 0;
   pkmSelectedSeatingCard = null;
 
-  // Clear slots in dropzones
-  document.querySelectorAll(".pkm-dropzone .dropzone-slots").forEach(slot => {
-    slot.innerHTML = "";
-  });
+  // Clear seated sprites container
+  const container = document.getElementById("pkm-seated-sprites-container");
+  if (container) {
+    container.innerHTML = "";
+  }
 
   // Reset counters in HTML labels
   ["A", "B", "C"].forEach(grp => {
@@ -5202,8 +5225,17 @@ function setupStage1Seating() {
     card.setAttribute("data-id", n.id);
     card.setAttribute("data-subgroup", n.subgroup);
 
+    let borderStyle = "";
+    if (n.subgroup === "A") {
+      borderStyle = "border: 2.5px solid #4caf50;";
+    } else if (n.subgroup === "B") {
+      borderStyle = "border: 2.5px solid #ff9800;";
+    } else if (n.subgroup === "C") {
+      borderStyle = "border: 2.5px solid #03a9f4;";
+    }
+
     card.innerHTML = `
-      <img src="${n.portrait}" alt="${n.name}" class="pkm-char-img">
+      <img src="${n.portrait}" alt="${n.name}" class="pkm-char-img" style="${borderStyle}">
       <span class="pkm-char-name">${n.name.split(" ")[0]}</span>
     `;
 
@@ -5233,7 +5265,7 @@ function setupStage1Seating() {
   });
 
   // Setup Dropzones drag/drop listeners
-  document.querySelectorAll(".pkm-dropzone").forEach(zone => {
+  document.querySelectorAll(".pkm-target-box").forEach(zone => {
     zone.addEventListener("dragover", (e) => {
       e.preventDefault();
       zone.classList.add("dragover");
@@ -5279,16 +5311,45 @@ function handleSeatingPlacement(card, zone) {
   const cardSubgroup = card.getAttribute("data-subgroup");
 
   if (targetSubgroup === cardSubgroup) {
-    // Correct! Snap in
-    zone.querySelector(".dropzone-slots").appendChild(card);
-    card.removeAttribute("draggable");
-    card.style.pointerEvents = "none";
-    card.classList.add("drag-correct-pulse");
+    // Correct! Hide card from draggable pool grid
+    card.style.display = "none";
+    
+    // Spawn large seated nasabah sprite dynamically on the mat
+    const nasabahId = card.getAttribute("data-id");
+    const nasabahData = PKM_CONFIG.nasabah.find(n => n.id === nasabahId);
+    
+    if (nasabahData) {
+      const container = document.getElementById("pkm-seated-sprites-container");
+      if (container) {
+        // Create wrapper div for layout, scaling, and z-index positioning
+        const wrapper = document.createElement("div");
+        wrapper.className = "pkm-seated-wrapper";
+        wrapper.setAttribute("data-subgroup", targetSubgroup);
+        
+        // Coordinates and scale lookup
+        const coords = PKM_SEATING_COORDINATES[nasabahId] || { left: "50%", top: "50%", scale: 1.0, zIndex: 10 };
+        wrapper.style.left = coords.left;
+        wrapper.style.top = coords.top;
+        wrapper.style.zIndex = coords.zIndex;
+        wrapper.style.transform = `translate(-50%, -50%) scale(${coords.scale})`;
+        
+        // Create image element inside wrapper
+        const sprite = document.createElement("img");
+        sprite.src = nasabahData.portrait;
+        sprite.alt = nasabahData.name;
+        sprite.className = "pkm-seated-nasabah";
+        
+        wrapper.appendChild(sprite);
+        container.appendChild(wrapper);
+      }
+    }
+
     playSound("correct");
     STATE.pkmSeatingCorrect++;
 
-    // Update Counter badge
-    const matCards = zone.querySelectorAll(".pkm-char-card").length;
+    // Update Counter badge based on placed sprites
+    const containerEl = document.getElementById("pkm-seated-sprites-container");
+    const matCards = containerEl ? containerEl.querySelectorAll(`.pkm-seated-wrapper[data-subgroup="${targetSubgroup}"]`).length : 0;
     const counterEl = document.getElementById(`counter-mat-${targetSubgroup}`);
     if (counterEl) {
       if (matCards === 4) {
