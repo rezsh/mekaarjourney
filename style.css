@@ -4014,3 +4014,86 @@ dotlottie-player {
 .drag-correct-pulse {
   animation: drag-success-pulse 0.5s ease-out;
 }
+
+/* PKM POLISH ENHANCEMENTS */
+.dropzone-counter {
+  font-size: 10px;
+  font-weight: bold;
+  color: #ccc;
+  margin-left: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1px 6px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.dropzone-counter.completed {
+  color: #fff;
+  background-color: var(--pnm-green);
+  box-shadow: 0 0 6px rgba(0, 131, 67, 0.5);
+}
+
+.pkm-ao-speech {
+  font-size: 10px;
+  color: var(--gold);
+  margin-top: 4px;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  animation: pulse-speech 2s infinite alternate;
+}
+@keyframes pulse-speech {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+.bin-stack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.bin-strip {
+  position: absolute;
+  width: 36px;
+  height: 20px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 1;
+  transition: all 0.3s ease;
+  animation: strip-fall 0.25s ease-out forwards;
+}
+
+@keyframes strip-fall {
+  0% {
+    transform: scale(1.4) translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.85;
+  }
+}
+
+.bin-strip.denom-100k {
+  background: linear-gradient(135deg, #ff8a80, #ff5252);
+  border: 1px solid #d32f2f;
+}
+.bin-strip.denom-50k {
+  background: linear-gradient(135deg, #80d8ff, #40c4ff);
+  border: 1px solid #1976d2;
+}
+.bin-strip.denom-20k {
+  background: linear-gradient(135deg, #b9f6ca, #69f0ae);
+  border: 1px solid #388e3c;
+}
+.bin-strip.denom-10k {
+  background: linear-gradient(135deg, #ea80fc, #e040fb);
+  border: 1px solid #7b1fa2;
+}

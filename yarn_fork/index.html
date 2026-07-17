@@ -931,15 +931,15 @@
           <!-- Visual Overlay Items for Stage 1 (mat areas / markers) -->
           <div id="pkm-stage-1-zones" class="pkm-overlay-layer hidden">
             <div class="pkm-dropzone" data-subgroup="A">
-              <div class="dropzone-label">Sub-Kelompok A</div>
+              <div class="dropzone-label">Sub-Kelompok A <span class="dropzone-counter" id="counter-mat-A">(0/4)</span></div>
               <div class="dropzone-slots"></div>
             </div>
             <div class="pkm-dropzone" data-subgroup="B">
-              <div class="dropzone-label">Sub-Kelompok B</div>
+              <div class="dropzone-label">Sub-Kelompok B <span class="dropzone-counter" id="counter-mat-B">(0/4)</span></div>
               <div class="dropzone-slots"></div>
             </div>
             <div class="pkm-dropzone" data-subgroup="C">
-              <div class="dropzone-label">Sub-Kelompok C</div>
+              <div class="dropzone-label">Sub-Kelompok C <span class="dropzone-counter" id="counter-mat-C">(0/4)</span></div>
               <div class="dropzone-slots"></div>
             </div>
           </div>
@@ -954,6 +954,7 @@
             <div class="pkm-raised-hand-money">
               <span class="money-count-label">Uang Angsuran Dihitung:</span>
               <span id="pkm-counting-bubble" class="counting-bubble">Menunggu...</span>
+              <div id="pkm-ao-counting-speech" class="pkm-ao-speech">AO Budi: "Mari kita mulai hitung..."</div>
             </div>
           </div>
         </div>
@@ -1002,21 +1003,25 @@
             <!-- Random money bills to drag -->
           </div>
           <div class="money-bins-container">
-            <div class="money-bin" data-denom="100000">
-              <div class="bin-label">Rp100.000</div>
-              <div class="bin-value" id="bin-val-100k">Rp0</div>
+            <div class="money-bin" data-denom="100000" style="position: relative;">
+              <div class="bin-label" style="z-index: 5;">Rp100.000</div>
+              <div class="bin-value" id="bin-val-100k" style="z-index: 5;">Rp0</div>
+              <div class="bin-stack" id="bin-stack-100k"></div>
             </div>
-            <div class="money-bin" data-denom="50000">
-              <div class="bin-label">Rp50.000</div>
-              <div class="bin-value" id="bin-val-50k">Rp0</div>
+            <div class="money-bin" data-denom="50000" style="position: relative;">
+              <div class="bin-label" style="z-index: 5;">Rp50.000</div>
+              <div class="bin-value" id="bin-val-50k" style="z-index: 5;">Rp0</div>
+              <div class="bin-stack" id="bin-stack-50k"></div>
             </div>
-            <div class="money-bin" data-denom="20000">
-              <div class="bin-label">Rp20.000</div>
-              <div class="bin-value" id="bin-val-20k">Rp0</div>
+            <div class="money-bin" data-denom="20000" style="position: relative;">
+              <div class="bin-label" style="z-index: 5;">Rp20.000</div>
+              <div class="bin-value" id="bin-val-20k" style="z-index: 5;">Rp0</div>
+              <div class="bin-stack" id="bin-stack-20k"></div>
             </div>
-            <div class="money-bin" data-denom="10000">
-              <div class="bin-label">Rp10.000</div>
-              <div class="bin-value" id="bin-val-10k">Rp0</div>
+            <div class="money-bin" data-denom="10000" style="position: relative;">
+              <div class="bin-label" style="z-index: 5;">Rp10.000</div>
+              <div class="bin-value" id="bin-val-10k" style="z-index: 5;">Rp0</div>
+              <div class="bin-stack" id="bin-stack-10k"></div>
             </div>
           </div>
         </div>
@@ -1075,18 +1080,22 @@
 
       <!-- MODAL: Confirm Signing -->
       <div id="pkm-sign-modal" class="modal-overlay">
-        <div class="modal-card animate-pop">
+        <div class="modal-card animate-pop" style="width: 90%; max-width: 320px;">
           <div class="wood-banner">
             <h2>Tandatangan Berkas</h2>
           </div>
-          <div class="modal-card-content">
-            <p style="color: var(--text-dark); font-size: 14px; text-align: center; margin-bottom: 20px; line-height: 1.5;">
-              Seluruh transaksi pertemuan mingguan hari ini telah selesai dicatat.<br>Silakan tanda tangani berita acara untuk menutup pertemuan.
+          <div class="modal-card-content" style="display: flex; flex-direction: column; align-items: center;">
+            <p style="color: var(--text-dark); font-size: 11px; text-align: center; margin-bottom: 12px; line-height: 1.4;">
+              Seluruh transaksi angsuran hari ini telah selesai dicatat. Silakan tanda tangani berita acara di bawah ini.
             </p>
-            <div class="signature-line-area">
-              <span class="sign-helper-text">Ketuk tombol di bawah untuk menandatangani secara digital</span>
+            <div class="signature-line-area" style="position: relative; width: 280px; height: 120px; background: #fafafa; border: 1.5px solid #ccd1d9; border-radius: 8px; cursor: crosshair;">
+              <canvas id="pkm-signature-canvas" width="280" height="120" style="display: block; position: absolute; top:0; left:0; z-index: 5;"></canvas>
+              <span class="sign-helper-text" id="pkm-sign-helper" style="position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%); font-size: 11px; color: #aaa; pointer-events: none; z-index: 2;">Sentuh & seret di sini untuk tanda tangan</span>
             </div>
-            <button id="btn-pkm-sign-confirm" class="btn btn-primary btn-full-width" style="margin-top: 15px;">TANDA TANGANI</button>
+            <div style="display: flex; gap: 8px; width: 100%; margin-top: 12px;">
+              <button id="btn-pkm-sign-clear" class="btn btn-secondary" style="flex: 1; margin: 0; padding: 8px 0; font-size: 11px;">ULANGI</button>
+              <button id="btn-pkm-sign-confirm" class="btn btn-primary" style="flex: 2; margin: 0; padding: 8px 0; font-size: 11px; pointer-events: none; opacity: 0.5;">TANDA TANGANI</button>
+            </div>
           </div>
         </div>
       </div>

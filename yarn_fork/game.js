@@ -5099,6 +5099,15 @@ function setupStage1Seating() {
     slot.innerHTML = "";
   });
 
+  // Reset counters in HTML labels
+  ["A", "B", "C"].forEach(grp => {
+    const el = document.getElementById(`counter-mat-${grp}`);
+    if (el) {
+      el.innerText = "(0/4)";
+      el.classList.remove("completed");
+    }
+  });
+
   // Populate reference table rows
   const refBody = document.getElementById("pkm-ref-table-body");
   refBody.innerHTML = "";
@@ -5214,6 +5223,19 @@ function handleSeatingPlacement(card, zone) {
     playSound("correct");
     STATE.pkmSeatingCorrect++;
 
+    // Update Counter badge
+    const matCards = zone.querySelectorAll(".pkm-char-card").length;
+    const counterEl = document.getElementById(`counter-mat-${targetSubgroup}`);
+    if (counterEl) {
+      if (matCards === 4) {
+        counterEl.innerText = "✓ (4/4)";
+        counterEl.classList.add("completed");
+      } else {
+        counterEl.innerText = `(${matCards}/4)`;
+        counterEl.classList.remove("completed");
+      }
+    }
+
     // Check completion
     if (STATE.pkmSeatingCorrect === 12) {
       setTimeout(() => {
@@ -5323,7 +5345,10 @@ function setupStage3Attendance() {
     row.innerHTML = `
       <div class="app-nasabah-info">
         <img src="${n.portrait}" class="app-nasabah-avatar">
-        <span class="app-nasabah-name">${n.name}</span>
+        <div style="display: flex; flex-direction: column;">
+          <span class="app-nasabah-name">${n.name}</span>
+          <span class="app-nasabah-status-pill" id="status-pill-${n.id}" style="font-size: 8px; font-weight: bold; color: #8c96a3; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px;">Belum Diisi</span>
+        </div>
       </div>
       <div class="app-code-select-container">
         <button class="app-code-btn" data-code="1">1</button>
@@ -5337,6 +5362,7 @@ function setupStage3Attendance() {
       btn.addEventListener("click", () => {
         playSound("tap");
         const code = parseInt(btn.getAttribute("data-code"));
+        const pill = document.getElementById(`status-pill-${n.id}`);
         
         row.querySelectorAll(".app-code-btn").forEach(b => b.classList.remove("selected", "wrong"));
         
@@ -5345,11 +5371,30 @@ function setupStage3Attendance() {
           row.classList.add("correct");
           tempSelections[n.id] = code;
           playSound("correct");
+          
+          if (pill) {
+            if (code === 1) {
+              pill.innerText = "Hadir & Bayar";
+              pill.style.color = "#2ec971";
+            } else if (code === 2) {
+              pill.innerText = "Tidak Hadir";
+              pill.style.color = "#f56c6c";
+            } else if (code === 3) {
+              pill.innerText = "Hadir, Belum Bayar";
+              pill.style.color = "#f4c430";
+            }
+          }
         } else {
           btn.classList.add("wrong");
           row.classList.remove("correct");
           delete tempSelections[n.id];
           playSound("incorrect");
+          
+          if (pill) {
+            pill.innerText = "Salah Input!";
+            pill.style.color = "#f56c6c";
+          }
+          
           // Shake row
           row.animate([
             { transform: "translateX(0)" },
@@ -5422,13 +5467,20 @@ function setupStage4MoneyCounting() {
   document.getElementById("pkm-money-target-val").innerText = formatRupiah(targetTotalVal);
   document.getElementById("pkm-counting-bubble").innerText = "Rp0";
 
+  const pkmSpeech = document.getElementById("pkm-ao-counting-speech");
+  if (pkmSpeech) {
+    pkmSpeech.innerText = replacePlayerName("{playername} (AO): \"Mari kita mulai hitung uang angsurannya...\"");
+  }
+
   // Reset target bins
   document.querySelectorAll(".money-bin").forEach(bin => {
     bin.classList.remove("dragover");
-    const denom = bin.getAttribute("data-denom");
     const valEl = bin.querySelector(".bin-value");
     if (valEl) valEl.innerText = "Rp0";
     bin.setAttribute("data-sum", "0");
+    bin.setAttribute("data-count", "0");
+    const stack = bin.querySelector(".bin-stack");
+    if (stack) stack.innerHTML = "";
   });
 
   // Generate money bills array
@@ -5548,9 +5600,26 @@ function handleMoneyPlacement(card, bin) {
     STATE.pkmTotalCounted += billDenom;
 
     // Update bin visual total
+    const count = parseInt(bin.getAttribute("data-count") || "0") + 1;
+    bin.setAttribute("data-count", count.toString());
+
     const currentSum = parseInt(bin.getAttribute("data-sum") || "0") + billDenom;
     bin.setAttribute("data-sum", currentSum.toString());
     bin.querySelector(".bin-value").innerText = formatRupiah(currentSum);
+
+    // Spawn visual strip in stack
+    const stack = bin.querySelector(".bin-stack");
+    if (stack) {
+      const strip = document.createElement("div");
+      strip.className = `bin-strip denom-${billDenom / 1000}k`;
+      const bottomVal = Math.min(4 + (count * 1.5), 32);
+      const leftVal = 5 + Math.random() * 40; // random offset left
+      const rotation = (Math.random() - 0.5) * 16; // random rotation angle
+      strip.style.bottom = `${bottomVal}px`;
+      strip.style.left = `${leftVal}%`;
+      strip.style.transform = `rotate(${rotation}deg)`;
+      stack.appendChild(strip);
+    }
 
     // Visual snap animation
     bin.classList.add("drag-correct-pulse");
@@ -5558,6 +5627,13 @@ function handleMoneyPlacement(card, bin) {
 
     // Update floating counting board in scene
     document.getElementById("pkm-counting-bubble").innerText = formatRupiah(STATE.pkmTotalCounted);
+    
+    // Update counting speech subtitle
+    const pkmSpeech = document.getElementById("pkm-ao-counting-speech");
+    if (pkmSpeech) {
+      pkmSpeech.innerText = replacePlayerName(`{playername} (AO): "${formatRupiah(STATE.pkmTotalCounted)}..."`);
+    }
+
     playSound("correct");
 
     // Spawn next
@@ -5595,17 +5671,108 @@ STATE.pkmSignedRecord = false;
 
 function openPkmSignatureModal() {
   document.getElementById("pkm-sign-modal").classList.add("active");
-  
-  document.getElementById("btn-pkm-sign-confirm").onclick = () => {
+
+  const canvas = document.getElementById("pkm-signature-canvas");
+  const helper = document.getElementById("pkm-sign-helper");
+  const clearBtn = document.getElementById("btn-pkm-sign-clear");
+  const confirmBtn = document.getElementById("btn-pkm-sign-confirm");
+
+  // Reset modal state
+  confirmBtn.style.opacity = "0.5";
+  confirmBtn.style.pointerEvents = "none";
+  helper.style.display = "block";
+
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#0a4f8f"; // pnm-blue color signature ink
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let strokeCount = 0;
+
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+    const clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  }
+
+  function startDrawing(e) {
+    e.preventDefault();
+    isDrawing = true;
+    const pos = getMousePos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+    
+    // Draw initial dot
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(lastX, lastY);
+    ctx.stroke();
+
+    helper.style.display = "none";
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    e.preventDefault();
+    const pos = getMousePos(e);
+    
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    
+    lastX = pos.x;
+    lastY = pos.y;
+    strokeCount++;
+
+    if (strokeCount > 10) {
+      confirmBtn.style.opacity = "1";
+      confirmBtn.style.pointerEvents = "auto";
+    }
+  }
+
+  function stopDrawing() {
+    isDrawing = false;
+  }
+
+  // Mouse Listeners
+  canvas.onmousedown = startDrawing;
+  canvas.onmousemove = draw;
+  canvas.onmouseup = stopDrawing;
+  canvas.onmouseleave = stopDrawing;
+
+  // Touch Listeners
+  canvas.ontouchstart = startDrawing;
+  canvas.ontouchmove = draw;
+  canvas.ontouchend = stopDrawing;
+  canvas.ontouchcancel = stopDrawing;
+
+  // Clear handler
+  clearBtn.onclick = () => {
     playSound("tap");
-    // Show quick visual signature animation
-    const signArea = document.querySelector(".signature-line-area");
-    signArea.innerHTML = `
-      <div style="font-family: 'Playpen Sans', cursive; font-size: 24px; font-weight: bold; color: var(--pnm-blue); transform: rotate(-5deg); letter-spacing: 2px;">
-        ${localStorage.getItem("mekaar_player_name") || "Aminah"}
-      </div>
-    `;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    strokeCount = 0;
+    confirmBtn.style.opacity = "0.5";
+    confirmBtn.style.pointerEvents = "none";
+    helper.style.display = "block";
+  };
+
+  confirmBtn.onclick = () => {
+    playSound("tap");
     playSound("victory");
+
+    // Disable to prevent double click
+    confirmBtn.style.pointerEvents = "none";
+    confirmBtn.style.opacity = "0.5";
 
     setTimeout(() => {
       document.getElementById("pkm-sign-modal").classList.remove("active");
@@ -5613,7 +5780,7 @@ function openPkmSignatureModal() {
       document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
       // Advance to stage 5 remaining lines
       runPkmDialogueStep();
-    }, 1500);
+    }, 1200);
   };
 }
 
