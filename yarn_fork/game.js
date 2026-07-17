@@ -4935,6 +4935,7 @@ function initPkmStage(stageNum) {
   document.getElementById("pkm-stage-4-workspace").classList.add("hidden");
   document.getElementById("pkm-stage-4-dashboard").classList.add("hidden");
   document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+  document.getElementById("pkm-dialogue-panel").style.display = "none";
 
   // Clear seating-active class and hide Stage 1 guide
   document.getElementById("pkm-screen").classList.remove("seating-active");
@@ -4948,6 +4949,7 @@ function initPkmStage(stageNum) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 0: Pembukaan & Sambutan";
     document.getElementById("pkm-bg-img").src = "pkm/pkmintro.jpeg";
     document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
     runPkmDialogueStep();
   } 
   else if (stageNum === 1) {
@@ -4984,6 +4986,7 @@ function initPkmStage(stageNum) {
     
     // Keep standard dialogue board hidden
     document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "none";
     
     setupStage1Seating();
   } 
@@ -4991,12 +4994,14 @@ function initPkmStage(stageNum) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 2: Doa Bersama & Ikrar AO";
     document.getElementById("pkm-bg-img").src = "pkm/pkmsceneliatalk.jpeg";
     document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
     runPkmDialogueStep();
   } 
   else if (stageNum === 3) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 3: Uji Absensi";
     document.getElementById("pkm-bg-img").src = "pkm/pkmsceneplayertalk.jpeg";
     document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
     // Run intro dialogue first
     runPkmDialogueStep();
   } 
@@ -5004,6 +5009,7 @@ function initPkmStage(stageNum) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 4: Pembayaran Angsuran";
     document.getElementById("pkm-bg-img").src = "pkm/pkmsceneplayertalk.jpeg";
     document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
     // Run intro dialogue first
     runPkmDialogueStep();
   } 
@@ -5011,6 +5017,7 @@ function initPkmStage(stageNum) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 5: Doa Penutup & Janji Nasabah";
     document.getElementById("pkm-bg-img").src = "pkm/pkmscene1.png";
     document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
     runPkmDialogueStep();
   }
 }
@@ -5041,6 +5048,7 @@ function runPkmDialogueStep() {
   // Custom check for Stage 5 signature trigger after line 1
   if (stage === 5 && idx === 2 && !STATE.pkmSignedRecord) {
     document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "none";
     openPkmSignatureModal();
     return;
   }
@@ -5080,12 +5088,14 @@ function runPkmDialogueStep() {
     } else if (stage === 3) {
       // Transition to actual attendance quiz UI
       document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "none";
       document.getElementById("pkm-stage-3-indicators").classList.remove("hidden");
       document.getElementById("pkm-stage-3-hud").classList.remove("hidden");
       setupStage3Attendance();
     } else if (stage === 4) {
       // Transition to money sorting minigame
       document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "none";
       document.getElementById("pkm-stage-4-workspace").classList.remove("hidden");
       document.getElementById("pkm-stage-4-dashboard").classList.remove("hidden");
       setupStage4MoneyCounting();
@@ -5832,6 +5842,7 @@ function openPkmSignatureModal() {
       document.getElementById("pkm-sign-modal").classList.remove("active");
       STATE.pkmSignedRecord = true;
       document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "flex";
       // Advance to stage 5 remaining lines
       runPkmDialogueStep();
     }, 1200);

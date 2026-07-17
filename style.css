@@ -3031,7 +3031,9 @@ dotlottie-player {
 .dialogue-board-minigame > div:last-child {
   margin-top: auto;
 }
-.dialogue-board-minigame.hidden {
+.dialogue-board-minigame.hidden,
+.dialogue-board.hidden,
+.hidden {
   display: none !important;
 }
 .board-minigame-title {
