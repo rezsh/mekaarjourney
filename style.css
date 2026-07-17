@@ -3386,6 +3386,7 @@ dotlottie-player {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 #pkm-screen.active {
@@ -3452,6 +3453,17 @@ dotlottie-player {
   justify-content: center;
   align-items: center;
   border-bottom: 4px solid var(--wood-light);
+  z-index: 5;
+}
+
+/* Full screen modifier for seating minigame */
+#pkm-screen.seating-active .pkm-bg-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: none;
 }
 
 .pkm-bg-img {
@@ -3481,7 +3493,7 @@ dotlottie-player {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 85px 25px 15px 25px;
+  padding: 85px 25px 175px 25px; /* Spacing for top header and bottom floating seating pool */
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -4096,4 +4108,34 @@ dotlottie-player {
 .bin-strip.denom-10k {
   background: linear-gradient(135deg, #ea80fc, #e040fb);
   border: 1px solid #7b1fa2;
+}
+
+/* Floating Seating Pool and Dialogue guides inside Level 3 */
+.pkm-guide-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: flex-end;
+  z-index: 120;
+  pointer-events: none;
+}
+.pkm-guide-overlay.hidden {
+  display: none !important;
+}
+
+#pkm-stage-1-pool {
+  position: absolute;
+  bottom: 145px; /* Float directly above the 115px-high floating speech card */
+  left: 12px;
+  right: 12px;
+  background: rgba(251, 246, 240, 0.96) !important;
+  border: 2.5px solid var(--pnm-green) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  z-index: 100 !important;
+  padding: 8px 12px !important;
+  pointer-events: auto !important;
+  border-top: none !important;
 }

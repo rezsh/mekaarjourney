@@ -4936,6 +4936,13 @@ function initPkmStage(stageNum) {
   document.getElementById("pkm-stage-4-dashboard").classList.add("hidden");
   document.getElementById("pkm-dialogue-panel").classList.add("hidden");
 
+  // Clear seating-active class and hide Stage 1 guide
+  document.getElementById("pkm-screen").classList.remove("seating-active");
+  const guideEl = document.getElementById("pkm-stage-1-guide");
+  if (guideEl) {
+    guideEl.classList.add("hidden");
+  }
+
   // Stage-specific initializers
   if (stageNum === 0) {
     document.getElementById("pkm-header-sub").innerText = "Tahap 0: Pembukaan & Sambutan";
@@ -4948,6 +4955,36 @@ function initPkmStage(stageNum) {
     document.getElementById("pkm-bg-img").src = "pkm/pkmsceneminigame.png";
     document.getElementById("pkm-stage-1-zones").classList.remove("hidden");
     document.getElementById("pkm-stage-1-pool").classList.remove("hidden");
+    
+    // Add seating-active class to pkm-screen to make background full screen
+    document.getElementById("pkm-screen").classList.add("seating-active");
+    
+    // Show new guide bubble card at bottom
+    const guideEl = document.getElementById("pkm-stage-1-guide");
+    if (guideEl) {
+      guideEl.classList.remove("hidden");
+    }
+    
+    // Dynamically set name and avatar inside guide card
+    const speakerEl = document.getElementById("pkm-stage-1-speaker-badge");
+    const avatarEl = document.getElementById("pkm-stage-1-avatar");
+    const pName = localStorage.getItem("mekaar_player_name") || "Aminah";
+    const pGender = localStorage.getItem("mekaar_player_gender") || "female";
+    if (speakerEl) {
+      speakerEl.innerText = `AO ${pName}`;
+    }
+    if (avatarEl) {
+      avatarEl.src = "player/femaleplayer.png";
+      if (pGender === "female") {
+        avatarEl.style.filter = "none";
+      } else {
+        avatarEl.style.filter = "brightness(0)";
+      }
+    }
+    
+    // Keep standard dialogue board hidden
+    document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+    
     setupStage1Seating();
   } 
   else if (stageNum === 2) {
@@ -5010,7 +5047,7 @@ function runPkmDialogueStep() {
 
   if (idx < dialogueData.length) {
     const line = dialogueData[idx];
-    
+
     // Set speaker name and replace name token
     const speakerEl = document.getElementById("pkm-speaker-name");
     if (speakerEl) {
@@ -5027,11 +5064,13 @@ function runPkmDialogueStep() {
 
     // Setup Next Click listener
     const nextBtn = document.getElementById("btn-pkm-dialogue-next");
-    nextBtn.onclick = () => {
-      playSound("tap");
-      STATE.pkmDialogueIndex++;
-      runPkmDialogueStep();
-    };
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        playSound("tap");
+        STATE.pkmDialogueIndex++;
+        runPkmDialogueStep();
+      };
+    }
   } else {
     // Dialogue completed, proceed to next step
     if (stage === 0) {
