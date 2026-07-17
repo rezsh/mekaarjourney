@@ -559,11 +559,11 @@ const LEVEL_CONFIGS = {
           }
         ]
       }
-    },
-    3: {
-      totalNasabahGoal: 12,
-      encounters: null
     }
+  },
+  3: {
+    totalNasabahGoal: 12,
+    encounters: null
   }
 };
 

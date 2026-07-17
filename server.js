@@ -21,7 +21,7 @@ const server = http.createServer((req, res) => {
   let filePath = path.join(__dirname, decodeURIComponent(urlPath));
   
   if (urlPath === '/') {
-    filePath = path.join(__dirname, 'index.html');
+    filePath = path.join(__dirname, 'yarn_fork', 'index.html');
   }
 
   const extname = String(path.extname(filePath)).toLowerCase();
