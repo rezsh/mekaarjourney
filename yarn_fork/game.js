@@ -4844,6 +4844,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize star score presentation on first load
   updateLevelDetailStars();
 
+  // Level 3 PKM Header Help and Settings buttons
+  const btnPkmHelp = document.getElementById("btn-pkm-help");
+  if (btnPkmHelp) {
+    btnPkmHelp.addEventListener("click", () => {
+      document.getElementById("instructions-modal").classList.add("active");
+      playSound("tap");
+    });
+  }
+  const btnPkmSettings = document.getElementById("btn-pkm-settings");
+  if (btnPkmSettings) {
+    btnPkmSettings.addEventListener("click", () => {
+      openSettingsModal(false);
+    });
+  }
+
   // Attach tap-to-skip typewriter on dialogue click inside PKM Dialogue board
   const pkmDialoguePanel = document.getElementById("pkm-dialogue-panel");
   if (pkmDialoguePanel) {
@@ -5285,8 +5300,8 @@ function setupStage3Attendance() {
       const indicator = document.createElement("div");
       indicator.className = "pkm-visual-indicator";
       
-      // Layout positions: Row (top) 15%, 42%, 70%. Col (left) 12%, 35%, 58%, 81%.
-      const topPct = 20 + rowIdx * 25;
+      // Layout positions: Row (top) 26%, 48%, 70%. Col (left) 12%, 35%, 58%, 81%.
+      const topPct = 26 + rowIdx * 22;
       const leftPct = 12 + colIdx * 23;
       indicator.style.top = `${topPct}%`;
       indicator.style.left = `${leftPct}%`;

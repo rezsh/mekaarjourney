@@ -3481,7 +3481,7 @@ dotlottie-player {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 15px 25px;
+  padding: 85px 25px 15px 25px;
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -3927,7 +3927,7 @@ dotlottie-player {
 /* Stage 4: Visual transparent bubble in scene */
 .pkm-raised-hand-money {
   position: absolute;
-  top: 15px;
+  top: 85px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.75);
