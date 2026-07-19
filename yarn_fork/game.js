@@ -5153,24 +5153,24 @@ function finishPkmTypewriter() {
 // Stage 1: Seating Arrangement
 const PKM_SEATING_COORDINATES = {
   // Row 4 (Back) - y: 37%
-  nur:   { left: "29.5%", top: "37%", scale: 0.62, zIndex: 10 },
-  siti:  { left: "50%",   top: "37%", scale: 0.62, zIndex: 10 },
-  indah: { left: "70.5%", top: "37%", scale: 0.62, zIndex: 10 },
+  siti:  { left: "29.5%", top: "37%", scale: 0.62, zIndex: 10 },   // Subgroup A (Left)
+  ratna: { left: "50%",   top: "37%", scale: 0.62, zIndex: 10 },   // Subgroup B (Middle)
+  nur:   { left: "70.5%", top: "37%", scale: 0.62, zIndex: 10 },   // Subgroup C (Right)
   
   // Row 3 - y: 43%
-  desi:  { left: "27%",   top: "43%", scale: 0.72, zIndex: 12 },
-  ratna: { left: "50%",   top: "43%", scale: 0.72, zIndex: 12 },
-  yulia: { left: "73%",   top: "43%", scale: 0.72, zIndex: 12 },
+  indah: { left: "27%",   top: "43%", scale: 0.72, zIndex: 12 },   // Subgroup A (Left)
+  lastri:{ left: "50%",   top: "43%", scale: 0.72, zIndex: 12 },   // Subgroup B (Middle)
+  yulia: { left: "73%",   top: "43%", scale: 0.72, zIndex: 12 },   // Subgroup C (Right)
   
   // Row 2 - y: 51%
-  ijah:  { left: "23%",   top: "51%", scale: 0.85, zIndex: 14 },
-  lia:   { left: "50%",   top: "51%", scale: 0.85, zIndex: 14 },
-  rini:  { left: "77%",   top: "51%", scale: 0.85, zIndex: 14 },
+  ijah:  { left: "23%",   top: "51%", scale: 0.85, zIndex: 14 },   // Subgroup A (Left)
+  ningsih:{ left: "50%",  top: "51%", scale: 0.85, zIndex: 14 },   // Subgroup B (Middle)
+  lia:   { left: "77%",   top: "51%", scale: 0.85, zIndex: 14 },   // Subgroup C (Right)
   
   // Row 1 (Front) - y: 63%
-  lastri:{ left: "16%",   top: "63%", scale: 1.02, zIndex: 16 },
-  ningsih:{ left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },
-  yanti: { left: "84%",   top: "63%", scale: 1.02, zIndex: 16 }
+  rini:  { left: "16%",   top: "63%", scale: 1.02, zIndex: 16 },   // Subgroup A (Left)
+  yanti: { left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },   // Subgroup B (Middle)
+  desi:  { left: "84%",   top: "63%", scale: 1.02, zIndex: 16 }    // Subgroup C (Right)
 };
 
 let pkmSelectedSeatingCard = null;
