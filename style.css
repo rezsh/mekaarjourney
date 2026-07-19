@@ -3684,6 +3684,7 @@ dotlottie-player {
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center top;
   background-color: #f0f0f0;
   border: 1.5px solid var(--pnm-green);
 }
