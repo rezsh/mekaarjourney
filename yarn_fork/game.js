@@ -4394,8 +4394,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-level-kelayakan").addEventListener("click", () => {
-    const starsLvl1 = parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0;
-    if (starsLvl1 === 0) {
+    if (document.getElementById("btn-level-kelayakan").classList.contains("locked")) {
       const textEl = document.getElementById("dev-modal-text");
       if (textEl) {
         textEl.innerHTML = "LEVEL TERKUNCI<br><span style='font-size: 13px; font-weight: 400; color: #666;'>Selesaikan Level 1 (Sosialisasi) terlebih dahulu untuk membuka level ini!</span>";
