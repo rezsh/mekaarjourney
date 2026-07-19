@@ -5610,17 +5610,16 @@ function setupStage4MoneyCounting() {
     if (stack) stack.innerHTML = "";
   });
 
-  // Generate money bills array
-  // 10 bills of 100k (1,000,000)
-  // 20 bills of 50k (1,000,000)
-  // 15 bills of 20k (300,000)
-  // 10 bills of 10k (100,000)
-  // Total = Rp2.400.000 (55 bills total)
-  const bills = [];
-  for (let i = 0; i < 10; i++) bills.push(100000);
-  for (let i = 0; i < 20; i++) bills.push(50000);
-  for (let i = 0; i < 15; i++) bills.push(20000);
-  for (let i = 0; i < 10; i++) bills.push(10000);
+  // Generate money bills array of bundles
+  // Total = Rp2.400.000 (6 bundles total)
+  const bills = [
+    { denom: 100000, qty: 10 },
+    { denom: 50000,  qty: 10 },
+    { denom: 50000,  qty: 10 },
+    { denom: 20000,  qty: 10 },
+    { denom: 20000,  qty: 5 },
+    { denom: 10000,  qty: 10 }
+  ];
 
   // Shuffle bills
   for (let i = bills.length - 1; i > 0; i--) {
@@ -5680,16 +5679,21 @@ function spawnNextMoneyBill() {
     return;
   }
 
-  const denom = STATE.pkmMoneyBills[idx];
+  const billObj = STATE.pkmMoneyBills[idx];
+  const denom = billObj.denom;
+  const qty = billObj.qty;
+
   const card = document.createElement("div");
   card.className = `money-bill denom-${denom / 1000}k`;
   card.id = `money-bill-${idx}`;
   card.setAttribute("draggable", "true");
-  card.setAttribute("data-denom", denom);
+  card.setAttribute("data-denom", denom.toString());
+  card.setAttribute("data-qty", qty.toString());
 
   card.innerHTML = `
     <span class="money-bill-mini-label">Rupiah</span>
     <span style="font-size:12px;">${formatDenomLabel(denom)}</span>
+    <div class="money-bill-qty-badge">x${qty}</div>
   `;
 
   // Drag listeners
@@ -5720,32 +5724,36 @@ function spawnNextMoneyBill() {
 function handleMoneyPlacement(card, bin) {
   const targetDenom = parseInt(bin.getAttribute("data-denom"));
   const billDenom = parseInt(card.getAttribute("data-denom"));
+  const billQty = parseInt(card.getAttribute("data-qty") || "1");
 
   if (targetDenom === billDenom) {
     // Correct! Increment values
     STATE.pkmMoneySorted++;
-    STATE.pkmTotalCounted += billDenom;
+    const totalVal = billDenom * billQty;
+    STATE.pkmTotalCounted += totalVal;
 
     // Update bin visual total
-    const count = parseInt(bin.getAttribute("data-count") || "0") + 1;
+    const count = parseInt(bin.getAttribute("data-count") || "0") + billQty;
     bin.setAttribute("data-count", count.toString());
 
-    const currentSum = parseInt(bin.getAttribute("data-sum") || "0") + billDenom;
+    const currentSum = parseInt(bin.getAttribute("data-sum") || "0") + totalVal;
     bin.setAttribute("data-sum", currentSum.toString());
     bin.querySelector(".bin-value").innerText = formatRupiah(currentSum);
 
-    // Spawn visual strip in stack
+    // Spawn visual strips in stack
     const stack = bin.querySelector(".bin-stack");
     if (stack) {
-      const strip = document.createElement("div");
-      strip.className = `bin-strip denom-${billDenom / 1000}k`;
-      const bottomVal = Math.min(4 + (count * 1.5), 32);
-      const leftVal = 5 + Math.random() * 40; // random offset left
-      const rotation = (Math.random() - 0.5) * 16; // random rotation angle
-      strip.style.bottom = `${bottomVal}px`;
-      strip.style.left = `${leftVal}%`;
-      strip.style.transform = `rotate(${rotation}deg)`;
-      stack.appendChild(strip);
+      for (let i = 0; i < billQty; i++) {
+        const strip = document.createElement("div");
+        strip.className = `bin-strip denom-${billDenom / 1000}k`;
+        const bottomVal = Math.min(4 + ((count - billQty + i) * 1.5), 32);
+        const leftVal = 5 + Math.random() * 40; // random offset left
+        const rotation = (Math.random() - 0.5) * 16; // random rotation angle
+        strip.style.bottom = `${bottomVal}px`;
+        strip.style.left = `${leftVal}%`;
+        strip.style.transform = `rotate(${rotation}deg)`;
+        stack.appendChild(strip);
+      }
     }
 
     // Visual snap animation
