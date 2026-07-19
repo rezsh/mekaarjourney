@@ -3499,8 +3499,10 @@ dotlottie-player {
   background: rgba(0, 0, 0, 0.2);
 }
 
-#pkm-stage-1-zones {
+#pkm-stage-1-zones:not(.hidden) {
   display: block !important;
+}
+#pkm-stage-1-zones {
   padding: 0 !important;
   background: transparent !important;
   pointer-events: none;
