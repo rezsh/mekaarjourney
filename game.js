@@ -560,7 +560,119 @@ const LEVEL_CONFIGS = {
         ]
       }
     }
+  },
+  3: {
+    totalNasabahGoal: 12,
+    encounters: null
   }
+};
+
+const PKM_CONFIG = {
+  nasabah: [
+    { id: "siti", name: "Siti Nurhaliza", portrait: "pkm/nasabahPKM/SITI NURHALIZA.png", subgroup: "A" },
+    { id: "ijah", name: "Ijah Fatiha", portrait: "pkm/nasabahPKM/IJAH FATIHA.png", subgroup: "A" },
+    { id: "indah", name: "Indah Sari", portrait: "pkm/nasabahPKM/INDAH SARI.png", subgroup: "A" },
+    { id: "rini", name: "Rini Kartika", portrait: "pkm/nasabahPKM/RINI KARTIKA.png", subgroup: "A" },
+    { id: "lastri", name: "Lastri Endang", portrait: "pkm/nasabahPKM/LASTRI ENDANG.png", subgroup: "B" },
+    { id: "ningsih", name: "Ningsih Wulandari", portrait: "pkm/nasabahPKM/NINGSIH WULANDARI.png", subgroup: "B" },
+    { id: "ratna", name: "Ratna Dwi", portrait: "pkm/nasabahPKM/RATNA DWI.png", subgroup: "B" },
+    { id: "yanti", name: "Yanti Susilo", portrait: "pkm/nasabahPKM/YANTI SUSILO.png", subgroup: "B" },
+    { id: "desi", name: "Desi Manik", portrait: "pkm/nasabahPKM/DESI MANIK.png", subgroup: "C" },
+    { id: "lia", name: "Lia Munaroh", portrait: "pkm/nasabahPKM/LIA MUNAROH.png", subgroup: "C" },
+    { id: "nur", name: "Nur Rahmawati", portrait: "pkm/nasabahPKM/NUR RAHMAWATI.png", subgroup: "C" },
+    { id: "yulia", name: "Yuliawati", portrait: "pkm/nasabahPKM/YULIAWATI.png", subgroup: "C" }
+  ],
+  attendanceCodes: {
+    1: "Hadir & Bayar",
+    2: "Tidak Hadir",
+    3: "Hadir, Belum Bayar"
+  },
+  installmentPerPerson: 200000,
+  denominations: [100000, 50000, 20000, 10000],
+  groupLeader: "lia"
+};
+
+const PKM_DIALOGUES = {
+  0: [
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmintro.jpeg",
+      text: "Assalamu'alaikum ibu-ibu! Selamat datang di Pertemuan Kelompok Mingguan atau PKM perdana kita hari ini! Saya {playername}, Account Officer dari PNM Mekaar yang akan mendampingi ibu-ibu ke depannya. Senang sekali bisa bertemu semua!"
+    },
+    {
+      speaker: "BU LIA (Ketua Kelompok)",
+      portrait: "pkm/pkmintro.jpeg",
+      text: "Wa'alaikumussalam, Mbak {playername}. Kami juga senang sekali didampingi oleh Mbak {playername} yang ramah ini. Semoga kelompok kita selalu lancar ya, Bu."
+    },
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmintro.jpeg",
+      text: "Aamiin Yaa Rabbal 'Aalamiin. Terima kasih Ibu Lia. Sebelum kita memulai, silakan Ibu-ibu duduk di sub-kelompoknya masing-masing terlebih dahulu ya. Mari kita rapihkan posisi duduknya!"
+    }
+  ],
+  2: [
+    {
+      speaker: "BU LIA (Ketua Kelompok)",
+      portrait: "pkm/pkmsceneliatalk.jpeg",
+      text: "Baiklah Ibu-ibu, sebelum memulai acara hari ini, mari kita bersama-sama berdoa terlebih dahulu agar pertemuan kita berjalan dengan lancar dan mendatangkan keberkahan. Berdoa dimulai..."
+    },
+    {
+      speaker: "Narator",
+      portrait: "pkm/pkmscene1.png",
+      text: "Ibu-ibu berdoa bersama dengan khidmat selama beberapa saat..."
+    },
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Terima kasih Ibu Lia. Sekarang, mari kita bersama-sama membacakan Ikrar Account Officer PNM Mekaar dengan lantang dan penuh komitmen!"
+    },
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Ikrar Account Officer PNM Mekaar: Kami Account Officer Mekaar, berjanji senantiasa jujur, disiplin, dan bertanggung jawab. Siap mendampingi kelompok ibu-ibu prasejahtera demi masa depan yang lebih baik!"
+    }
+  ],
+  "3_intro": [
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Bagus sekali Ibu-ibu. Sekarang kita masuk ke agenda penting berikutnya, yaitu pencatatan absensi dan uang jaga-jaga (tabungan darurat). Silakan Ibu-ibu angkat uang jaga-jaganya tinggi-tinggi ya!"
+    }
+  ],
+  "4_intro": [
+    {
+      speaker: "BU LIA (Ketua Kelompok)",
+      portrait: "pkm/pkmsceneliatalk.jpeg",
+      text: "Ini Mbak {playername}, uang angsuran dari seluruh sub-kelompok hari ini. Total semuanya Rp2.400.000, tolong dihitung kembali ya Mbak."
+    },
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Baik Ibu Lia, terima kasih. Saya akan menghitung uang angsuran ini secara terbuka di depan Ibu-ibu sekalian agar transparan. Mari kita hitung bersama ya!"
+    }
+  ],
+  5: [
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Alhamdulillah, seluruh uang angsuran telah dihitung secara transparan dan nominalnya tepat Rp2.400.000. Saya tandatangani berita acaranya ya."
+    },
+    {
+      speaker: "BU LIA (Ketua Kelompok)",
+      portrait: "pkm/pkmsceneliatalk.jpeg",
+      text: "Alhamdulillah. Sebagai penutup, mari kita membacakan doa penutup dan Janji Nasabah bersama-sama."
+    },
+    {
+      speaker: "Semua Nasabah",
+      portrait: "pkm/pkmscene1.png",
+      text: "Janji Nasabah PNM Mekaar: Kami nasabah PNM Mekaar berjanji: Hadir tepat waktu, Membayar angsuran tepat waktu, Menggunakan modal untuk usaha, Saling membantu sesama anggota kelompok!"
+    },
+    {
+      speaker: "AO {playername}",
+      portrait: "pkm/pkmsceneplayertalk.jpeg",
+      text: "Terima kasih Ibu-ibu. Jangan lupa hadir lagi di pertemuan berikutnya ya, Bu. Bagi yang tidak hadir hari ini, tolong diminta hadir untuk pertemuan selanjutnya. Dan jangan lupa membawa angsurannya ya, Bu."
+    }
+  ]
 };
 
 const STATE = {
@@ -604,7 +716,7 @@ const STATE = {
   cabangScrollTeaseTimerId: null,
   cabangScrollLoopId: null,
   cabangIsTeasing: false,
-  
+
   // Yarn Spinner integration variables
   useYarnDialogue: false,
   currentYarnParentNode: "",
@@ -631,7 +743,17 @@ const STATE = {
   currentEncounterIncorrect: false,
   pendingRecruits: 0,
   currentAvatar: "",
-  currentExpression: "idle"
+  currentExpression: "idle",
+  
+  // PKM Level 3 State
+  pkmStage: 0,
+  pkmDialogueIndex: 0,
+  pkmSeatingCorrect: 0,
+  pkmAttendanceCorrect: 0,
+  pkmAttendanceConditions: [],
+  pkmMoneyBills: [],
+  pkmMoneySorted: 0,
+  pkmTotalCounted: 0
 };
 
 // Safety Riding Equipment Configuration
@@ -674,14 +796,14 @@ function updateLevelDetailStars() {
 // Load Level Configuration
 function loadLevelConfig(levelId) {
   STATE.currentLevel = levelId;
-  
+
   if (!CONFIG_LEVEL_1_BACKUP_ENCOUNTERS) {
     CONFIG_LEVEL_1_BACKUP_ENCOUNTERS = CONFIG.encounters;
   }
-  
+
   const levelData = LEVEL_CONFIGS[levelId];
   CONFIG.totalNasabahGoal = levelData.totalNasabahGoal;
-  
+
   if (levelId === 1) {
     CONFIG.encounters = CONFIG_LEVEL_1_BACKUP_ENCOUNTERS;
     if (STATE.useYarnDialogue) {
@@ -690,7 +812,7 @@ function loadLevelConfig(levelId) {
   } else {
     CONFIG.encounters = levelData.encounters;
   }
-  
+
   STATE.highScoreStars = parseInt(localStorage.getItem(`mekaar_journey_level_${levelId}_stars`)) || 0;
 }
 
@@ -698,10 +820,17 @@ function loadLevelConfig(levelId) {
 function updateLevelSelectionUI() {
   const btnLvl1 = document.getElementById("btn-level-sosialisasi");
   const btnLvl2 = document.getElementById("btn-level-kelayakan");
+  const btnLvl3 = document.getElementById("btn-level-pkm");
   if (!btnLvl1 || !btnLvl2) return;
 
-  const starsLvl1 = parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 3;
-  const starsLvl2 = parseInt(localStorage.getItem("mekaar_journey_level_2_stars")) || 0;
+  let starsLvl1 = parseInt(localStorage.getItem("mekaar_journey_level_1_stars")) || 0;
+  let starsLvl2 = parseInt(localStorage.getItem("mekaar_journey_level_2_stars")) || 0;
+  let starsLvl3 = parseInt(localStorage.getItem("mekaar_journey_level_3_stars")) || 0;
+
+  if (window.location.search.includes("unlock=all") || localStorage.getItem("mekaar_cheat_unlock") === "true") {
+    if (starsLvl1 === 0) starsLvl1 = 3;
+    if (starsLvl2 === 0) starsLvl2 = 3;
+  }
 
   // Level 1: always open
   const badgeLvl1 = btnLvl1.querySelector(".level-status-badge");
@@ -746,6 +875,36 @@ function updateLevelSelectionUI() {
       badgeLvl2.style.color = "";
     }
   }
+
+  // Level 3: unlocked if Level 2 cleared
+  if (btnLvl3) {
+    if (starsLvl2 > 0) {
+      btnLvl3.className = "level-select-btn active";
+      const badgeLvl3 = btnLvl3.querySelector(".level-status-badge");
+      if (badgeLvl3) {
+        if (starsLvl3 > 0) {
+          badgeLvl3.innerText = `${starsLvl3} ★`;
+          badgeLvl3.className = "level-status-badge open";
+          badgeLvl3.style.backgroundColor = "var(--gold)";
+          badgeLvl3.style.color = "var(--text-dark)";
+        } else {
+          badgeLvl3.innerText = "BUKA";
+          badgeLvl3.className = "level-status-badge open";
+          badgeLvl3.style.backgroundColor = "";
+          badgeLvl3.style.color = "";
+        }
+      }
+    } else {
+      btnLvl3.className = "level-select-btn locked";
+      const badgeLvl3 = btnLvl3.querySelector(".level-status-badge");
+      if (badgeLvl3) {
+        badgeLvl3.innerText = "KUNCI";
+        badgeLvl3.className = "level-status-badge dev";
+        badgeLvl3.style.backgroundColor = "";
+        badgeLvl3.style.color = "";
+      }
+    }
+  }
 }
 
 // Update Level Detail Modal fields dynamically
@@ -760,6 +919,9 @@ function updateLevelDetailModal(levelId) {
   } else if (levelId === 2) {
     if (detailTitle) detailTitle.innerText = "UJI KELAYAKAN";
     if (detailDesc) detailDesc.innerHTML = "Level 2: Uji Kelayakan & Verifikasi<br>Temui calon nasabah, verifikasi usaha dan komitmen kelompok mereka, lalu putuskan kelayakan mereka!";
+  } else if (levelId === 3) {
+    if (detailTitle) detailTitle.innerText = "PKM";
+    if (detailDesc) detailDesc.innerHTML = "Level 3: Pertemuan Kelompok Mingguan<br>Dampingi kelompok nasabah Mekaar perdana: susun kelompok, kelola absensi di Mekar Digi, dan hitung uang angsuran secara transparan!";
   }
 
   // Update stars rating
@@ -842,7 +1004,7 @@ function initMapForCurrentLevel() {
     // Set map character sprite and class (group / single)
     const wrapper = el.querySelector(".npc-character-wrapper");
     const singleChar = el.querySelector(":scope > .npc-character");
-    
+
     if (wrapper && singleChar) {
       const isGroupEncounter = encData.isGroup && encData.recruitsCount > 1;
 
@@ -896,7 +1058,7 @@ function initMapForCurrentLevel() {
         else if (encId === "tini") imgUrl = "nasabah/nasabah5dle.png"; // Bu Titin
         else if (encId === "wati") imgUrl = "nasabah/nasabah9idle.png"; // Bu Wati
         else if (encId === "minah") imgUrl = "nasabah/nasabah6idle.png"; // Bu Ijah
-        
+
         if (imgUrl) {
           charSprite.style.backgroundImage = `url('${imgUrl}')`;
         }
@@ -963,7 +1125,26 @@ const ASSETS_TO_PRELOAD = [
   "ujikelayakan&verif/ukmeet3.jpeg",
   "ujikelayakan&verif/ukmeet4.jpg",
   "ujikelayakan&verif/ukmeet5.jpg",
-  "ujikelayakan&verif/ukmeet6.jpeg"
+  "ujikelayakan&verif/ukmeet6.jpeg",
+
+  // Level 3 PKM
+  "pkm/pkmintro.jpeg",
+  "pkm/pkmscene1.png",
+  "pkm/pkmsceneminigame.png",
+  "pkm/pkmsceneliatalk.jpeg",
+  "pkm/pkmsceneplayertalk.jpeg",
+  "pkm/nasabahPKM/DESI MANIK.png",
+  "pkm/nasabahPKM/IJAH FATIHA.png",
+  "pkm/nasabahPKM/INDAH SARI.png",
+  "pkm/nasabahPKM/LASTRI ENDANG.png",
+  "pkm/nasabahPKM/LIA MUNAROH.png",
+  "pkm/nasabahPKM/NINGSIH WULANDARI.png",
+  "pkm/nasabahPKM/NUR RAHMAWATI.png",
+  "pkm/nasabahPKM/RATNA DWI.png",
+  "pkm/nasabahPKM/RINI KARTIKA.png",
+  "pkm/nasabahPKM/SITI NURHALIZA.png",
+  "pkm/nasabahPKM/YANTI SUSILO.png",
+  "pkm/nasabahPKM/YULIAWATI.png"
 ];
 
 // Dynamically generate all NPC dialogue sprites for preloading
@@ -1300,26 +1481,26 @@ function playSound(type) {
     gainNode.gain.linearRampToValueAtTime(0, now + 0.15);
     osc.start(now);
     osc.stop(now + 0.15);
-    
+
     // Add a second noise-like click using bandpass-filtered triangle wave
     const osc2 = ctx.createOscillator();
     const gainNode2 = ctx.createGain();
     const filter = ctx.createBiquadFilter();
-    
+
     osc2.type = "triangle";
     osc2.frequency.setValueAtTime(150, now);
     osc2.frequency.exponentialRampToValueAtTime(10, now + 0.1);
-    
+
     filter.type = "bandpass";
     filter.frequency.setValueAtTime(1000, now);
-    
+
     osc2.connect(filter);
     filter.connect(gainNode2);
     gainNode2.connect(ctx.destination);
-    
+
     gainNode2.gain.setValueAtTime(0.25, now);
     gainNode2.gain.linearRampToValueAtTime(0, now + 0.1);
-    
+
     osc2.start(now);
     osc2.stop(now + 0.1);
   }
@@ -1675,7 +1856,7 @@ function preprocessDialogueBody(bodyText) {
   const resultLines = [];
   let showCurrentBlock = true;
   let ifStack = [];
-  
+
   for (let line of lines) {
     const trimmed = line.trim();
     if (trimmed.startsWith("<<if ")) {
@@ -1718,11 +1899,11 @@ function parseStepsFromText(text) {
     text: "",
     options: []
   };
-  
+
   for (let line of lines) {
     let trimmed = line.trim();
     if (!trimmed) continue;
-    
+
     if (trimmed.startsWith("[[") && trimmed.endsWith("]]")) {
       const optionContent = trimmed.substring(2, trimmed.length - 2);
       const parts = optionContent.split("|");
@@ -1731,13 +1912,13 @@ function parseStepsFromText(text) {
       currentStep.options.push({ text, target });
       continue;
     }
-    
+
     const commands = [];
     const cmdRegex = /<<([^>]+)>>/g;
     let match;
     let lastIndex = 0;
     let lineText = "";
-    
+
     while ((match = cmdRegex.exec(line)) !== null) {
       lineText += line.substring(lastIndex, match.index);
       commands.push(match[1].trim());
@@ -1745,7 +1926,7 @@ function parseStepsFromText(text) {
     }
     lineText += line.substring(lastIndex);
     lineText = lineText.trim();
-    
+
     if (commands.length > 0) {
       const hasNewAvatar = commands.some(c => c.startsWith("avatar "));
       if (hasNewAvatar && currentStep.text) {
@@ -1769,11 +1950,11 @@ function parseStepsFromText(text) {
       }
     }
   }
-  
+
   if (currentStep.text || currentStep.options.length > 0) {
     steps.push(currentStep);
   }
-  
+
   return steps;
 }
 
@@ -1804,7 +1985,7 @@ function getYarnPortraitUrl(avatarName, expression) {
   if (nameLower.includes("pak rt")) {
     return expression === "laugh" ? "npc/pakrthappy.png" : "npc/pakrtneutral.png";
   }
-  
+
   let nasabahId = 1;
   if (nameLower.includes("indah")) nasabahId = 1;
   else if (nameLower.includes("ratna")) nasabahId = 2;
@@ -1841,7 +2022,7 @@ function updateYarnPortraits() {
 
   portraitImg.style.display = "block";
   portraitImg.src = getYarnPortraitUrl(STATE.currentAvatar || "Aminah", STATE.currentExpression);
-  
+
   portraitImg.className = "npc-portrait-img";
   if (STATE.currentExpression === "happy") {
     portraitImg.classList.add("happy");
@@ -1867,7 +2048,7 @@ function triggerVignetteFlash(type) {
 function executeYarnCommand(cmd) {
   cmd = cmd.trim();
   const lower = cmd.toLowerCase();
-  
+
   if (lower.startsWith("avatar ")) {
     const avatarName = cmd.substring(7).trim();
     STATE.currentAvatar = avatarName;
@@ -1913,7 +2094,7 @@ function playYarnNode(nodeTitle) {
 
   const preprocessedText = preprocessDialogueBody(node.body);
   const steps = parseStepsFromText(preprocessedText);
-  
+
   STATE.yarnSteps = steps;
   STATE.yarnStepIndex = 0;
   STATE.currentEncounterCorrect = false;
@@ -1937,7 +2118,7 @@ function loadYarnStep() {
   }
 
   const step = STATE.yarnSteps[STATE.yarnStepIndex];
-  
+
   step.commands.forEach(cmd => {
     executeYarnCommand(cmd);
   });
@@ -1973,7 +2154,7 @@ function loadYarnStep() {
   const optionsList = document.getElementById("options-list");
   if (optionsList) {
     optionsList.innerHTML = "";
-    
+
     let optionsToRender = [...step.options];
     if (optionsToRender.length === 0) {
       if (STATE.yarnStepIndex < STATE.yarnSteps.length - 1) {
@@ -1986,7 +2167,7 @@ function loadYarnStep() {
         }
       }
     }
-    
+
     optionsToRender.forEach((opt) => {
       const btn = document.createElement("button");
       btn.className = "option-btn";
@@ -2007,7 +2188,7 @@ function loadYarnStep() {
 
 function handleYarnOptionSelect(option) {
   playSound("tap");
-  
+
   if (option.target === "next_step") {
     STATE.yarnStepIndex++;
     loadYarnStep();
@@ -2016,12 +2197,12 @@ function handleYarnOptionSelect(option) {
     showScreen("map");
   } else if (option.target === "complete_encounter") {
     STATE.completedEncounters.add(STATE.activeEncounterId);
-    
+
     if (STATE.activeEncounterId === "citra") {
       endCabangDialogue();
       return;
     }
-    
+
     if (STATE.activeEncounterId === "pakrt") {
       STATE.hasPermission = true;
       const rMarker = document.querySelector("#encounter-pakrt .speech-bubble");
@@ -2029,11 +2210,11 @@ function handleYarnOptionSelect(option) {
       showScreen("map");
       return;
     }
-    
+
     const oldCount = STATE.collectedCount;
     const recruits = STATE.pendingRecruits || 1;
     STATE.collectedCount += recruits;
-    
+
     if (STATE.collectedCount >= CONFIG.totalNasabahGoal) {
       triggerVictory();
     } else {
@@ -2252,26 +2433,26 @@ function handleOptionSelect(option, buttonEl) {
       startInterviewMinigame();
       return;
     }
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
-        (STATE.dialogueIndex === 10 || (dialogue.objection === "Silakan, Mbak." && dialogue.speaker === "BU LIA"))) {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" &&
+      (STATE.dialogueIndex === 10 || (dialogue.objection === "Silakan, Mbak." && dialogue.speaker === "BU LIA"))) {
       startPhotoMinigame();
       return;
     }
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
-        (STATE.dialogueIndex === 14 || dialogue.objection.includes("Alhamdulillah kalau semuanya lancar"))) {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" &&
+      (STATE.dialogueIndex === 14 || dialogue.objection.includes("Alhamdulillah kalau semuanya lancar"))) {
       console.log("TRANSITION TRIGGERED at dialogueIndex:", STATE.dialogueIndex);
       triggerTimeSkipTransition(() => {
         advanceDialogue();
       });
       return;
     }
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
-        (STATE.dialogueIndex === 20 || dialogue.objection.includes("Yang perlu disiapkan itu"))) {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" &&
+      (STATE.dialogueIndex === 20 || dialogue.objection.includes("Yang perlu disiapkan itu"))) {
       startVerifDocsMinigame();
       return;
     }
-    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" && 
-        (STATE.dialogueIndex === 24 || (dialogue.objection === "Silakan, Mbak Citra." && dialogue.speaker === "BU LIA"))) {
+    if (STATE.currentLevel === 2 && STATE.activeEncounterId === "lia" &&
+      (STATE.dialogueIndex === 24 || (dialogue.objection === "Silakan, Mbak Citra." && dialogue.speaker === "BU LIA"))) {
       startMirrorDocsMinigame();
       return;
     }
@@ -2549,6 +2730,16 @@ function resetGame() {
   STATE.currentAvatar = "";
   STATE.currentExpression = "idle";
 
+  // Reset PKM Level 3 states
+  STATE.pkmStage = 0;
+  STATE.pkmDialogueIndex = 0;
+  STATE.pkmSeatingCorrect = 0;
+  STATE.pkmAttendanceCorrect = 0;
+  STATE.pkmAttendanceConditions = [];
+  STATE.pkmMoneyBills = [];
+  STATE.pkmMoneySorted = 0;
+  STATE.pkmTotalCounted = 0;
+
   // Set star icon in level selector card to match current progress
   updateLevelDetailStars();
 
@@ -2696,7 +2887,7 @@ function openSettingsModal(fromMainMenu = false) {
 
   const currentSavedGender = localStorage.getItem("mekaar_player_gender") || "female";
   STATE.tempSettingsGender = currentSavedGender;
-  
+
   const femaleCard = document.getElementById("settings-gender-female");
   const maleCard = document.getElementById("settings-gender-male");
   if (femaleCard && maleCard) {
@@ -3222,7 +3413,7 @@ function initPhotoMinigameDragHandlers() {
 
   function onEnd() {
     isDragging = false;
-    
+
     // Trigger inertia scroll if released with velocity
     if (Math.abs(velocity) > 0.05) {
       const friction = 0.95;
@@ -3269,18 +3460,18 @@ function initPhotoMinigameDragHandlers() {
       const W = panoramaImgEl.clientWidth;
       const scale = W / 1376;
       const maxScrollX = Math.max(0, W - V);
-      
+
       if (key === "l") {
-        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.left * scale - V/2, maxScrollX));
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.left * scale - V / 2, maxScrollX));
       } else if (key === "c") {
-        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.center * scale - V/2, maxScrollX));
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.center * scale - V / 2, maxScrollX));
       } else if (key === "r") {
-        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.right * scale - V/2, maxScrollX));
+        STATE.photoMinigame.currentX = Math.max(0, Math.min(PHOTO_TARGETS.right * scale - V / 2, maxScrollX));
       } else if (key === "s") {
         handleShutterClick();
         return;
       }
-      
+
       panoramaImgEl.style.transform = `translateX(${-STATE.photoMinigame.currentX}px)`;
       checkTargetProximity();
     }
@@ -3456,7 +3647,7 @@ function triggerTimeSkipTransition(callback) {
   }
   playSound("tap");
   overlay.classList.add("active");
-  
+
   setTimeout(() => {
     if (callback) callback();
     setTimeout(() => {
@@ -3469,7 +3660,7 @@ function triggerTimeSkipTransition(callback) {
 function setDialogueBoardMinigameMode(minigameId) {
   const board = document.querySelector(".dialogue-board");
   if (!board) return;
-  
+
   if (minigameId) {
     board.classList.add("minigame-active");
     board.querySelectorAll(".dialogue-board-minigame").forEach(el => el.classList.add("hidden"));
@@ -3491,28 +3682,28 @@ function startVerifDocsMinigame() {
   showScreen("dialogue");
   STATE.screen = "verifdocs";
   setDialogueBoardMinigameMode("verifdocs-board");
-  
+
   // Clear any previous selection
   STATE.verifDocsSelected = new Set();
-  
+
   const cards = document.querySelectorAll(".verifdocs-grid-board .verifdoc-card");
   cards.forEach(card => {
     card.classList.remove("selected");
   });
-  
+
   const feedbackMsg = document.getElementById("verifdocs-feedback");
   if (feedbackMsg) {
     feedbackMsg.innerText = "Pilih 3 dokumen wajib yang benar. (Terpilih: 0/3)";
     feedbackMsg.className = "verif-feedback-msg";
   }
-  
+
   initVerifDocsHandlers();
 }
 
 function initVerifDocsHandlers() {
   if (verifDocsMinigameInitialized) return;
   verifDocsMinigameInitialized = true;
-  
+
   const cards = document.querySelectorAll(".verifdocs-grid-board .verifdoc-card");
   const updateVerifProgress = () => {
     const feedback = document.getElementById("verifdocs-feedback");
@@ -3538,29 +3729,29 @@ function initVerifDocsHandlers() {
       updateVerifProgress();
     });
   });
-  
+
   const btnConfirm = document.getElementById("btn-verifdocs-confirm");
   if (btnConfirm) {
     btnConfirm.addEventListener("click", () => {
       if (STATE.screen !== "verifdocs") return;
-      
+
       const feedbackMsg = document.getElementById("verifdocs-feedback");
       const container = document.getElementById("verifdocs-board");
-      
+
       // Target correct set: ktp, kk, domisili
       const correctSet = new Set(["ktp", "kk", "domisili"]);
-      
+
       // Check if selected matches correctSet exactly
-      let isCorrect = STATE.verifDocsSelected.size === correctSet.size && 
-                      [...STATE.verifDocsSelected].every(x => correctSet.has(x));
-                      
+      let isCorrect = STATE.verifDocsSelected.size === correctSet.size &&
+        [...STATE.verifDocsSelected].every(x => correctSet.has(x));
+
       if (isCorrect) {
         playSound("correct");
         if (feedbackMsg) {
           feedbackMsg.innerText = "Tepat sekali! Memverifikasi dokumen...";
           feedbackMsg.className = "verif-feedback-msg success";
         }
-        
+
         setTimeout(() => {
           setDialogueBoardMinigameMode(null);
           STATE.screen = "dialogue";
@@ -3592,28 +3783,28 @@ function startMirrorDocsMinigame() {
   showScreen("dialogue");
   STATE.screen = "mirrordocs";
   setDialogueBoardMinigameMode("mirrordocs-board");
-  
+
   // Clear any previous selection
   STATE.mismatchesSelected = new Set();
-  
+
   const rows = document.querySelectorAll("#mirrordocs-board .comparison-row");
   rows.forEach(row => {
     row.className = "comparison-row"; // Reset selected, error, correct classes
   });
-  
+
   const feedbackMsg = document.getElementById("mirrordocs-feedback");
   if (feedbackMsg) {
     feedbackMsg.innerText = "Temukan 2 data yang tidak sesuai. (Terpilih: 0/2)";
     feedbackMsg.className = "verif-feedback-msg";
   }
-  
+
   initMirrorDocsHandlers();
 }
 
 function initMirrorDocsHandlers() {
   if (mirrorDocsMinigameInitialized) return;
   mirrorDocsMinigameInitialized = true;
-  
+
   const rows = document.querySelectorAll("#mirrordocs-board .comparison-row");
   const updateMirrorProgress = () => {
     const feedback = document.getElementById("mirrordocs-feedback");
@@ -3629,10 +3820,10 @@ function initMirrorDocsHandlers() {
       if (STATE.screen !== "mirrordocs") return;
       playSound("tap");
       const fieldName = row.getAttribute("data-field");
-      
+
       // Clean previous error marks on this row
       row.classList.remove("error-validated");
-      
+
       if (STATE.mismatchesSelected.has(fieldName)) {
         STATE.mismatchesSelected.delete(fieldName);
         row.classList.remove("selected");
@@ -3643,29 +3834,29 @@ function initMirrorDocsHandlers() {
       updateMirrorProgress();
     });
   });
-  
+
   const btnConfirm = document.getElementById("btn-mirrordocs-confirm");
   if (btnConfirm) {
     btnConfirm.addEventListener("click", () => {
       if (STATE.screen !== "mirrordocs") return;
-      
+
       const feedbackMsg = document.getElementById("mirrordocs-feedback");
       const container = document.getElementById("mirrordocs-board");
-      
+
       // Target correct mistakes: tgl_lahir and no_kk
       const correctMismatches = new Set(["tgl_lahir", "no_kk"]);
-      
+
       // Check if selected matches correctMismatches exactly
       let isCorrect = STATE.mismatchesSelected.size === correctMismatches.size &&
-                      [...STATE.mismatchesSelected].every(x => correctMismatches.has(x));
-                      
+        [...STATE.mismatchesSelected].every(x => correctMismatches.has(x));
+
       if (isCorrect) {
         playSound("correct");
         if (feedbackMsg) {
           feedbackMsg.innerText = "Sempurna! Semua perbedaan data telah diidentifikasi.";
           feedbackMsg.className = "verif-feedback-msg success";
         }
-        
+
         // Highlight rows green
         rows.forEach(row => {
           const field = row.getAttribute("data-field");
@@ -3673,7 +3864,7 @@ function initMirrorDocsHandlers() {
             row.classList.add("correct-validated");
           }
         });
-        
+
         setTimeout(() => {
           setDialogueBoardMinigameMode(null);
           STATE.screen = "dialogue";
@@ -3686,7 +3877,7 @@ function initMirrorDocsHandlers() {
           feedbackMsg.innerText = "Coba periksa kembali, Mbak!";
           feedbackMsg.className = "verif-feedback-msg error";
         }
-        
+
         // Visual indicator: mark selected incorrect rows with cross
         rows.forEach(row => {
           const field = row.getAttribute("data-field");
@@ -3696,7 +3887,7 @@ function initMirrorDocsHandlers() {
             }
           }
         });
-        
+
         if (container) {
           container.classList.add("shake-element");
           setTimeout(() => {
@@ -4141,22 +4332,22 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btn-pause-resume").addEventListener("click", () => {
     const nameInput = document.getElementById("settings-player-name-input");
     const nameSettingRow = document.getElementById("settings-player-name-row");
-    
+
     // Only verify if the name input row is visible (meaning we are on Main Menu settings)
     if (nameSettingRow && nameSettingRow.style.display !== "none" && nameInput) {
       const newName = nameInput.value.trim();
-      
+
       // Validation: Player cannot leave empty blank on the name input
       if (!newName) {
         nameInput.style.borderColor = "#d32f2f";
         playSound("incorrect");
         return; // prevent leaving settings
       }
-      
+
       const currentSavedName = localStorage.getItem("mekaar_player_name") || "Aminah";
       const currentSavedGender = localStorage.getItem("mekaar_player_gender") || "female";
       const tempGender = STATE.tempSettingsGender || currentSavedGender;
-      
+
       if ((newName && newName !== currentSavedName) || tempGender !== currentSavedGender) {
         const confirmText = document.getElementById("name-confirm-text");
         if (confirmText) {
@@ -4167,7 +4358,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return; // wait for confirmation
       }
     }
-    
+
     document.getElementById("pause-modal").classList.remove("active");
     playSound("tap");
   });
@@ -4224,13 +4415,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("btn-level-pkm").addEventListener("click", () => {
-    const titleEl = document.querySelector("#dev-modal .wood-banner h2");
-    if (titleEl) titleEl.innerText = "COMING SOON";
-    const textEl = document.getElementById("dev-modal-text");
-    if (textEl) {
-      textEl.innerHTML = "Level 3: PKM<br><span style='font-size: 13px; font-weight: 400; color: #555;'>Pertemuan Kelompok Mingguan & Pembinaan</span>";
+    if (document.getElementById("btn-level-pkm").classList.contains("locked")) {
+      const titleEl = document.querySelector("#dev-modal .wood-banner h2");
+      if (titleEl) titleEl.innerText = "TERKUNCI";
+      const textEl = document.getElementById("dev-modal-text");
+      if (textEl) {
+        textEl.innerHTML = "Selesaikan Level 2 terlebih dahulu untuk membuka level ini!";
+      }
+      document.getElementById("dev-modal").classList.add("active");
+      playSound("incorrect");
+      return;
     }
-    document.getElementById("dev-modal").classList.add("active");
+
+    STATE.currentLevel = 3;
+    updateLevelDetailModal(3);
+    document.getElementById("level-select-overlay").classList.remove("active");
+    document.getElementById("level-detail-overlay").classList.add("active");
     playSound("tap");
   });
 
@@ -4287,6 +4487,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (STATE.currentLevel === 2) {
       STATE.hasPermission = true;
       triggerLoadingScreen("map", 2500);
+    } else if (STATE.currentLevel === 3) {
+      triggerLoadingScreen("pkm", 2500);
+      setTimeout(startPkmLevel, 2500);
     } else {
       triggerLoadingScreen("cabang", 2500);
     }
@@ -4640,4 +4843,1112 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize star score presentation on first load
   updateLevelDetailStars();
+
+  // Level 3 PKM Header Help and Settings buttons
+  const btnPkmHelp = document.getElementById("btn-pkm-help");
+  if (btnPkmHelp) {
+    btnPkmHelp.addEventListener("click", () => {
+      document.getElementById("instructions-modal").classList.add("active");
+      playSound("tap");
+    });
+  }
+  const btnPkmSettings = document.getElementById("btn-pkm-settings");
+  if (btnPkmSettings) {
+    btnPkmSettings.addEventListener("click", () => {
+      openSettingsModal(false);
+    });
+  }
+
+  // Attach tap-to-skip typewriter on dialogue click inside PKM Dialogue board
+  const pkmDialoguePanel = document.getElementById("pkm-dialogue-panel");
+  if (pkmDialoguePanel) {
+    pkmDialoguePanel.addEventListener("click", (e) => {
+      if (e.target.closest("button")) return;
+      if (STATE.pkmTypewriterRunning) {
+        finishPkmTypewriter();
+      }
+    });
+  }
 });
+
+// ==========================================================================
+// LEVEL 3: PKM LEVEL IMPLEMENTATION
+// ==========================================================================
+
+function startPkmLevel() {
+  STATE.screen = "pkm";
+  showScreen("pkm");
+
+  // Reset pkm states
+  STATE.pkmStage = 0;
+  STATE.pkmDialogueIndex = 0;
+  STATE.pkmSeatingCorrect = 0;
+  STATE.pkmAttendanceCorrect = 0;
+  STATE.pkmMoneySorted = 0;
+  STATE.pkmTotalCounted = 0;
+  STATE.pkmAttendanceConditions = [];
+  STATE.pkmMoneyBills = [];
+
+  // Generate randomized attendance conditions for stage 3
+  // 2 absent (code 2), 1 present but did not pay (code 3), 9 present & paid (code 1)
+  const pool = [2, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  // Shuffle pool
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  
+  // Assign to nasabah
+  STATE.pkmAttendanceConditions = PKM_CONFIG.nasabah.map((n, idx) => {
+    return {
+      id: n.id,
+      name: n.name,
+      portrait: n.portrait,
+      subgroup: n.subgroup,
+      condition: pool[idx] // 1, 2, or 3
+    };
+  });
+
+  // Start stage 0
+  initPkmStage(0);
+}
+
+function initPkmStage(stageNum) {
+  STATE.pkmStage = stageNum;
+  STATE.pkmDialogueIndex = 0;
+
+  // Update dots HUD
+  document.querySelectorAll(".pkm-dot").forEach((dot, idx) => {
+    dot.classList.remove("active", "completed");
+    if (idx === stageNum) {
+      dot.classList.add("active");
+    } else if (idx < stageNum) {
+      dot.classList.add("completed");
+    }
+  });
+
+  // Hide all panels initially
+  document.getElementById("pkm-stage-1-zones").classList.add("hidden");
+  document.getElementById("pkm-stage-1-pool").classList.add("hidden");
+  document.getElementById("pkm-stage-3-indicators").classList.add("hidden");
+  document.getElementById("pkm-stage-3-hud").classList.add("hidden");
+  document.getElementById("pkm-stage-4-workspace").classList.add("hidden");
+  document.getElementById("pkm-stage-4-dashboard").classList.add("hidden");
+  document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+  document.getElementById("pkm-dialogue-panel").style.display = "none";
+
+  // Clear seating-active class and hide Stage 1 guide
+  document.getElementById("pkm-screen").classList.remove("seating-active");
+  const guideEl = document.getElementById("pkm-stage-1-guide");
+  if (guideEl) {
+    guideEl.classList.add("hidden");
+  }
+
+  // Stage-specific initializers
+  if (stageNum === 0) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 0: Pembukaan & Sambutan";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmintro.jpeg";
+    document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
+    runPkmDialogueStep();
+  } 
+  else if (stageNum === 1) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 1: Penyusunan Kelompok";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmsceneminigame.png";
+    document.getElementById("pkm-stage-1-zones").classList.remove("hidden");
+    document.getElementById("pkm-stage-1-pool").classList.remove("hidden");
+    
+    // Add seating-active class to pkm-screen to make background full screen
+    document.getElementById("pkm-screen").classList.add("seating-active");
+    
+    // Show new guide bubble card at bottom
+    const guideEl = document.getElementById("pkm-stage-1-guide");
+    if (guideEl) {
+      guideEl.classList.remove("hidden");
+    }
+    
+    // Dynamically set name and avatar inside guide card
+    const speakerEl = document.getElementById("pkm-stage-1-speaker-badge");
+    const avatarEl = document.getElementById("pkm-stage-1-avatar");
+    const pName = localStorage.getItem("mekaar_player_name") || "Aminah";
+    const pGender = localStorage.getItem("mekaar_player_gender") || "female";
+    if (speakerEl) {
+      speakerEl.innerText = `AO ${pName}`;
+    }
+    if (avatarEl) {
+      avatarEl.src = "player/femaleplayer.png";
+      if (pGender === "female") {
+        avatarEl.style.filter = "none";
+      } else {
+        avatarEl.style.filter = "brightness(0)";
+      }
+    }
+    
+    // Keep standard dialogue board hidden
+    document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "none";
+    
+    setupStage1Seating();
+  } 
+  else if (stageNum === 2) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 2: Doa Bersama & Ikrar AO";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmsceneliatalk.jpeg";
+    document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
+    runPkmDialogueStep();
+  } 
+  else if (stageNum === 3) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 3: Uji Absensi";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmsceneplayertalk.jpeg";
+    document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
+    // Run intro dialogue first
+    runPkmDialogueStep();
+  } 
+  else if (stageNum === 4) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 4: Pembayaran Angsuran";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmsceneplayertalk.jpeg";
+    document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
+    // Run intro dialogue first
+    runPkmDialogueStep();
+  } 
+  else if (stageNum === 5) {
+    document.getElementById("pkm-header-sub").innerText = "Tahap 5: Doa Penutup & Janji Nasabah";
+    document.getElementById("pkm-bg-img").src = "pkm/pkmscene1.png";
+    document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "flex";
+    runPkmDialogueStep();
+  }
+}
+
+// Custom PKM Dialogue Runner
+function runPkmDialogueStep() {
+  const stage = STATE.pkmStage;
+  let dialogueData = null;
+
+  if (stage === 0) {
+    dialogueData = PKM_DIALOGUES[0];
+  } else if (stage === 2) {
+    dialogueData = PKM_DIALOGUES[2];
+  } else if (stage === 3) {
+    // Stage 3 intro dialogue
+    dialogueData = PKM_DIALOGUES["3_intro"];
+  } else if (stage === 4) {
+    // Stage 4 intro dialogue
+    dialogueData = PKM_DIALOGUES["4_intro"];
+  } else if (stage === 5) {
+    dialogueData = PKM_DIALOGUES[5];
+  }
+
+  if (!dialogueData) return;
+
+  const idx = STATE.pkmDialogueIndex;
+  
+  // Custom check for Stage 5 signature trigger after line 1
+  if (stage === 5 && idx === 2 && !STATE.pkmSignedRecord) {
+    document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+    document.getElementById("pkm-dialogue-panel").style.display = "none";
+    openPkmSignatureModal();
+    return;
+  }
+
+  if (idx < dialogueData.length) {
+    const line = dialogueData[idx];
+
+    // Set speaker name and replace name token
+    const speakerEl = document.getElementById("pkm-speaker-name");
+    if (speakerEl) {
+      speakerEl.innerText = replacePlayerName(line.speaker);
+    }
+    
+    // Update portrait/scene background
+    if (line.portrait) {
+      document.getElementById("pkm-bg-img").src = line.portrait;
+    }
+
+    // Run typewriter
+    runPkmTypewriter(line.text);
+
+    // Setup Next Click listener
+    const nextBtn = document.getElementById("btn-pkm-dialogue-next");
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        playSound("tap");
+        STATE.pkmDialogueIndex++;
+        runPkmDialogueStep();
+      };
+    }
+  } else {
+    // Dialogue completed, proceed to next step
+    if (stage === 0) {
+      initPkmStage(1);
+    } else if (stage === 2) {
+      initPkmStage(3);
+    } else if (stage === 3) {
+      // Transition to actual attendance quiz UI
+      document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "none";
+      document.getElementById("pkm-stage-3-indicators").classList.remove("hidden");
+      document.getElementById("pkm-stage-3-hud").classList.remove("hidden");
+      setupStage3Attendance();
+    } else if (stage === 4) {
+      // Transition to money sorting minigame
+      document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "none";
+      document.getElementById("pkm-stage-4-workspace").classList.remove("hidden");
+      document.getElementById("pkm-stage-4-dashboard").classList.remove("hidden");
+      setupStage4MoneyCounting();
+    } else if (stage === 5) {
+      // PKM Level Completed! Show Victory screen
+      triggerPkmVictory();
+    }
+  }
+}
+
+function runPkmTypewriter(text) {
+  const textEl = document.getElementById("pkm-dialogue-text");
+  if (!textEl) return;
+  textEl.textContent = "";
+  let charIndex = 0;
+
+  text = replacePlayerName(text);
+
+  const nextBtn = document.getElementById("btn-pkm-dialogue-next");
+  if (nextBtn) nextBtn.style.visibility = "hidden";
+
+  if (STATE.pkmTypewriterInterval) {
+    clearInterval(STATE.pkmTypewriterInterval);
+  }
+
+  STATE.pkmTypewriterRunning = true;
+  STATE.pkmTypewriterFullText = text;
+
+  const charSpeed = 20;
+
+  STATE.pkmTypewriterInterval = setInterval(() => {
+    if (charIndex < text.length) {
+      charIndex++;
+      textEl.textContent = text.substring(0, charIndex);
+    } else {
+      finishPkmTypewriter();
+    }
+  }, charSpeed);
+}
+
+function finishPkmTypewriter() {
+  if (STATE.pkmTypewriterInterval) {
+    clearInterval(STATE.pkmTypewriterInterval);
+    STATE.pkmTypewriterInterval = null;
+  }
+  const textEl = document.getElementById("pkm-dialogue-text");
+  if (textEl) {
+    textEl.textContent = STATE.pkmTypewriterFullText;
+  }
+  STATE.pkmTypewriterRunning = false;
+
+  const nextBtn = document.getElementById("btn-pkm-dialogue-next");
+  if (nextBtn) nextBtn.style.visibility = "visible";
+}
+
+// Stage 1: Seating Arrangement
+const PKM_SEATING_COORDINATES = {
+  // Row 4 (Back) - y: 37%
+  nur:   { left: "29.5%", top: "37%", scale: 0.62, zIndex: 10 },
+  siti:  { left: "50%",   top: "37%", scale: 0.62, zIndex: 10 },
+  indah: { left: "70.5%", top: "37%", scale: 0.62, zIndex: 10 },
+  
+  // Row 3 - y: 43%
+  desi:  { left: "27%",   top: "43%", scale: 0.72, zIndex: 12 },
+  ratna: { left: "50%",   top: "43%", scale: 0.72, zIndex: 12 },
+  yulia: { left: "73%",   top: "43%", scale: 0.72, zIndex: 12 },
+  
+  // Row 2 - y: 51%
+  ijah:  { left: "23%",   top: "51%", scale: 0.85, zIndex: 14 },
+  lia:   { left: "50%",   top: "51%", scale: 0.85, zIndex: 14 },
+  rini:  { left: "77%",   top: "51%", scale: 0.85, zIndex: 14 },
+  
+  // Row 1 (Front) - y: 63%
+  lastri:{ left: "16%",   top: "63%", scale: 1.02, zIndex: 16 },
+  ning:  { left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },
+  yanti: { left: "84%",   top: "63%", scale: 1.02, zIndex: 16 }
+};
+
+let pkmSelectedSeatingCard = null;
+
+function setupStage1Seating() {
+  STATE.pkmSeatingCorrect = 0;
+  pkmSelectedSeatingCard = null;
+
+  // Clear seated sprites container
+  const container = document.getElementById("pkm-seated-sprites-container");
+  if (container) {
+    container.innerHTML = "";
+  }
+
+  // Reset counters in HTML labels
+  ["A", "B", "C"].forEach(grp => {
+    const el = document.getElementById(`counter-mat-${grp}`);
+    if (el) {
+      el.innerText = "(0/4)";
+      el.classList.remove("completed");
+    }
+  });
+
+  // Populate reference table rows
+  const refBody = document.getElementById("pkm-ref-table-body");
+  refBody.innerHTML = "";
+  PKM_CONFIG.nasabah.forEach(n => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><strong>${n.name}</strong></td>
+      <td style="font-weight: bold; color: var(--pnm-blue);">Sub-Kelompok ${n.subgroup}</td>
+    `;
+    refBody.appendChild(row);
+  });
+
+  // Shuffle customers for the draggable pool
+  const poolList = [...PKM_CONFIG.nasabah];
+  for (let i = poolList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [poolList[i], poolList[j]] = [poolList[j], poolList[i]];
+  }
+
+  // Populate pool grid
+  const grid = document.getElementById("pkm-seating-pool-grid");
+  grid.innerHTML = "";
+
+  poolList.forEach(n => {
+    const card = document.createElement("div");
+    card.className = "pkm-char-card";
+    card.setAttribute("draggable", "true");
+    card.setAttribute("data-id", n.id);
+    card.setAttribute("data-subgroup", n.subgroup);
+
+    let borderStyle = "";
+    if (n.subgroup === "A") {
+      borderStyle = "border: 2.5px solid #4caf50;";
+    } else if (n.subgroup === "B") {
+      borderStyle = "border: 2.5px solid #ff9800;";
+    } else if (n.subgroup === "C") {
+      borderStyle = "border: 2.5px solid #03a9f4;";
+    }
+
+    card.innerHTML = `
+      <img src="${n.portrait}" alt="${n.name}" class="pkm-char-img" style="${borderStyle}">
+      <span class="pkm-char-name">${n.name.split(" ")[0]}</span>
+    `;
+
+    // Standard Drag start
+    card.addEventListener("dragstart", (e) => {
+      card.classList.add("dragging");
+      e.dataTransfer.setData("text/plain", n.id);
+    });
+
+    card.addEventListener("dragend", () => {
+      card.classList.remove("dragging");
+    });
+
+    // Tap selection (Mobile fallback)
+    card.addEventListener("click", () => {
+      playSound("tap");
+      document.querySelectorAll(".pkm-char-card").forEach(c => c.classList.remove("selected"));
+      if (pkmSelectedSeatingCard === card) {
+        pkmSelectedSeatingCard = null;
+      } else {
+        pkmSelectedSeatingCard = card;
+        card.classList.add("selected");
+      }
+    });
+
+    grid.appendChild(card);
+  });
+
+  // Setup Dropzones drag/drop listeners
+  document.querySelectorAll(".pkm-target-box").forEach(zone => {
+    zone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      zone.classList.add("dragover");
+    });
+
+    zone.addEventListener("dragleave", () => {
+      zone.classList.remove("dragover");
+    });
+
+    zone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      zone.classList.remove("dragover");
+      const id = e.dataTransfer.getData("text/plain");
+      const card = document.querySelector(`.pkm-char-card[data-id="${id}"]`);
+      if (card) {
+        handleSeatingPlacement(card, zone);
+      }
+    });
+
+    // Dropzone Tap Click (Mobile fallback)
+    zone.addEventListener("click", () => {
+      if (pkmSelectedSeatingCard) {
+        handleSeatingPlacement(pkmSelectedSeatingCard, zone);
+        pkmSelectedSeatingCard = null;
+        document.querySelectorAll(".pkm-char-card").forEach(c => c.classList.remove("selected"));
+      }
+    });
+  });
+
+  // Modal reference buttons
+  document.getElementById("btn-pkm-show-ref").onclick = () => {
+    playSound("tap");
+    document.getElementById("pkm-ref-popup").classList.add("active");
+  };
+  document.getElementById("btn-pkm-close-ref").onclick = () => {
+    playSound("tap");
+    document.getElementById("pkm-ref-popup").classList.remove("active");
+  };
+}
+
+function handleSeatingPlacement(card, zone) {
+  const targetSubgroup = zone.getAttribute("data-subgroup");
+  const cardSubgroup = card.getAttribute("data-subgroup");
+
+  if (targetSubgroup === cardSubgroup) {
+    // Correct! Hide card from draggable pool grid
+    card.style.display = "none";
+    
+    // Spawn large seated nasabah sprite dynamically on the mat
+    const nasabahId = card.getAttribute("data-id");
+    const nasabahData = PKM_CONFIG.nasabah.find(n => n.id === nasabahId);
+    
+    if (nasabahData) {
+      const container = document.getElementById("pkm-seated-sprites-container");
+      if (container) {
+        // Create wrapper div for layout, scaling, and z-index positioning
+        const wrapper = document.createElement("div");
+        wrapper.className = "pkm-seated-wrapper";
+        wrapper.setAttribute("data-subgroup", targetSubgroup);
+        
+        // Coordinates and scale lookup
+        const coords = PKM_SEATING_COORDINATES[nasabahId] || { left: "50%", top: "50%", scale: 1.0, zIndex: 10 };
+        wrapper.style.left = coords.left;
+        wrapper.style.top = coords.top;
+        wrapper.style.zIndex = coords.zIndex;
+        wrapper.style.transform = `translate(-50%, -50%) scale(${coords.scale})`;
+        
+        // Create image element inside wrapper
+        const sprite = document.createElement("img");
+        sprite.src = nasabahData.portrait;
+        sprite.alt = nasabahData.name;
+        sprite.className = "pkm-seated-nasabah";
+        
+        wrapper.appendChild(sprite);
+        container.appendChild(wrapper);
+      }
+    }
+
+    playSound("correct");
+    STATE.pkmSeatingCorrect++;
+
+    // Update Counter badge based on placed sprites
+    const containerEl = document.getElementById("pkm-seated-sprites-container");
+    const matCards = containerEl ? containerEl.querySelectorAll(`.pkm-seated-wrapper[data-subgroup="${targetSubgroup}"]`).length : 0;
+    const counterEl = document.getElementById(`counter-mat-${targetSubgroup}`);
+    if (counterEl) {
+      if (matCards === 4) {
+        counterEl.innerText = "✓ (4/4)";
+        counterEl.classList.add("completed");
+      } else {
+        counterEl.innerText = `(${matCards}/4)`;
+        counterEl.classList.remove("completed");
+      }
+    }
+
+    // Check completion
+    if (STATE.pkmSeatingCorrect === 12) {
+      setTimeout(() => {
+        // Simple success banner or animation
+        const banner = document.getElementById("pkm-header-sub");
+        banner.innerHTML = "✨ Penyusunan Selesai! Menuju Tahap 2... ✨";
+        playSound("victory");
+        setTimeout(() => {
+          initPkmStage(2);
+        }, 1500);
+      }, 500);
+    }
+  } else {
+    // Incorrect placement: bounce back with shake
+    playSound("incorrect");
+    card.style.border = "2.5px solid #f56c6c";
+    card.animate([
+      { transform: "translateX(0)" },
+      { transform: "translateX(-6px)" },
+      { transform: "translateX(6px)" },
+      { transform: "translateX(-6px)" },
+      { transform: "translateX(0)" }
+    ], {
+      duration: 350,
+      iterations: 1
+    });
+    setTimeout(() => {
+      card.style.border = "";
+    }, 1000);
+  }
+}
+
+// Stage 3: Attendance Quiz
+function setupStage3Attendance() {
+  STATE.pkmAttendanceCorrect = 0;
+
+  // Show visual layout of sitting nasabah overlays
+  const indicatorsLayer = document.getElementById("pkm-stage-3-indicators");
+  indicatorsLayer.innerHTML = "";
+
+  // Render sitting indicators corresponding to group alignment
+  // Layout nasabah in a 3-row grid inside screen bounds
+  const subgroups = ["A", "B", "C"];
+  subgroups.forEach((sg, rowIdx) => {
+    const list = STATE.pkmAttendanceConditions.filter(n => n.subgroup === sg);
+    list.forEach((n, colIdx) => {
+      const indicator = document.createElement("div");
+      indicator.className = "pkm-visual-indicator";
+      
+      // Layout positions: Row (top) 26%, 48%, 70%. Col (left) 12%, 35%, 58%, 81%.
+      const topPct = 26 + rowIdx * 22;
+      const leftPct = 12 + colIdx * 23;
+      indicator.style.top = `${topPct}%`;
+      indicator.style.left = `${leftPct}%`;
+      indicator.style.backgroundImage = `url('${n.portrait}')`;
+      indicator.style.backgroundSize = "cover";
+      indicator.style.backgroundPosition = "center";
+      indicator.style.border = "2px solid #fff";
+      indicator.setAttribute("data-id", n.id);
+
+      // Status badge icons (💵: present+paid, ❌: present no pay, invisible: absent)
+      const badge = document.createElement("div");
+      badge.style.position = "absolute";
+      badge.style.bottom = "-5px";
+      badge.style.right = "-5px";
+      badge.style.width = "20px";
+      badge.style.height = "20px";
+      badge.style.borderRadius = "50%";
+      badge.style.display = "flex";
+      badge.style.alignItems = "center";
+      badge.style.justifyContent = "center";
+      badge.style.fontSize = "11px";
+      badge.style.boxShadow = "0 2px 4px rgba(0,0,0,0.3)";
+
+      if (n.condition === 1) {
+        // Present & Paid: Show raised cash icon
+        badge.innerText = "💵";
+        badge.style.backgroundColor = "#2ec971";
+      } else if (n.condition === 3) {
+        // Present, No Pay: Show red tag / no-money icon
+        badge.innerText = "🤲";
+        badge.style.backgroundColor = varColor("gold");
+      } else {
+        // Absent: Silhouette overlay
+        indicator.style.filter = "brightness(0)";
+        badge.innerText = "🪹";
+        badge.style.backgroundColor = "#f56c6c";
+      }
+
+      indicator.appendChild(badge);
+      indicatorsLayer.appendChild(indicator);
+    });
+  });
+
+  // Populate Mekar Digi list rows
+  const appList = document.getElementById("pkm-app-nasabah-list");
+  appList.innerHTML = "";
+
+  // Temporary selected codes store
+  const tempSelections = {};
+
+  STATE.pkmAttendanceConditions.forEach(n => {
+    const row = document.createElement("div");
+    row.className = "app-nasabah-row";
+    row.setAttribute("data-id", n.id);
+
+    row.innerHTML = `
+      <div class="app-nasabah-info">
+        <img src="${n.portrait}" class="app-nasabah-avatar">
+        <div style="display: flex; flex-direction: column;">
+          <span class="app-nasabah-name">${n.name}</span>
+          <span class="app-nasabah-status-pill" id="status-pill-${n.id}" style="font-size: 8px; font-weight: bold; color: #8c96a3; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px;">Belum Diisi</span>
+        </div>
+      </div>
+      <div class="app-code-select-container">
+        <button class="app-code-btn" data-code="1">1</button>
+        <button class="app-code-btn" data-code="2">2</button>
+        <button class="app-code-btn" data-code="3">3</button>
+      </div>
+    `;
+
+    // Code button action
+    row.querySelectorAll(".app-code-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        playSound("tap");
+        const code = parseInt(btn.getAttribute("data-code"));
+        const pill = document.getElementById(`status-pill-${n.id}`);
+        
+        row.querySelectorAll(".app-code-btn").forEach(b => b.classList.remove("selected", "wrong"));
+        
+        if (code === n.condition) {
+          btn.classList.add("selected");
+          row.classList.add("correct");
+          tempSelections[n.id] = code;
+          playSound("correct");
+          
+          if (pill) {
+            if (code === 1) {
+              pill.innerText = "Hadir & Bayar";
+              pill.style.color = "#2ec971";
+            } else if (code === 2) {
+              pill.innerText = "Tidak Hadir";
+              pill.style.color = "#f56c6c";
+            } else if (code === 3) {
+              pill.innerText = "Hadir, Belum Bayar";
+              pill.style.color = "#f4c430";
+            }
+          }
+        } else {
+          btn.classList.add("wrong");
+          row.classList.remove("correct");
+          delete tempSelections[n.id];
+          playSound("incorrect");
+          
+          if (pill) {
+            pill.innerText = "Salah Input!";
+            pill.style.color = "#f56c6c";
+          }
+          
+          // Shake row
+          row.animate([
+            { transform: "translateX(0)" },
+            { transform: "translateX(-4px)" },
+            { transform: "translateX(4px)" },
+            { transform: "translateX(0)" }
+          ], { duration: 250 });
+        }
+
+        // Enable/Disable submit button
+        const count = Object.keys(tempSelections).length;
+        const submitBtn = document.getElementById("btn-pkm-submit-app");
+        if (count === 12) {
+          submitBtn.removeAttribute("disabled");
+          submitBtn.style.opacity = "1";
+        } else {
+          submitBtn.setAttribute("disabled", "true");
+          submitBtn.style.opacity = "0.6";
+        }
+      });
+    });
+
+    appList.appendChild(row);
+  });
+
+  // App Modal Handlers
+  document.getElementById("btn-pkm-open-app").onclick = () => {
+    playSound("tap");
+    document.getElementById("pkm-app-modal").classList.add("active");
+  };
+
+  // Submit button closes app modal and advances level stage
+  const submitBtn = document.getElementById("btn-pkm-submit-app");
+  submitBtn.setAttribute("disabled", "true");
+  submitBtn.style.opacity = "0.6";
+  submitBtn.onclick = () => {
+    playSound("victory");
+    document.getElementById("pkm-app-modal").classList.remove("active");
+    // Show success summary
+    const presentPaid = STATE.pkmAttendanceConditions.filter(n => n.condition === 1).length;
+    const absent = STATE.pkmAttendanceConditions.filter(n => n.condition === 2).length;
+    const presentNoPay = STATE.pkmAttendanceConditions.filter(n => n.condition === 3).length;
+
+    const banner = document.getElementById("pkm-header-sub");
+    banner.innerHTML = `✨ Absensi Selesai! Hadir & Bayar: ${presentPaid}, Absen: ${absent}, Belum Bayar: ${presentNoPay} ✨`;
+    
+    setTimeout(() => {
+      initPkmStage(4);
+    }, 2000);
+  };
+}
+
+function varColor(name) {
+  if (name === "gold") return "#f4c430";
+  return "#008343";
+}
+
+// Stage 4: Money Counting sorting minigame
+let pkmSelectedBillCard = null;
+
+function setupStage4MoneyCounting() {
+  STATE.pkmMoneySorted = 0;
+  STATE.pkmTotalCounted = 0;
+  pkmSelectedBillCard = null;
+
+  // Expected target total: 10 present * 200k angsuran = 2,000,000 + etc.
+  // We specified target Rp2.400.000 in config. That corresponds to 12 members angsuran.
+  // Wait, let's keep it matching target total of Rp2.400.000 (12 nasabah * Rp200.000).
+  const targetTotalVal = PKM_CONFIG.installmentPerPerson * 12;
+  document.getElementById("pkm-money-target-val").innerText = formatRupiah(targetTotalVal);
+  document.getElementById("pkm-counting-bubble").innerText = "Rp0";
+
+  const pkmSpeech = document.getElementById("pkm-ao-counting-speech");
+  if (pkmSpeech) {
+    pkmSpeech.innerText = replacePlayerName("{playername} (AO): \"Mari kita mulai hitung uang angsurannya...\"");
+  }
+
+  // Reset target bins
+  document.querySelectorAll(".money-bin").forEach(bin => {
+    bin.classList.remove("dragover");
+    const valEl = bin.querySelector(".bin-value");
+    if (valEl) valEl.innerText = "Rp0";
+    bin.setAttribute("data-sum", "0");
+    bin.setAttribute("data-count", "0");
+    const stack = bin.querySelector(".bin-stack");
+    if (stack) stack.innerHTML = "";
+  });
+
+  // Generate money bills array
+  // 10 bills of 100k (1,000,000)
+  // 20 bills of 50k (1,000,000)
+  // 15 bills of 20k (300,000)
+  // 10 bills of 10k (100,000)
+  // Total = Rp2.400.000 (55 bills total)
+  const bills = [];
+  for (let i = 0; i < 10; i++) bills.push(100000);
+  for (let i = 0; i < 20; i++) bills.push(50000);
+  for (let i = 0; i < 15; i++) bills.push(20000);
+  for (let i = 0; i < 10; i++) bills.push(10000);
+
+  // Shuffle bills
+  for (let i = bills.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [bills[i], bills[j]] = [bills[j], bills[i]];
+  }
+
+  STATE.pkmMoneyBills = bills;
+  spawnNextMoneyBill();
+
+  // Setup bin drag/drop drop targets
+  document.querySelectorAll(".money-bin").forEach(bin => {
+    bin.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      bin.classList.add("dragover");
+    });
+
+    bin.addEventListener("dragleave", () => {
+      bin.classList.remove("dragover");
+    });
+
+    bin.addEventListener("drop", (e) => {
+      e.preventDefault();
+      bin.classList.remove("dragover");
+      const id = e.dataTransfer.getData("text/plain");
+      const card = document.getElementById(id);
+      if (card) {
+        handleMoneyPlacement(card, bin);
+      }
+    });
+
+    // Tap placement fallback
+    bin.addEventListener("click", () => {
+      if (pkmSelectedBillCard) {
+        handleMoneyPlacement(pkmSelectedBillCard, bin);
+        pkmSelectedBillCard = null;
+      }
+    });
+  });
+}
+
+function spawnNextMoneyBill() {
+  const pool = document.getElementById("pkm-money-pool");
+  pool.innerHTML = "";
+
+  const idx = STATE.pkmMoneySorted;
+  if (idx >= STATE.pkmMoneyBills.length) {
+    // All sorted! Complete stage
+    setTimeout(() => {
+      const banner = document.getElementById("pkm-header-sub");
+      banner.innerHTML = "✨ Uang Angsuran Selesai Dihitung! Rp2.400.000 Sesuai! ✨";
+      playSound("victory");
+      setTimeout(() => {
+        initPkmStage(5);
+      }, 2000);
+    }, 500);
+    return;
+  }
+
+  const denom = STATE.pkmMoneyBills[idx];
+  const card = document.createElement("div");
+  card.className = `money-bill denom-${denom / 1000}k`;
+  card.id = `money-bill-${idx}`;
+  card.setAttribute("draggable", "true");
+  card.setAttribute("data-denom", denom);
+
+  card.innerHTML = `
+    <span class="money-bill-mini-label">Rupiah</span>
+    <span style="font-size:12px;">${formatDenomLabel(denom)}</span>
+  `;
+
+  // Drag listeners
+  card.addEventListener("dragstart", (e) => {
+    card.classList.add("dragging");
+    e.dataTransfer.setData("text/plain", card.id);
+  });
+
+  card.addEventListener("dragend", () => {
+    card.classList.remove("dragging");
+  });
+
+  // Tap listener
+  card.addEventListener("click", () => {
+    playSound("tap");
+    document.querySelectorAll(".money-bill").forEach(b => b.classList.remove("selected"));
+    if (pkmSelectedBillCard === card) {
+      pkmSelectedBillCard = null;
+    } else {
+      pkmSelectedBillCard = card;
+      card.classList.add("selected");
+    }
+  });
+
+  pool.appendChild(card);
+}
+
+function handleMoneyPlacement(card, bin) {
+  const targetDenom = parseInt(bin.getAttribute("data-denom"));
+  const billDenom = parseInt(card.getAttribute("data-denom"));
+
+  if (targetDenom === billDenom) {
+    // Correct! Increment values
+    STATE.pkmMoneySorted++;
+    STATE.pkmTotalCounted += billDenom;
+
+    // Update bin visual total
+    const count = parseInt(bin.getAttribute("data-count") || "0") + 1;
+    bin.setAttribute("data-count", count.toString());
+
+    const currentSum = parseInt(bin.getAttribute("data-sum") || "0") + billDenom;
+    bin.setAttribute("data-sum", currentSum.toString());
+    bin.querySelector(".bin-value").innerText = formatRupiah(currentSum);
+
+    // Spawn visual strip in stack
+    const stack = bin.querySelector(".bin-stack");
+    if (stack) {
+      const strip = document.createElement("div");
+      strip.className = `bin-strip denom-${billDenom / 1000}k`;
+      const bottomVal = Math.min(4 + (count * 1.5), 32);
+      const leftVal = 5 + Math.random() * 40; // random offset left
+      const rotation = (Math.random() - 0.5) * 16; // random rotation angle
+      strip.style.bottom = `${bottomVal}px`;
+      strip.style.left = `${leftVal}%`;
+      strip.style.transform = `rotate(${rotation}deg)`;
+      stack.appendChild(strip);
+    }
+
+    // Visual snap animation
+    bin.classList.add("drag-correct-pulse");
+    setTimeout(() => bin.classList.remove("drag-correct-pulse"), 500);
+
+    // Update floating counting board in scene
+    document.getElementById("pkm-counting-bubble").innerText = formatRupiah(STATE.pkmTotalCounted);
+    
+    // Update counting speech subtitle
+    const pkmSpeech = document.getElementById("pkm-ao-counting-speech");
+    if (pkmSpeech) {
+      pkmSpeech.innerText = replacePlayerName(`{playername} (AO): "${formatRupiah(STATE.pkmTotalCounted)}..."`);
+    }
+
+    playSound("correct");
+
+    // Spawn next
+    spawnNextMoneyBill();
+  } else {
+    // Incorrect bin
+    playSound("incorrect");
+    card.style.border = "2px solid #f56c6c";
+    card.animate([
+      { transform: "translateX(0)" },
+      { transform: "translateX(-5px)" },
+      { transform: "translateX(5px)" },
+      { transform: "translateX(0)" }
+    ], { duration: 250 });
+    setTimeout(() => {
+      card.style.border = "";
+    }, 1000);
+  }
+}
+
+function formatDenomLabel(val) {
+  if (val === 100000) return "100.000";
+  if (val === 50000) return "50.000";
+  if (val === 20000) return "20.000";
+  if (val === 10000) return "10.000";
+  return val.toString();
+}
+
+function formatRupiah(num) {
+  return "Rp" + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Stage 5: Signing news record
+STATE.pkmSignedRecord = false;
+
+function openPkmSignatureModal() {
+  document.getElementById("pkm-sign-modal").classList.add("active");
+
+  const canvas = document.getElementById("pkm-signature-canvas");
+  const helper = document.getElementById("pkm-sign-helper");
+  const clearBtn = document.getElementById("btn-pkm-sign-clear");
+  const confirmBtn = document.getElementById("btn-pkm-sign-confirm");
+
+  // Reset modal state
+  confirmBtn.style.opacity = "0.5";
+  confirmBtn.style.pointerEvents = "none";
+  helper.style.display = "block";
+
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#0a4f8f"; // pnm-blue color signature ink
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let strokeCount = 0;
+
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+    const clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
+  }
+
+  function startDrawing(e) {
+    e.preventDefault();
+    isDrawing = true;
+    const pos = getMousePos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+    
+    // Draw initial dot
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(lastX, lastY);
+    ctx.stroke();
+
+    helper.style.display = "none";
+  }
+
+  function draw(e) {
+    if (!isDrawing) return;
+    e.preventDefault();
+    const pos = getMousePos(e);
+    
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    
+    lastX = pos.x;
+    lastY = pos.y;
+    strokeCount++;
+
+    if (strokeCount > 10) {
+      confirmBtn.style.opacity = "1";
+      confirmBtn.style.pointerEvents = "auto";
+    }
+  }
+
+  function stopDrawing() {
+    isDrawing = false;
+  }
+
+  // Mouse Listeners
+  canvas.onmousedown = startDrawing;
+  canvas.onmousemove = draw;
+  canvas.onmouseup = stopDrawing;
+  canvas.onmouseleave = stopDrawing;
+
+  // Touch Listeners
+  canvas.ontouchstart = startDrawing;
+  canvas.ontouchmove = draw;
+  canvas.ontouchend = stopDrawing;
+  canvas.ontouchcancel = stopDrawing;
+
+  // Clear handler
+  clearBtn.onclick = () => {
+    playSound("tap");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    strokeCount = 0;
+    confirmBtn.style.opacity = "0.5";
+    confirmBtn.style.pointerEvents = "none";
+    helper.style.display = "block";
+  };
+
+  confirmBtn.onclick = () => {
+    playSound("tap");
+    playSound("victory");
+
+    // Disable to prevent double click
+    confirmBtn.style.pointerEvents = "none";
+    confirmBtn.style.opacity = "0.5";
+
+    setTimeout(() => {
+      document.getElementById("pkm-sign-modal").classList.remove("active");
+      STATE.pkmSignedRecord = true;
+      document.getElementById("pkm-dialogue-panel").classList.remove("hidden");
+      document.getElementById("pkm-dialogue-panel").style.display = "flex";
+      // Advance to stage 5 remaining lines
+      runPkmDialogueStep();
+    }, 1200);
+  };
+}
+
+// PKM Victory Integration
+function triggerPkmVictory() {
+  // Clear any dialogues
+  document.getElementById("pkm-dialogue-panel").classList.add("hidden");
+
+  // Show confettis
+  launchConfetti();
+
+  // stars calculation:
+  // For PKM we calculate stars based on attempts: 
+  // Let's default to 3 stars since it is a completion-based level.
+  const scoreKey = "mekaar_journey_level_3_stars";
+  localStorage.setItem(scoreKey, "3");
+  STATE.highScoreStars = 3;
+
+  // Custom victory title/details
+  const victoryTitle = document.querySelector("#victory-screen .victory-subtitle");
+  if (victoryTitle) victoryTitle.innerText = "PKM Perdana Sukses!";
+
+  const starRatingImg = document.getElementById("victory-stars-img");
+  const ratingTextEl = document.getElementById("victory-rating-text");
+  if (starRatingImg) starRatingImg.src = "3star.png";
+  if (ratingTextEl) {
+    ratingTextEl.innerText = "Sangat Kompeten! (3 Bintang)";
+    ratingTextEl.className = "stat-value text-gold";
+  }
+
+  // Update Stats in victory card
+  const correctCountEl = document.getElementById("victory-correct-answers");
+  if (correctCountEl) correctCountEl.innerText = "12 / 12"; // seating
+  const labelAnswers = document.querySelector("#victory-screen .stat-row:nth-child(2) .stat-label");
+  if (labelAnswers) {
+    labelAnswers.innerText = "Nasabah Hadir & Rapi:";
+  }
+
+  const recruitsLabel = document.getElementById("victory-stat-label-recruits");
+  const recruitsVal = document.getElementById("victory-stat-value-recruits");
+  if (recruitsLabel) recruitsLabel.innerText = "Uang Angsuran:";
+  if (recruitsVal) recruitsVal.innerText = "Rp2.400.000 / Rp2.400.000";
+
+  showScreen("victory");
+}

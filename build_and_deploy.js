@@ -93,7 +93,15 @@ if (fs.existsSync(forkDir)) {
   }
 }
 
-console.log('Dist build complete. Running Netlify deploy...');
+console.log('Dist build complete.');
+
+// Skip manual Netlify CLI deploy step if running inside Netlify or other CI build environment
+if (process.env.NETLIFY === 'true' || process.env.CI === 'true') {
+  console.log('Running inside Netlify/CI build environment. Skipping manual CLI deploy step.');
+  process.exit(0);
+}
+
+console.log('Running Netlify deploy...');
 try {
   const output = execSync('npx netlify deploy --prod --dir=dist', { encoding: 'utf-8' });
   console.log(output);
