@@ -5169,7 +5169,7 @@ const PKM_SEATING_COORDINATES = {
   
   // Row 1 (Front) - y: 63%
   lastri:{ left: "16%",   top: "63%", scale: 1.02, zIndex: 16 },
-  ning:  { left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },
+  ningsih:{ left: "50%",   top: "63%", scale: 1.02, zIndex: 16 },
   yanti: { left: "84%",   top: "63%", scale: 1.02, zIndex: 16 }
 };
 
@@ -5306,6 +5306,9 @@ function setupStage1Seating() {
 }
 
 function handleSeatingPlacement(card, zone) {
+  if (card.style.display === "none") return;
+  pkmSelectedSeatingCard = null;
+
   const targetSubgroup = zone.getAttribute("data-subgroup");
   const cardSubgroup = card.getAttribute("data-subgroup");
 
