@@ -3510,7 +3510,7 @@ dotlottie-player {
 
 .pkm-target-boxes-row {
   position: absolute;
-  bottom: 270px; /* Floats above the pool container */
+  bottom: 285px; /* Floats above the pool container, moved up */
   left: 15px;
   right: 15px;
   display: flex;
@@ -4249,7 +4249,7 @@ dotlottie-player {
 
 #pkm-stage-1-pool {
   position: absolute;
-  bottom: 145px; /* Float directly above the 115px-high floating speech card */
+  bottom: 132px; /* Float directly above the floating speech card, moved down */
   left: 12px;
   right: 12px;
   background: rgba(251, 246, 240, 0.96) !important;
